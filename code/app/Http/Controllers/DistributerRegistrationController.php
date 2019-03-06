@@ -58,47 +58,14 @@ class DistributerRegistrationController extends Controller
         ));
 
         $distributerRegis = new DistributerRegistration();
-
-        if( $request->has('name') ){
-            $distributerRegis->name = $request->input('name');
-        }
-
-        if( $request->has('email') ){
-            $distributerRegis->email = $request->input('email');
-        }
-
-        if( $request->has('nic') ){
-            $distributerRegis->nic = $request->input('nic');
-        }
-
-        if( $request->has('mobile') ){
-            $distributerRegis->mobile = $request->input('mobile');
-        }
-
-        if( $request->has('phone') ){
-            $distributerRegis->phone = $request->input('phone');
-        }
-
-        if( $request->has('address') ){
-            $distributerRegis->address = $request->input('address');
-        }
-
-        if( $request->has('username_auto') ){
-            $distributerRegis->username_auto = $request->input('username_auto');
-        }
-
-        if( $request->has('password_auto') ){
-            $distributerRegis->password_auto = $request->input('password_auto');
-        }
-
-        if( $request->has('joining_date') ){
-            $distributerRegis->joining_date = $request->input('joining_date');
-        }
-
-        if( $request->has('designation') ){
-            $distributerRegis->designation = $request->input('designation');
-        }
-
+        $distributerRegis->name         = $request->input('name');
+        $distributerRegis->email        = $request->input('email');
+        $distributerRegis->nic          = $request->input('nic');
+        $distributerRegis->mobile       = $request->input('mobile');
+        $distributerRegis->phone        = $request->input('phone');
+        $distributerRegis->address      = $request->input('address');
+        $distributerRegis->username_auto= $request->input('email');
+        $distributerRegis->password_auto= $request->input('email');
 
         if($apk_file =  $request->file('image')) {
 
@@ -123,30 +90,21 @@ class DistributerRegistrationController extends Controller
             'id' => $distributerRegis->id,
             'name' => $request->name,
             'email' => $request->email,
-            'password' =>  bcrypt($request->password_auto)
+            'password' =>  bcrypt($request->input('email'))
             ]);
 
         // Account table create data
         $accountRegis = new Accounts();
-        if( $request->has('name') ){
-            $accountRegis->name = $request->input('name');
-        }
-        if( $request->has('name') ){
-            $accountRegis->head_id = 1;
-        }
-        if( $request->has('name') ){
-            $accountRegis->sub_head_id = 4;
-        }
+        $accountRegis->name = $request->input('name');
+        $accountRegis->head_id = 1;
+        $accountRegis->sub_head_id = 4;
+        
         $accountRegis->save();
 
         // One to ONe Account table create data
         $oneToOneAcc = new OneToOneAccounts();
-        if( $request->has('name') ){
-            $oneToOneAcc->account_id = $accountRegis->id;
-        }
-        if( $request->has('name') ){
-            $oneToOneAcc->distributer_id = $distributerRegis->id;
-        }
+        $oneToOneAcc->account_id = $accountRegis->id;
+        $oneToOneAcc->distributer_id = $distributerRegis->id;
         $oneToOneAcc->save();
 
 
@@ -201,46 +159,12 @@ class DistributerRegistrationController extends Controller
         ));
 
         $distributerRegis = DistributerRegistration::find($id);
-
-        if( $request->has('name') ){
-            $distributerRegis->name = $request->input('name');
-        }
-
-        if( $request->has('email') ){
-            $distributerRegis->email = $request->input('email');
-        }
-
-        if( $request->has('nic') ){
-            $distributerRegis->nic = $request->input('nic');
-        }
-
-        if( $request->has('mobile') ){
-            $distributerRegis->mobile = $request->input('mobile');
-        }
-
-        if( $request->has('phone') ){
-            $distributerRegis->phone = $request->input('phone');
-        }
-
-        if( $request->has('address') ){
-            $distributerRegis->address = $request->input('address');
-        }
-
-        if( $request->has('username_auto') ){
-            $distributerRegis->username_auto = $request->input('username_auto');
-        }
-
-        if( $request->has('password_auto') ){
-            $distributerRegis->password_auto = $request->input('password_auto');
-        }
-
-        if( $request->has('joining_date') ){
-            $distributerRegis->joining_date = $request->input('joining_date');
-        }
-
-        if( $request->has('designation') ){
-            $distributerRegis->designation = $request->input('designation');
-        }
+        $distributerRegis->name         = $request->input('name');
+        $distributerRegis->nic          = $request->input('nic');
+        $distributerRegis->email        = $request->input('email');
+        $distributerRegis->mobile       = $request->input('mobile');
+        $distributerRegis->phone        = $request->input('phone');
+        $distributerRegis->address      = $request->input('address');
 
         if($apk_file =  $request->file('image')) {
 
@@ -265,25 +189,13 @@ class DistributerRegistrationController extends Controller
         // Account table Update
         $get1To1Acc = OneToOneAccounts::where('distributer_id', $distributerRegis->id)->first();
         $accountRegis = Accounts::find($get1To1Acc->account_id);
-
-        if( $request->has('name') ){
-            $accountRegis->name = $request->input('name');
-        }
-        if( $request->has('name') ){
-            $accountRegis->head_id = 1;
-        }
-        if( $request->has('name') ){
-            $accountRegis->sub_head_id = 4;
-        }
+        $accountRegis->name = $request->input('name');
+        $accountRegis->head_id = 1;
+        $accountRegis->sub_head_id = 4;
         $accountRegis->update();
-
-        // One to One Account table Update
-        if( $request->has('name') ){
-            $oneToOneAcc['account_id'] = $accountRegis->id;
-        }
-        if( $request->has('name') ){
-            $oneToOneAcc['distributer_id'] = $distributerRegis->id;
-        }
+        
+        $oneToOneAcc['account_id'] = $accountRegis->id;
+        $oneToOneAcc['distributer_id'] = $distributerRegis->id;
         OneToOneAccounts::where('distributer_id', $get1To1Acc->distributer_id)->update($oneToOneAcc);
 
 

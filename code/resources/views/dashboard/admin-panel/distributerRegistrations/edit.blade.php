@@ -103,20 +103,6 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="username_auto"> distributer Name (Login) <span class="required">*</span>
-                                    </label>
-                                    <div class="col-md-8 col-sm-6 col-xs-12">
-                                        <input type="text" id="username_auto" value="{{ $distributerRegis->username_auto }}" required="required" name="username_auto" class="form-control col-md-7 col-xs-12">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="password_auto"> distributer Password (Login) <span class="required">*</span>
-                                    </label>
-                                    <div class="col-md-8 col-sm-6 col-xs-12">
-                                        <input type="text" id="password_auto" value="{{ $distributerRegis->password_auto }}" required="required" name="password_auto" class="form-control col-md-7 col-xs-12">
-                                    </div>
-                                </div>
-                                <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="image"> Profile Image
                                     </label>
                                     <div class="col-md-8 col-sm-6 col-xs-12">

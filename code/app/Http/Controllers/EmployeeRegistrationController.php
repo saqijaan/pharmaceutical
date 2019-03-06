@@ -56,46 +56,16 @@ class EmployeeRegistrationController extends Controller
         ));
 
         $employeeRegis = new EmployeeRegistration();
-
-        if( $request->has('name') ){
-            $employeeRegis->name = $request->input('name');
-        }
-
-        if( $request->has('email') ){
-            $employeeRegis->email = $request->input('email');
-        }
-
-        if( $request->has('nic') ){
-            $employeeRegis->nic = $request->input('nic');
-        }
-
-        if( $request->has('mobile') ){
-            $employeeRegis->mobile = $request->input('mobile');
-        }
-
-        if( $request->has('phone') ){
-            $employeeRegis->phone = $request->input('phone');
-        }
-
-        if( $request->has('address') ){
-            $employeeRegis->address = $request->input('address');
-        }
-
-        if( $request->has('username_auto') ){
-            $employeeRegis->username_auto = $request->input('username_auto');
-        }
-
-        if( $request->has('password_auto') ){
-            $employeeRegis->password_auto = $request->input('password_auto');
-        }
-
-        if( $request->has('joining_date') ){
-            $employeeRegis->joining_date = $request->input('joining_date');
-        }
-
-        if( $request->has('designation') ){
-            $employeeRegis->designation = $request->input('designation');
-        }
+        $employeeRegis->name            = $request->input('name');
+        $employeeRegis->email           = $request->input('email');
+        $employeeRegis->nic             = $request->input('nic');
+        $employeeRegis->mobile          = $request->input('mobile');
+        $employeeRegis->phone           = $request->input('phone');
+        $employeeRegis->address         = $request->input('address');
+        $employeeRegis->username_auto   = $request->input('email');
+        $employeeRegis->password_auto   = $request->input('email');
+        $employeeRegis->joining_date    = $request->input('joining_date');
+        $employeeRegis->designation     = $request->input('designation');
 
         if($apk_file =  $request->file('image')) {
 
@@ -118,25 +88,15 @@ class EmployeeRegistrationController extends Controller
 
         // Account table create data
         $accountRegis = new Accounts();
-        if( $request->has('name') ){
-            $accountRegis->name = $request->input('name');
-        }
-        if( $request->has('name') ){
-            $accountRegis->head_id = 2;
-        }
-        if( $request->has('name') ){
-            $accountRegis->sub_head_id = 8;
-        }
+        $accountRegis->name = $request->input('name');
+        $accountRegis->head_id = 2;
+        $accountRegis->sub_head_id = 8;
         $accountRegis->save();
 
         // One to ONe Account table create data
         $oneToOneAcc = new OneToOneAccounts();
-        if( $request->has('name') ){
-            $oneToOneAcc->account_id = $accountRegis->id;
-        }
-        if( $request->has('name') ){
-            $oneToOneAcc->employe_id = $employeeRegis->id;
-        }
+        $oneToOneAcc->account_id = $accountRegis->id;
+        $oneToOneAcc->employe_id = $employeeRegis->id;
         $oneToOneAcc->save();
 
 
@@ -190,48 +150,18 @@ class EmployeeRegistrationController extends Controller
             'address'   =>  'max:300',
             'image'     =>  'image|mimes:jpeg,jpg,png,gif,svg|max:10000'
         ));
-
+        
         $employeeRegis = EmployeeRegistration::find($id);
-
-        if( $request->has('name') ){
-            $employeeRegis->name = $request->input('name');
-        }
-
-        if( $request->has('email') ){
-            $employeeRegis->email = $request->input('email');
-        }
-
-        if( $request->has('nic') ){
-            $employeeRegis->nic = $request->input('nic');
-        }
-
-        if( $request->has('mobile') ){
-            $employeeRegis->mobile = $request->input('mobile');
-        }
-
-        if( $request->has('phone') ){
-            $employeeRegis->phone = $request->input('phone');
-        }
-
-        if( $request->has('address') ){
-            $employeeRegis->address = $request->input('address');
-        }
-
-        if( $request->has('username_auto') ){
-            $employeeRegis->username_auto = $request->input('username_auto');
-        }
-
-        if( $request->has('password_auto') ){
-            $employeeRegis->password_auto = $request->input('password_auto');
-        }
-
-        if( $request->has('joining_date') ){
-            $employeeRegis->joining_date = $request->input('joining_date');
-        }
-
-        if( $request->has('designation') ){
-            $employeeRegis->designation = $request->input('designation');
-        }
+        $employeeRegis->name        = $request->input('name');
+        $employeeRegis->email       = $request->input('email');
+        $employeeRegis->nic         = $request->input('nic');
+        $employeeRegis->mobile      = $request->input('mobile');
+        $employeeRegis->phone       = $request->input('phone');
+        $employeeRegis->address     = $request->input('address');
+        $employeeRegis->username_auto= $request->input('email');
+        $employeeRegis->password_auto= $request->input('email');
+        $employeeRegis->joining_date = $request->input('joining_date');
+        $employeeRegis->designation  = $request->input('designation');
 
         if($apk_file =  $request->file('image')) {
 
@@ -255,24 +185,14 @@ class EmployeeRegistrationController extends Controller
         // Account table Update
         $get1To1Acc = OneToOneAccounts::where('employe_id', $employeeRegis->id)->first();
         $accountRegis = Accounts::find($get1To1Acc->account_id);
-        if( $request->has('name') ){
-            $accountRegis->name = $request->input('name');
-        }
-        if( $request->has('name') ){
-            $accountRegis->head_id = 2;
-        }
-        if( $request->has('name') ){
-            $accountRegis->sub_head_id = 8;
-        }
+        $accountRegis->name = $request->input('name');
+        $accountRegis->head_id = 2;
+        $accountRegis->sub_head_id = 8;
         $accountRegis->update();
 
         // One to One Account table Update
-        if( $request->has('name') ){
-            $oneToOneAcc['account_id'] = $accountRegis->id;
-        }
-        if( $request->has('name') ){
-            $oneToOneAcc['employe_id'] = $employeeRegis->id;
-        }
+        $oneToOneAcc['account_id'] = $accountRegis->id;
+        $oneToOneAcc['employe_id'] = $employeeRegis->id;
         OneToOneAccounts::where('employe_id', $get1To1Acc->employe_id)->update($oneToOneAcc);
 
 

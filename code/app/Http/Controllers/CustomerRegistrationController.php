@@ -56,38 +56,14 @@ class CustomerRegistrationController extends Controller
         ));
 
         $customerRegis = new CustomerRegistration();
-
-        if( $request->has('name') ){
-            $customerRegis->name = $request->input('name');
-        }
-
-        if( $request->has('email') ){
-            $customerRegis->email = $request->input('email');
-        }
-
-        if( $request->has('nic') ){
-            $customerRegis->nic = $request->input('nic');
-        }
-
-        if( $request->has('mobile') ){
-            $customerRegis->mobile = $request->input('mobile');
-        }
-
-        if( $request->has('phone') ){
-            $customerRegis->phone = $request->input('phone');
-        }
-
-        if( $request->has('address') ){
-            $customerRegis->address = $request->input('address');
-        }
-
-        if( $request->has('username_auto') ){
-            $customerRegis->username_auto = $request->input('username_auto');
-        }
-
-        if( $request->has('password_auto') ){
-            $customerRegis->password_auto = $request->input('password_auto');
-        }
+        $customerRegis->name        = $request->input('name');
+        $customerRegis->email       = $request->input('email');
+        $customerRegis->nic         = $request->input('nic');
+        $customerRegis->mobile      = $request->input('mobile');
+        $customerRegis->phone       = $request->input('phone');
+        $customerRegis->address     = $request->input('address');
+        $customerRegis->username_auto=$request->input('email');
+        $customerRegis->password_auto=$request->input('email');
 
         if($apk_file =  $request->file('image')) {
 
@@ -110,28 +86,16 @@ class CustomerRegistrationController extends Controller
 
         // Account table create data
         $accountRegis = new Accounts();
-        if( $request->has('name') ){
-            $accountRegis->name = $request->input('name');
-        }
-        if( $request->has('name') ){
-            $accountRegis->head_id = 1;
-        }
-        if( $request->has('name') ){
-            $accountRegis->sub_head_id = 3;
-        }
+        $accountRegis->name = $request->input('name');
+        $accountRegis->head_id = 1;
+        $accountRegis->sub_head_id = 3;
         $accountRegis->save();
 
         // One to ONe Account table create data
         $oneToOneAcc = new OneToOneAccounts();
-        if( $request->has('name') ){
-            $oneToOneAcc->account_id = $accountRegis->id;
-        }
-        if( $request->has('name') ){
-            $oneToOneAcc->customer_id = $customerRegis->id;
-        }
+        $oneToOneAcc->account_id = $accountRegis->id;
+        $oneToOneAcc->customer_id = $customerRegis->id;
         $oneToOneAcc->save();
-
-
 
         Session::flash('Success','Customer has been successfully registered!.');
         return redirect('/dashboard/customer-registration');
@@ -184,38 +148,14 @@ class CustomerRegistrationController extends Controller
         ));
 
         $customerRegis = CustomerRegistration::find($id);
-
-        if( $request->has('name') ){
-            $customerRegis->name = $request->input('name');
-        }
-
-        if( $request->has('email') ){
-            $customerRegis->email = $request->input('email');
-        }
-
-        if( $request->has('nic') ){
-            $customerRegis->nic = $request->input('nic');
-        }
-
-        if( $request->has('mobile') ){
-            $customerRegis->mobile = $request->input('mobile');
-        }
-
-        if( $request->has('phone') ){
-            $customerRegis->phone = $request->input('phone');
-        }
-
-        if( $request->has('address') ){
-            $customerRegis->address = $request->input('address');
-        }
-
-        if( $request->has('username_auto') ){
-            $customerRegis->username_auto = $request->input('username_auto');
-        }
-
-        if( $request->has('password_auto') ){
-            $customerRegis->password_auto = $request->input('password_auto');
-        }
+        $customerRegis->name        = $request->input('name');
+        $customerRegis->email       = $request->input('email');
+        $customerRegis->nic         = $request->input('nic');
+        $customerRegis->mobile      = $request->input('mobile');
+        $customerRegis->phone       = $request->input('phone');
+        $customerRegis->address     = $request->input('address');
+        $customerRegis->username_auto = $request->input('email');
+        $customerRegis->password_auto = $request->input('email');
 
         if($apk_file =  $request->file('image')) {
 
@@ -239,27 +179,15 @@ class CustomerRegistrationController extends Controller
         // Account table Update
         $get1To1Acc = OneToOneAccounts::where('customer_id', $id)->first();
         $accountRegis = Accounts::find($get1To1Acc->account_id);
-        if( $request->has('name') ){
-            $accountRegis->name = $request->input('name');
-        }
-        if( $request->has('name') ){
-            $accountRegis->head_id = 1;
-        }
-        if( $request->has('name') ){
-            $accountRegis->sub_head_id = 3;
-        }
+        $accountRegis->name = $request->input('name');
+        $accountRegis->head_id = 1;
+        $accountRegis->sub_head_id = 3;
         $accountRegis->update();
 
         // One to One Account table Update
-        if( $request->has('name') ){
-            $oneToOneAcc['account_id'] = $accountRegis->id;
-        }
-        if( $request->has('name') ){
-            $oneToOneAcc['customer_id'] = $customerRegis->id;
-        }
+        $oneToOneAcc['account_id'] = $accountRegis->id;
+        $oneToOneAcc['customer_id'] = $customerRegis->id;
         OneToOneAccounts::where('customer_id', $get1To1Acc->customer_id)->update($oneToOneAcc);
-
-
 
         Session::flash('Success', $id.' Customer has been successfully updated!.');
         return redirect('/dashboard/customer-registration');

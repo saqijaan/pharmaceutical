@@ -142,6 +142,12 @@
                         <li>
                             <a href="{{ url('/dashboard/distributer-registration') }}"><i class="fa fa-clone"></i> Distributers </a>
                         </li>
+                        <li>
+                            <a href="{{ route('admin.orders.all') }}"><i class="fa fa-clone"></i> Orders </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.distributers.deposits') }}"><i class="fa fa-clone"></i> Amount Deposits </a>
+                        </li>
                         {{--<li>--}}
                             {{--<a href="{{ url('/dashboard/transaction-registration') }}"><i class="fa fa-edit"></i> Transaction Registration </a>--}}
                         {{--</li>--}}

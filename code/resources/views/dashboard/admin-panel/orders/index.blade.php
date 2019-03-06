@@ -27,16 +27,6 @@
 
                 @include('partials.message')
 
-                <div class="title_left">
-                    <div class="col-md-5 col-sm-12 col-xs-12 form-group top_search">
-
-                        <a href="{{route('sale-master.create')}}" class="btn btn-lg btn-primary waves-effect"> Create New </a>
-                        <div class="clearfix"></div>
-                    </div>
-                </div>
-
-
-
                 <div class="title_right">
                     <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
                         <div class="input-group">
@@ -56,7 +46,7 @@
                 <div class="col-md-12 col-sm-12 col-xs-12"><!-- col start -->
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2> Sale Master   </h2>
+                            <h2> Distributer Order Book   </h2>
                              
                             <div class="clearfix"></div>
                         </div>
@@ -66,15 +56,14 @@
                               
 
                             <div class="table-responsive">
-                                <table class="table table-striped jambo_table bulk_action dt-responsive nowrap">
+                                <table id="datatable-buttons" class="table table-striped jambo_table bulk_action dt-responsive nowrap">
                                     <thead>
                                     <tr class="headings">
 
                                         <th class="column-title">ID </th>
-                                        <th class="column-title"> Invoice No. </th>
-                                        <th class="column-title"> Customer Name </th>
-                                        <th class="column-title"> Total Amount </th>
                                         <th class="column-title"> Date </th>
+                                        <th class="column-title"> Distributer Name </th>
+                                        <th class="column-title"> Gross Total </th>
                                         <th class="column-title no-link last"><span class="nobr">Action</span>
                                         </th>
                                         <th class="bulk-actions" colspan="7">
@@ -85,22 +74,21 @@
 
                                     <tbody>
 
-                                    @foreach( $saleMas as $saleMa )
+                                    @foreach( $disOrderBooks as $disOrderBook )
 
                                         <tr class="even pointer">
-                                            <td class=" "> {{ $saleMa->id }}</td>
-                                            <td class=" "> {{ $saleMa->cus_invoice_no }} </td>
-                                            <td class=" "> {!! $saleMa->cusName !!} </td>
-                                            <td class=" "> {!! $saleMa->net_total !!} </td>
-                                            <td class=" "> {!! date('m-d-Y', strtotime($saleMa->date)) !!} </td>
+                                            <td class=" "> {{ $disOrderBook->id }}</td>
+                                            <td class=" "> {{ $disOrderBook->date }} </td>
+                                            <td class=" "> {!! $disOrderBook->disName !!} </td>
+                                            <td class=" "> {!! $disOrderBook->gross_total !!} </td>
                                             <td class=" last">
-                                                <a type="button" data-mdlid="{{ $saleMa->id }}" class="btn btn-primary openBtn">
+                                                <a class="btn btn-primary" href="{{route( 'employee-profile',$disOrderBook->id )}}">
                                                     View
                                                 </a>
-                                                <a class="btn btn-primary" href="{{ route('sale-master.edit', $saleMa->id ) }}">
+                                                <a class="btn btn-primary" href="{{ route('distributer-order-book.edit', $disOrderBook->id ) }}">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
-                                                <form method="post" enctype="multipart/form-data" action="{{route('sale-master.destroy',$saleMa->id)}}" style="display: inline">
+                                                <form method="post" enctype="multipart/form-data" action="{{route('distributer-order-book.destroy',$disOrderBook->id)}}" style="display: inline">
                                                     <input name="_method" type="hidden" value="DELETE" />
                                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                     <button type="submit"  class="btn btn-danger"  style="margin-left: 5px;"  onclick="return confirm('Do you want to delete ?');" ><i class="fa fa-trash-o"></i></button>
@@ -127,34 +115,13 @@
         </div>
     </div>
     <!-- /page content -->
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Sale Invoice Detail</h4>
-                </div>
-                <div class="modal-body">
-                    ...
-                </div>
 
-            </div>
-        </div>
-    </div>
 
 
 @endsection
 
 @section('bottom_script')
-    <script>
-        $('.openBtn').on('click',function(){
-            var id = $(this).data('mdlid');
-            $('.modal-body').load('{{ url('/dashboard/sale-master/view') }}/'+id,function(){
-                $('#myModal').modal({show:true});
-            });
-        });
-    </script>
+
     <!-- FastClick -->
     <script src="{{ asset('vendors/fastclick/lib/fastclick.js') }}"></script>
     <!-- NProgress -->

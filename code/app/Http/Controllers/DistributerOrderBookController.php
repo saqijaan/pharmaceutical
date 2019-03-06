@@ -31,6 +31,18 @@ class DistributerOrderBookController extends Controller
         return view( 'dashboard.admin-panel.disOrderBook.index', [ 'disOrderBooks' => $disOrderBooks ] );
 
     }
+    public function adminindex()
+    {
+        //
+//        dd();
+//        $purchaseMas = disOrderBook::get();
+        $disOrderBooks = DB::table('distributer_order_books')
+            ->leftJoin('distributer_registrations', 'distributer_order_books.dis_name', '=', 'distributer_registrations.id')
+            ->select('distributer_order_books.*', 'distributer_registrations.name as disName')
+            ->get();
+        return view( 'dashboard.admin-panel.orders.index', [ 'disOrderBooks' => $disOrderBooks ] );
+
+    }
 
     /**
      * Show the form for creating a new resource.

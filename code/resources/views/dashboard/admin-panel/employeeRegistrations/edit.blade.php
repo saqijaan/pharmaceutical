@@ -102,20 +102,6 @@
                                         <input type="text" id="address" value="{{ $employeeRegis->address }}" required="required" name="address" class="form-control col-md-7 col-xs-12">
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="username_auto"> employee Name (Login) <span class="required">*</span>
-                                    </label>
-                                    <div class="col-md-8 col-sm-6 col-xs-12">
-                                        <input type="text" id="username_auto" value="{{ $employeeRegis->username_auto }}" required="required" name="username_auto" class="form-control col-md-7 col-xs-12">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="password_auto"> employee Password (Login) <span class="required">*</span>
-                                    </label>
-                                    <div class="col-md-8 col-sm-6 col-xs-12">
-                                        <input type="text" id="password_auto" value="{{ $employeeRegis->password_auto }}" required="required" name="password_auto" class="form-control col-md-7 col-xs-12">
-                                    </div>
-                                </div>
                                 <div class="form-group calendar-exibit">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="joining_date"> Joining Date <span class="required">*</span>
                                     </label>

@@ -73,6 +73,7 @@
                                         <th class="column-title">ID </th>
                                         <th class="column-title"> Invoice No. </th>
                                         <th class="column-title"> Customer Name </th>
+                                        <th class="column-title"> Total Amount </th>
                                         <th class="column-title"> Date </th>
                                         <th class="column-title no-link last"><span class="nobr">Action</span>
                                         </th>
@@ -90,6 +91,7 @@
                                             <td class=" "> {{ $saleMa->id }}</td>
                                             <td class=" "> {{ $saleMa->cus_invoice_no }} </td>
                                             <td class=" "> {!! $saleMa->cusName !!} </td>
+                                            <td class=" "> {!! $saleMa->net_total !!} </td>
                                             <td class=" "> {!! $saleMa->date !!} </td>
                                             <td class=" last">
                                                 <a type="button" data-mdlid="{{ $saleMa->id }}" class="btn btn-primary openBtn">

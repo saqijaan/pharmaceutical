@@ -25,7 +25,7 @@
         <div class="">
             <div class="page-title"><!-- page title and search bar column start -->
                 <div class="title_left">
-                    <h3> City Registration </h3>
+                    <h3> Supplier Registration </h3>
                 </div>
 
                 <div class="title_right">
@@ -47,7 +47,7 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2> Create New <small> like Lorem Ipsum </small></h2>
+                            <h2> Create New    </h2>
                              
                             <div class="clearfix"></div>
                         </div>
@@ -97,20 +97,7 @@
                                         <input type="text" id="address" required="required" name="address" class="form-control col-md-7 col-xs-12">
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="username_auto"> Supplyer Name (Login) <span class="required">*</span>
-                                    </label>
-                                    <div class="col-md-8 col-sm-6 col-xs-12">
-                                        <input type="text" id="username_auto" required="required" name="username_auto" class="form-control col-md-7 col-xs-12">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="password_auto"> Supplyer Password (Login) <span class="required">*</span>
-                                    </label>
-                                    <div class="col-md-8 col-sm-6 col-xs-12">
-                                        <input type="text" id="password_auto" required="required" name="password_auto" class="form-control col-md-7 col-xs-12">
-                                    </div>
-                                </div>
+                                
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="image"> Profile Image
                                     </label>
@@ -123,7 +110,7 @@
                                 <div class="ln_solid"></div>
                                 <div class="form-group">
                                     <div class="col-md-8 col-sm-6 col-xs-12 col-md-offset-3">
-                                        <a href="/supply-registration" class="btn btn-danger">Cancel</a>
+                                        <a href="/dashboard/supply-registration" class="btn btn-danger">Cancel</a>
                                         <button class="btn btn-warning" type="reset">Reset</button>
                                         <button type="submit" class="btn btn-success">Submit</button>
                                     </div>

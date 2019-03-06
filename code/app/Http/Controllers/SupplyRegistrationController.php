@@ -56,38 +56,14 @@ class SupplyRegistrationController extends Controller
         ));
 
         $supRegis = new SupplyRegistration();
-
-        if( $request->has('name') ){
-            $supRegis->name = $request->input('name');
-        }
-
-        if( $request->has('email') ){
-            $supRegis->email = $request->input('email');
-        }
-
-        if( $request->has('nic') ){
-            $supRegis->nic = $request->input('nic');
-        }
-
-        if( $request->has('mobile') ){
-            $supRegis->mobile = $request->input('mobile');
-        }
-
-        if( $request->has('phone') ){
-            $supRegis->phone = $request->input('phone');
-        }
-
-        if( $request->has('address') ){
-            $supRegis->address = $request->input('address');
-        }
-
-        if( $request->has('username_auto') ){
-            $supRegis->username_auto = $request->input('username_auto');
-        }
-
-        if( $request->has('password_auto') ){
-            $supRegis->password_auto = $request->input('password_auto');
-        }
+        $supRegis->name         = $request->input('name');
+        $supRegis->email        = $request->input('email');
+        $supRegis->nic          = $request->input('nic');
+        $supRegis->mobile       = $request->input('mobile');
+        $supRegis->phone        = $request->input('phone');
+        $supRegis->address      = $request->input('address');
+        $supRegis->username_auto= $request->input('email');
+        $supRegis->password_auto= $request->input('email');
 
         if($apk_file =  $request->file('image')) {
 
@@ -110,25 +86,15 @@ class SupplyRegistrationController extends Controller
 
         // Account table create data
         $accountRegis = new Accounts();
-        if( $request->has('name') ){
-            $accountRegis->name = $request->input('name');
-        }
-        if( $request->has('name') ){
-            $accountRegis->head_id = 2;
-        }
-        if( $request->has('name') ){
-            $accountRegis->sub_head_id = 7;
-        }
+        $accountRegis->name = $request->input('name');
+        $accountRegis->head_id = 2;
+        $accountRegis->sub_head_id = 7;
         $accountRegis->save();
 
         // One to ONe Account table create data
         $oneToOneAcc = new OneToOneAccounts();
-        if( $request->has('name') ){
-            $oneToOneAcc->account_id = $accountRegis->id;
-        }
-        if( $request->has('name') ){
-            $oneToOneAcc->supplier_id = $supRegis->id;
-        }
+        $oneToOneAcc->account_id = $accountRegis->id;
+        $oneToOneAcc->supplier_id = $supRegis->id;
         $oneToOneAcc->save();
 
 
@@ -184,38 +150,14 @@ class SupplyRegistrationController extends Controller
         ));
 
         $supRegis = SupplyRegistration::find($id);
-
-        if( $request->has('name') ){
-            $supRegis->name = $request->input('name');
-        }
-
-        if( $request->has('email') ){
-            $supRegis->email = $request->input('email');
-        }
-
-        if( $request->has('nic') ){
-            $supRegis->nic = $request->input('nic');
-        }
-
-        if( $request->has('mobile') ){
-            $supRegis->mobile = $request->input('mobile');
-        }
-
-        if( $request->has('phone') ){
-            $supRegis->phone = $request->input('phone');
-        }
-
-        if( $request->has('address') ){
-            $supRegis->address = $request->input('address');
-        }
-
-        if( $request->has('username_auto') ){
-            $supRegis->username_auto = $request->input('username_auto');
-        }
-
-        if( $request->has('password_auto') ){
-            $supRegis->password_auto = $request->input('password_auto');
-        }
+        $supRegis->name         = $request->input('name');
+        $supRegis->email        = $request->input('email');
+        $supRegis->nic          = $request->input('nic');
+        $supRegis->mobile       = $request->input('mobile');
+        $supRegis->phone        = $request->input('phone');
+        $supRegis->address      = $request->input('address');
+        $supRegis->username_auto= $request->input('email');
+        $supRegis->password_auto= $request->input('email');
 
         if($apk_file =  $request->file('image')) {
 
@@ -239,28 +181,16 @@ class SupplyRegistrationController extends Controller
         // Account table Update
         $get1To1Acc = OneToOneAccounts::where('supplier_id', $supRegis->id)->first();
         $accountRegis = Accounts::find($get1To1Acc->account_id);
-        if( $request->has('name') ){
-            $accountRegis->name = $request->input('name');
-        }
-        if( $request->has('name') ){
-            $accountRegis->head_id = 2;
-        }
-        if( $request->has('name') ){
-            $accountRegis->sub_head_id = 7;
-        }
+        $accountRegis->name = $request->input('name');
+        $accountRegis->head_id = 2;
+        $accountRegis->sub_head_id = 7;
         $accountRegis->update();
-
+        
         // One to One Account table Update
-        if( $request->has('name') ){
-            $oneToOneAcc['account_id'] = $accountRegis->id;
-        }
-        if( $request->has('name') ){
-            $oneToOneAcc['supplier_id'] = $supRegis->id;
-        }
+        $oneToOneAcc['account_id'] = $accountRegis->id;
+        $oneToOneAcc['supplier_id'] = $supRegis->id;
         OneToOneAccounts::where('supplier_id', $get1To1Acc->supplier_id)->update($oneToOneAcc);
-
-
-
+        
         Session::flash('Success', $id.' Supplyer has been successfully updated!.');
         return redirect('/dashboard/supply-registration');
 

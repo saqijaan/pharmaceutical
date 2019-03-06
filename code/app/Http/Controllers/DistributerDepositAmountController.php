@@ -24,6 +24,15 @@ class DistributerDepositAmountController extends Controller
         return view( 'dashboard.admin-panel.disDpstAmnt.index', [ 'disDpstAmnts' => $disDpstAmnts ] );
 
     }
+    public function adminindex()
+    {
+        $disDpstAmnts = DB::table('distributer_deposit_amounts')
+            ->leftJoin('distributer_registrations', 'distributer_deposit_amounts.dis_name', '=', 'distributer_registrations.id')
+            ->select('distributer_deposit_amounts.*', 'distributer_registrations.name as disName')
+            ->get();
+        return view( 'dashboard.admin-panel.deposits.index', [ 'disDpstAmnts' => $disDpstAmnts ] );
+
+    }
 
     /**
      * Show the form for creating a new resource.

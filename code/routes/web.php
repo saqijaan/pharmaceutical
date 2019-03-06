@@ -124,6 +124,9 @@ Route::group(['middleware'=> ['auth']], function(){
         //product report
         Route::get('/ledger-report', 'LedgerReportController@index');
         Route::get('/ledger-report/getData/', 'LedgerReportController@getData')->name('lgr-rprt-data');
+
+        Route::get('/distributer/orders', 'DistributerOrderBookController@adminindex')->name('admin.orders.all');
+        Route::get('/distributer/deposits', 'DistributerDepositAmountController@adminindex')->name('admin.distributers.deposits');
     });
 
 });
@@ -136,7 +139,8 @@ Route::group(['middleware'=>['auth:distributer']], function(){
         Route::resource('/distributer-order-book', 'DistributerOrderBookController');
         Route::post('/distributer-order-book-item-del', 'DistributerOrderBookController@productDel')->name('dis-odr-del');
         Route::resource('/distributer-sale-orders', 'DistributerSalesOrderController');
-        Route::post('/distributer-sale-orders-item-del', 'DistributerSalesOrderController@productDel')->name('dis-salesodr-del');                       Route::resource('/distributer-deposit-amount', 'DistributerDepositAmountController');
+        Route::post('/distributer-sale-orders-item-del', 'DistributerSalesOrderController@productDel')->name('dis-salesodr-del');                       
+        Route::resource('/distributer-deposit-amount', 'DistributerDepositAmountController');
 
     });
 
@@ -209,6 +213,12 @@ Route::get('/seed',function(){
 
 Route::get('/migrate',function (){
     Artisan::call('migrate');
+    echo "<pre>";
+    echo Artisan::Output();
+    exit;
+});;
+Route::get('/migrate:fresh',function (){
+    Artisan::call('migrate:fresh');
     echo "<pre>";
     echo Artisan::Output();
     exit;
