@@ -17,7 +17,7 @@ class CreateQuizzesTable extends Migration
             $table->increments('id');
             $table->string('question', 250)->nullable();
             $table->string('date')->nullable();
-            $table->json('options')->default('[]');
+            $table->json('options')->nullable();
             $table->string('start_time')->nullable();
             $table->string('end_time')->nullable();
             $table->timestamps();
