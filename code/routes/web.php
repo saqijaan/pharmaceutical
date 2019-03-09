@@ -209,6 +209,8 @@ Route::get('/seed',function(){
         'email' => 'admin@admin.com',
         'password' => bcrypt('12345678')
     ]);
+
+    
 });
 
 Route::get('/migrate',function (){
