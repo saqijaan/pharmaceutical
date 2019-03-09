@@ -164,7 +164,7 @@ class SaleMasterController extends Controller
             TransactionTable::firstOrCreate($params);
 
 
-            Session::flash("Success", "Purchase Master item successfully created!.");
+            Session::flash("Success", "Purchase Master item successfully created!. Invoice Number is: ".$lastInvoiceId);
 
 
         return redirect('/dashboard/sale-master');

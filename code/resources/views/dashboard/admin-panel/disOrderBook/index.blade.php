@@ -69,9 +69,9 @@
                                     <tr class="headings">
 
                                         <th class="column-title">ID </th>
-                                        <th class="column-title"> Date </th>
+                                        <th class="column-title"> Order ID </th>
                                         <th class="column-title"> Distributer Name </th>
-                                        <th class="column-title"> Gross Total </th>
+                                        <th class="column-title"> Order Date </th>
                                         <th class="column-title no-link last"><span class="nobr">Action</span>
                                         </th>
                                         <th class="bulk-actions" colspan="7">
@@ -86,13 +86,13 @@
 
                                         <tr class="even pointer">
                                             <td class=" "> {{ $disOrderBook->id }}</td>
-                                            <td class=" "> {{ $disOrderBook->date }} </td>
-                                            <td class=" "> {!! $disOrderBook->disName !!} </td>
-                                            <td class=" "> {!! $disOrderBook->gross_total !!} </td>
+                                            <td class=" "> {{ $disOrderBook->po_id }} </td>
+                                            <td class=" "> {!! $disOrderBook->dist_name !!} </td>
+                                            <td class=" "> {{ $disOrderBook->created_at }} </td>
                                             <td class=" last">
-                                                <a class="btn btn-primary" href="{{route( 'employee-profile',$disOrderBook->id )}}">
+                                                {{-- <a class="btn btn-primary" href="{{route( 'employee-profile',$disOrderBook->id )}}">
                                                     View
-                                                </a>
+                                                </a> --}}
                                                 <a class="btn btn-primary" href="{{ route('distributer-order-book.edit', $disOrderBook->id ) }}">
                                                     <i class="fa fa-edit"></i>
                                                 </a>

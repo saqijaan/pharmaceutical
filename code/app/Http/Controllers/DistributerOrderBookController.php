@@ -21,13 +21,11 @@ class DistributerOrderBookController extends Controller
      */
     public function index()
     {
+        
         //
 //        dd();
 //        $purchaseMas = disOrderBook::get();
-        $disOrderBooks = DB::table('distributer_order_books')
-            ->leftJoin('distributer_registrations', 'distributer_order_books.dis_name', '=', 'distributer_registrations.id')
-            ->select('distributer_order_books.*', 'distributer_registrations.name as disName')
-            ->get();
+        $disOrderBooks = DistributerOrderBook::where( 'dist_id', \Auth::guard('distributer')->Id() )->get();
         return view( 'dashboard.admin-panel.disOrderBook.index', [ 'disOrderBooks' => $disOrderBooks ] );
 
     }
@@ -36,10 +34,7 @@ class DistributerOrderBookController extends Controller
         //
 //        dd();
 //        $purchaseMas = disOrderBook::get();
-        $disOrderBooks = DB::table('distributer_order_books')
-            ->leftJoin('distributer_registrations', 'distributer_order_books.dis_name', '=', 'distributer_registrations.id')
-            ->select('distributer_order_books.*', 'distributer_registrations.name as disName')
-            ->get();
+        $disOrderBooks = DistributerOrderBook::all();
         return view( 'dashboard.admin-panel.orders.index', [ 'disOrderBooks' => $disOrderBooks ] );
 
     }
@@ -53,8 +48,7 @@ class DistributerOrderBookController extends Controller
     {
         //
         $products = ProductRegistration::get();
-        $disRegis = DistributerRegistration::select('id', 'name')->get();
-        return view( 'dashboard.admin-panel.disOrderBook.new', [ 'products'=>$products, 'disRegis'=>$disRegis ] );
+        return view( 'dashboard.admin-panel.disOrderBook.new', [ 'products'=>$products ] );
     }
 
     /**
@@ -69,10 +63,6 @@ class DistributerOrderBookController extends Controller
 
         $rules = [
             'date'    =>  'required|max:25',
-            'dis_name'     =>  'required|max:25',
-            'gross_total'   =>  'required|max:300',
-            'discount'   =>  'required|max:300',
-            'net_total'   =>  'max:300',
         ];
 
         $messages = [
@@ -84,27 +74,16 @@ class DistributerOrderBookController extends Controller
 
         $this->validate($request, $rules, $messages);
 
-        $disOdrBk = new DistributerOrderBook();
-
-        if( $request->has('date') ){
-            $disOdrBk->date = date( 'Y,m,d', strtotime($request->input('date')) );
+        $lastPoIdOrder = DistributerOrderBook::latest()->take(1)->first();
+        $PoID = 10000;
+        if ($lastPoIdOrder){
+            $PoID = ($lastPoIdOrder->po_id)+1;
         }
-
-        if( $request->has('dis_name') ){
-            $disOdrBk->dis_name = $request->input('dis_name');
-        }
-
-        if( $request->has('gross_total') ){
-            $disOdrBk->gross_total = $request->input('gross_total');
-        }
-
-        if( $request->has('discount') ){
-            $disOdrBk->discount = $request->input('discount');
-        }
-
-        if( $request->has('net_total') ){
-            $disOdrBk->net_total = $request->input('net_total');
-        }
+        $disOdrBk = new DistributerOrderBook;
+        $disOdrBk->po_id        =  $PoID;
+        $disOdrBk->dist_id      =  \Auth::guard('distributer')->Id();
+        $disOdrBk->dist_name    =  \Auth::guard('distributer')->user()->name;
+        $disOdrBk->created_at = date( 'Y-m-d', strtotime($request->input('date')) );
 
         $disOdrBk->save();
 
@@ -112,24 +91,21 @@ class DistributerOrderBookController extends Controller
             $product = array(
                 'item' => $request->get('item'),
                 'quantity' => $request->get('quantity'),
-                'cost_price' => $request->get('cost_price'),
-                'total' => $request->get('total'),
             );
             $x = 0;
             foreach( $request->get('item') as $item ){
                 $productTable = new DistributerOrderBookItem();
                 $productTable->dis_odr_book_id = $disOdrBk->id;
-                $productTable->item = $product['item'][$x];
-                $productTable->quantity = $product['quantity'][$x];
-                $productTable->cost_price = $product['cost_price'][$x];
-                $productTable->total = $product['total'][$x];
+                $productTable->item_id      = $product['item'][$x];
+                $productTable->item_name    = ProductRegistration::find($product['item'][$x]) ? ProductRegistration::find($product['item'][$x])->name : 'undefined';
+                $productTable->quantity     = $product['quantity'][$x];
                 $productTable->save();
                 $x++;
             }
         }
 
 
-        Session::flash("Success","Distributer Order Book items successfully register!.");
+        Session::flash("Success","Distributer Order Book successfully register!.Order Id is: ".$PoID);
         return redirect('/dashboard/distributer-order-book');
 
     }
@@ -157,8 +133,7 @@ class DistributerOrderBookController extends Controller
         $products = ProductRegistration::get();
         $disOdrBks = DistributerOrderBook::find($id);
         $disOdrBkItems = DistributerOrderBookItem::where('dis_odr_book_id',$id)->get();
-        $disRegis = DistributerRegistration::select('id', 'name')->get();
-        return view( 'dashboard.admin-panel.disOrderBook.edit', [ 'products'=>$products, 'disOdrBks'=>$disOdrBks, 'disOdrBkItems'=>$disOdrBkItems, 'disRegis'=>$disRegis ] );
+        return view( 'dashboard.admin-panel.disOrderBook.edit', [ 'products'=>$products, 'disOdrBks'=>$disOdrBks, 'disOdrBkItems'=>$disOdrBkItems ] );
 
     }
 
@@ -174,10 +149,6 @@ class DistributerOrderBookController extends Controller
         //
         $rules = [
             'date'    =>  'required|max:25',
-            'dis_name'     =>  'required|max:25',
-            'gross_total'   =>  'required|max:300',
-            'discount'   =>  'required|max:300',
-            'net_total'   =>  'max:300',
         ];
 
         $messages = [
@@ -191,44 +162,26 @@ class DistributerOrderBookController extends Controller
 
         $disOdrBk = DistributerOrderBook::find($id);
 
-        if( $request->has('date') ){
-            $disOdrBk->date = date( 'Y,m,d', strtotime($request->input('date')) );
-        }
-
-        if( $request->has('dis_name') ){
-            $disOdrBk->dis_name = $request->input('dis_name');
-        }
-
-        if( $request->has('gross_total') ){
-            $disOdrBk->gross_total = $request->input('gross_total');
-        }
-
-        if( $request->has('discount') ){
-            $disOdrBk->discount = $request->input('discount');
-        }
-
-        if( $request->has('net_total') ){
-            $disOdrBk->net_total = $request->input('net_total');
-        }
+        $lastPoIdOrder = DistributerOrderBook::latest()->take(1)->first();
+        $disOdrBk->dist_id      =  \Auth::guard('distributer')->Id();
+        $disOdrBk->dist_name    =  \Auth::guard('distributer')->user()->name;
+        $disOdrBk->created_at   = date( 'Y-m-d', strtotime($request->input('date')) );
 
 
 
+        //dd($request->all());
         if( $request->has('item') ){
             $product = array(
                 'item' => $request->get('item'),
                 'quantity' => $request->get('quantity'),
-                'cost_price' => $request->get('cost_price'),
-                'total' => $request->get('total'),
             );
-            $x = 0;
+            $x = 1;
             foreach( $request->get('item') as $key=>$item ){
-                $productTable = DistributerOrderBookItem::findOrNew($key);
-//                dd($item);
+                $productTable = DistributerOrderBookItem::findOrNew($item);
                 $productTable->dis_odr_book_id = $disOdrBk->id;
-                $productTable->item = $product['item'][$key];
-                $productTable->quantity = $product['quantity'][$key];
-                $productTable->cost_price = $product['cost_price'][$key];
-                $productTable->total = $product['total'][$key];
+                $productTable->item_id      = $product['item'][$key];
+                $productTable->item_name    = ProductRegistration::find($product['item'][$key]) ? ProductRegistration::find($product['item'][$key])->name : 'undefined';
+                $productTable->quantity     = $product['quantity'][$key];
                 $productTable->save();
                 $x++;
             }

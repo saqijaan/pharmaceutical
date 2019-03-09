@@ -63,7 +63,6 @@
                                         <th class="column-title">ID </th>
                                         <th class="column-title"> Date </th>
                                         <th class="column-title"> Distributer Name </th>
-                                        <th class="column-title"> Gross Total </th>
                                         <th class="column-title no-link last"><span class="nobr">Action</span>
                                         </th>
                                         <th class="bulk-actions" colspan="7">
@@ -78,21 +77,12 @@
 
                                         <tr class="even pointer">
                                             <td class=" "> {{ $disOrderBook->id }}</td>
-                                            <td class=" "> {{ $disOrderBook->date }} </td>
-                                            <td class=" "> {!! $disOrderBook->disName !!} </td>
-                                            <td class=" "> {!! $disOrderBook->gross_total !!} </td>
+                                            <td class=" "> {{ $disOrderBook->created_at }} </td>
+                                            <td class=" "> {!! $disOrderBook->dist_name !!} </td>
                                             <td class=" last">
-                                                <a class="btn btn-primary" href="{{route( 'employee-profile',$disOrderBook->id )}}">
+                                                {{-- <a class="btn btn-primary" href="{{route( 'employee-profile',$disOrderBook->id )}}">
                                                     View
-                                                </a>
-                                                <a class="btn btn-primary" href="{{ route('distributer-order-book.edit', $disOrderBook->id ) }}">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
-                                                <form method="post" enctype="multipart/form-data" action="{{route('distributer-order-book.destroy',$disOrderBook->id)}}" style="display: inline">
-                                                    <input name="_method" type="hidden" value="DELETE" />
-                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                    <button type="submit"  class="btn btn-danger"  style="margin-left: 5px;"  onclick="return confirm('Do you want to delete ?');" ><i class="fa fa-trash-o"></i></button>
-                                                </form>
+                                                </a> --}}
                                             </td>
                                         </tr>
 

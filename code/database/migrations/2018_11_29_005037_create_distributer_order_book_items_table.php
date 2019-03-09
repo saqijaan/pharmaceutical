@@ -16,9 +16,9 @@ class CreateDistributerOrderBookItemsTable extends Migration
         Schema::create('distributer_order_book_items', function (Blueprint $table) {
             $table->increments('id');
             $table->string('dis_odr_book_id', 11)->nullable();
-            $table->string('item', 45)->nullable();
+            $table->string('item_id', 45)->nullable();
+            $table->string('item_name', 45)->nullable();
             $table->string('quantity', 11)->nullable();
-            $table->string('total', 11)->nullable();
             $table->timestamps();
         });
     }

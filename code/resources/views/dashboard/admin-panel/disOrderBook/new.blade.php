@@ -79,18 +79,6 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group col-md-3 col-sm-6 col-xs-12">
-                                    <label class="control-label col-md-12 col-sm-12 col-xs-12" for="dis_name" style="text-align: left"> Distributer Name </label>
-                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <select class="form-control" id="dis_name" required="required" name="dis_name">
-                                            <option>Choose option</option>
-                                            @foreach( $disRegis as $disRegi )
-                                                <option value="{{ $disRegi->id }}"> {{ $disRegi->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-
                                 <div class="clearfix"></div>
 
 
@@ -104,8 +92,6 @@
                                                 <th class="column-title" style="padding-top: 16px;font-weight: bold;"> Sr. </th>
                                                 <th class="column-title"> Product </th>
                                                 <th class="column-title"> Quantity </th>
-                                                <th class="column-title"> Rate </th>
-                                                <th class="column-title"> Total </th>
                                                 <th class="column-title no-link last"><span class="nobr">Action</span>
                                                 </th>
                                                 <th class="bulk-actions" colspan="5">
@@ -128,8 +114,6 @@
                                                     <th class="column-title" style="padding-top: 16px;font-weight: bold;"> Sr. </th>
                                                     <th class="column-title"> Product </th>
                                                     <th class="column-title"> Quantity </th>
-                                                    <th class="column-title"> Rate </th>
-                                                    <th class="column-title"> Total </th>
                                                     <th class="column-title no-link last"><span class="nobr">Action</span>
                                                     </th>
                                                     <th class="bulk-actions" colspan="7">
@@ -137,42 +121,10 @@
                                                     </th>
                                                 </tr>
                                             </thead>
-                                            <tfoot>
-                                                <tr>
-                                                    <td colspan="5">
-
-                                                        <div class="form-group col-md-4 col-sm-6 col-xs-12">
-                                                            <label class="control-label col-md-12 col-sm-12 col-xs-12" for="gross_total" style="text-align: left"> Gross Total <span class="required">*</span>
-                                                            </label>
-                                                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                                                <input type="text" id="gross_total" name="gross_total" readonly class=" gross_total form-control">
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </tfoot>
                                         </table>
 
                                     </div>
                                 </div>
-
-                                <div class="form-group col-md-4 col-sm-6 col-xs-12">
-                                    <label class="control-label col-md-12 col-sm-12 col-xs-12" for="discount" style="text-align: left"> Discount <span class="required">*</span>
-                                    </label>
-                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <input type="text" id="discount" name="discount" onkeyup="cargoDis()" class="major-dis form-control">
-                                    </div>
-                                </div>
-
-                                <div class="form-group col-md-4 col-sm-6 col-xs-12">
-                                    <label class="control-label col-md-12 col-sm-12 col-xs-12" for="net_total" style="text-align: left"> Net Total <span class="required">*</span>
-                                    </label>
-                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <input type="text" id="net_total" name="net_total" readonly class="net_total form-control">
-                                    </div>
-                                </div>
-
-
                                 <div class="clearfix"></div>
 
                                 <div class="ln_solid"></div>
@@ -303,6 +255,9 @@
 
 
     $(document).ready(function() {
+        $('.item').selectpicker({
+            liveSearch : true
+        });
         var max_fields = 20; //maximum input boxes allowed
         var wrapper = $("#items"); //Fields wrapper
         var add_button = $(".add_field_button"); //Add button ID
@@ -318,22 +273,24 @@
                         sr+
                     '</td>'+
                     '<td>'+
-                        '<input type="text" name="item[]" placeholder="Item" class="form-control autocomplete-custom-append col-md-12 col-xs-12">'+
+                        '<select data-itmid="'+x+'" class="item form-control col-md-12 col-xs-12" required="required" name="item[]" required>'+
+                        '<option value=""> Select Item </option>'+
+                            @foreach( $products as $product )
+                                    '<option data-id="{{ $product->id }}" data-salePrice="{{ $product->slae_price }}" value="{{ $product->id }}"> {{ $product->name }}</option>'+
+                            @endforeach
+                        '</select>'+
                     '</td>'+
                     '<td>'+
                         '<input type="number" name="quantity[]" placeholder="Quantity" onKeyup="costQuantity( $(this).parent().parent(&apos;tr&apos;).data(&apos;number&apos;) )" class="quantity'+x+' form-control col-md-12 col-xs-12">'+
-                    '</td>'+
-                    '<td>'+
-                    '<input type="number" name="cost_price[]" placeholder="Rate Price"  onKeyup="costQuantity( $(this).parent().parent(&apos;tr&apos;).data(&apos;number&apos;) )" class="cost-price'+x+' form-control col-md-12 col-xs-12">'+
-                    '</td>'+
-                    '<td>'+
-                        '<input type="number" name="total[]" placeholder="Total" readonly data-subtotal="'+x+'" class="sub_total cost-quantity-total'+x+' form-control col-md-12 col-xs-12" >'+
                     '</td>'+
                     '<td>'+
                         '<button class="btn remove_field btn btn-danger" data-rowDel="'+x+'" type="button"><i class="fa fa-trash"></i></button>'+
                     '</td>'+
                     '</tr>'); //add input box
             }
+            $('.item').selectpicker({
+                liveSearch : true
+            });
         });
         $(wrapper).on("click",".remove_field", function(e){ //user click on remove field
             if( confirm("Do you want ot delete this product") === true ) {
