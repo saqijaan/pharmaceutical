@@ -151,7 +151,7 @@
                                                             <input type="number" name="quantity[{{$saleMasPro->id}}]" placeholder="Quantity" value="{{$saleMasPro->quantity}}" onKeyup="costQuantity( $(this).parent().parent('tr').data('number') )" class="quantity{{$x}} form-control col-md-12 col-xs-12">
                                                         </td>
                                                         <td>
-                                                            <input type="number" name="sale_price[{{$saleMasPro->id}}]" placeholder="Sale Price" value="{{$saleMasPro->sale_price}}"  onKeyup="costQuantity( $(this).parent().parent('tr').data('number') )" class="cost-price{{$x}} form-control col-md-12 col-xs-12">
+                                                            <input type="number" name="sale_price[{{$saleMasPro->id}}]" placeholder="Sale Price" value="{{$saleMasPro->cost_price}}"  onKeyup="costQuantity( $(this).parent().parent('tr').data('number') )" class="cost-price{{$x}} form-control col-md-12 col-xs-12">
                                                         </td>
                                                         <td>
                                                             <input type="number" name="per_item_dis[{{$saleMasPro->id}}]" placeholder="Per Item Discount" value="{{$saleMasPro->per_item_dis}}" onKeyup="costQuantity( $(this).parent().parent('tr').data('number') )" class="sub-discount{{$x}} form-control col-md-12 col-xs-12" >

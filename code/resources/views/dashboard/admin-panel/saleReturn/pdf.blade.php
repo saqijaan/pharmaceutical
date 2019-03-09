@@ -90,7 +90,7 @@
                     <td class=" "> {{ $saleMasPro->id }}</td>
                     <td class=" "> {{ $saleMasPro->item }} </td>
                     <td class=" "> {!! $saleMasPro->quantity !!} </td>
-                    <td class=" "> {!! $saleMasPro->sale_price !!} </td>
+                    <td class=" "> {!! $saleMasPro->cost_price !!} </td>
                     <td class=" "> {!! $saleMasPro->per_item_dis !!} </td>
                     <td class=" "> {!! $saleMasPro->total !!} </td>
 

@@ -89,42 +89,17 @@ class SaleReturnController extends Controller
         ];
 
         $this->validate($request, $rules, $messages);
-
+        
         $saleMas = new SaleReturn();
-
-        if( $request->has('date') ){
-            $saleMas->date = date( 'Y-m-d', strtotime($request->input('date')) );
-        }
-
-        if( $request->has('cus_invoice_no') ){
-            $saleMas->cus_invoice_no = $request->input('cus_invoice_no');
-        }
-
-        if( $request->has('cus_name') ){
-            $saleMas->cus_name = $request->input('cus_name');
-        }
-
-        if( $request->has('gross_total') ){
-            $saleMas->gross_total = $request->input('gross_total');
-        }
-
-        if( $request->has('discount') ){
-            $saleMas->discount = $request->input('discount');
-        }
-
-        if( $request->has('net_total') ){
-            $saleMas->net_total = $request->input('net_total');
-        }
-
-        if( $request->has('paid_amount') ){
-            $saleMas->paid_amount = $request->input('paid_amount');
-        }
-
-        if( $request->has('bal_amount') ){
-            $saleMas->bal_amount = $request->input('bal_amount');
-        }
+        $saleMas->date = date( 'Y-m-d', strtotime($request->input('date')) );
+        $saleMas->cus_invoice_no = $request->input('cus_invoice_no');
+        $saleMas->cus_name = $request->input('cus_name');
+        $saleMas->gross_total = $request->input('gross_total');
+        $saleMas->discount = $request->input('discount');
+        $saleMas->net_total = $request->input('net_total');
+        $saleMas->paid_amount = $request->input('paid_amount');
+        $saleMas->bal_amount = $request->input('bal_amount');
         $saleMas->detail = $request->input('detail');
-
         $saleMas->save();
 
         if( $request->has('item') ){
@@ -141,7 +116,7 @@ class SaleReturnController extends Controller
                 $productTable->sale_return_id = $saleMas->id;
                 $productTable->item = $product['item'][$key];
                 $productTable->quantity = $product['quantity'][$key];
-                $productTable->sale_price = $product['sale_price'][$key];
+                $productTable->cost_price = $product['sale_price'][$key];
                 $productTable->per_item_dis = $product['per_item_dis'][$key];
                 $productTable->total = $product['total'][$key];
                 $productTable->save();
@@ -238,38 +213,14 @@ class SaleReturnController extends Controller
         $this->validate($request, $rules, $messages);
 
         $saleMas = SaleReturn::find($id);
-
-        if( $request->has('date') ){
-            $saleMas->date = date( 'Y-m-d', strtotime($request->input('date')) );
-        }
-
-        if( $request->has('cus_invoice_no') ){
-            $saleMas->cus_invoice_no = $request->input('cus_invoice_no');
-        }
-
-        if( $request->has('cus_name') ){
-            $saleMas->cus_name = $request->input('cus_name');
-        }
-
-        if( $request->has('gross_total') ){
-            $saleMas->gross_total = $request->input('gross_total');
-        }
-
-        if( $request->has('discount') ){
-            $saleMas->discount = $request->input('discount');
-        }
-
-        if( $request->has('net_total') ){
-            $saleMas->net_total = $request->input('net_total');
-        }
-
-        if( $request->has('paid_amount') ){
-            $saleMas->paid_amount = $request->input('paid_amount');
-        }
-
-        if( $request->has('bal_amount') ){
-            $saleMas->bal_amount = $request->input('bal_amount');
-        }
+        $saleMas->date = date( 'Y-m-d', strtotime($request->input('date')) );
+        $saleMas->cus_invoice_no = $request->input('cus_invoice_no');
+        $saleMas->cus_name = $request->input('cus_name');
+        $saleMas->gross_total = $request->input('gross_total');
+        $saleMas->discount = $request->input('discount');
+        $saleMas->net_total = $request->input('net_total');
+        $saleMas->paid_amount = $request->input('paid_amount');
+        $saleMas->bal_amount = $request->input('bal_amount');
         $saleMas->detail = $request->input('detail');
 
         if( $request->has('item') ){
@@ -287,7 +238,7 @@ class SaleReturnController extends Controller
                 $productTable->sale_return_id = $saleMas->id;
                 $productTable->item = $product['item'][$key];
                 $productTable->quantity = $product['quantity'][$key];
-                $productTable->sale_price = $product['sale_price'][$key];
+                $productTable->cost_price = $product['sale_price'][$key];
                 $productTable->per_item_dis = $product['per_item_dis'][$key];
                 $productTable->total = $product['total'][$key];
                 $productTable->save();
