@@ -72,7 +72,7 @@ Route::group(['prefix' => 'v1-2019'], function() {
 		if($validation->fails()){
 			return response()->json([
 				'success' => false,
-				'message' => $validator->errors()->first()
+				'message' => $validation->errors()->first()
 			]);
 		}
 		
