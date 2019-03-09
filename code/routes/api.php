@@ -74,7 +74,7 @@ Route::group(['prefix' => 'v1-2019'], function() {
 		$rules = [
 			'question' 	 => 'required|integer',
 			'answer'	 => 'string',
-			'employe_id' => 'reqired'
+			'employe_id' => 'required'
 		];
 
 		
