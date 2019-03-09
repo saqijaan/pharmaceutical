@@ -60,7 +60,8 @@ Route::group(['prefix' => 'v1-2019'], function() {
 			\App\Quiz::all()
 		);
 	});
-	Route::get('/quize/answer', function (Request $request){
+	
+	Route::post('/quize/answer', function (Request $request){
 		$rules = [
 			'question' 	=> 'required|integer',
 			'answer'	=> 'required|integer',
