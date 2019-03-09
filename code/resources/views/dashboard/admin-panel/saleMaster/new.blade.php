@@ -83,7 +83,7 @@
                                     <label class="control-label col-md-12 col-sm-12 col-xs-12" for="cus_invoice_no" style="text-align: left"> Invoice No.
                                     </label>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <input type="number" id="cus_invoice_no" name="cus_invoice_no" maxlength="15" class="form-control" required>
+                                        <input type="number" id="cus_invoice_no" name="cus_invoice_no" value="{{ old('supplier_invoice_no',date('ymds')) }}" readonly maxlength="15" class="form-control" required>
                                     </div>
                                 </div>
 

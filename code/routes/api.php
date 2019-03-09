@@ -55,16 +55,26 @@ Route::group(['prefix' => 'v1-2019'], function() {
 			\App\EmployeeRegistration::with('answers','answers.quiz')->get()
 		);
 	});
-	Route::get('/quize/list', function (){
+	Route::get('/quize/list', function (Request $request){
+		$employe_id = $request->employe_id;
+		/**
+		 * Get already Answered Questions
+		 */
+		$answers = QuizAnswer::where('employe_id',$employe_id)->get()->pluck('id')->toArray();
+		
+		/**
+		 * Prepare Response Excluding Already Answered Questions
+		 */
 		return response()->json(
-			\App\Quiz::all()
+			\App\Quiz::whereNotIn('id',$answers)->get()
 		);
 	});
-	
+
 	Route::post('/quize/answer', function (Request $request){
 		$rules = [
-			'question' 	=> 'required|integer',
-			'answer'	=> 'required|integer',
+			'question' 	 => 'required|integer',
+			'answer'	 => 'string',
+			'employe_id' => 'reqired'
 		];
 
 		
@@ -77,6 +87,12 @@ Route::group(['prefix' => 'v1-2019'], function() {
 			]);
 		}
 		
+		$answer = new QuizAnswer;
+		$answer->employe_id = $request->employe_id;
+		$answer->quiz_id 	= $request->question;
+		$answer->answer 	= $request->answer;
+		$answer->save();
+
 		return response()->json([
 			'success' => true,
 			'message' => 'Answer Saved Successfully',

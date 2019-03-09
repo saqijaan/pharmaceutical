@@ -83,7 +83,7 @@
                                     <label class="control-label col-md-12 col-sm-12 col-xs-12" for="supplier_invoice_no" style="text-align: left"> Supplier Invoice No.
                                     </label>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <input type="number" id="supplier_invoice_no" name="supplier_invoice_no" value="{{ old('supplier_invoice_no',date('ymds')) }}"  maxlength="15" class="form-control" required>
+                                        <input type="number" id="supplier_invoice_no" name="supplier_invoice_no" maxlength="15" class="form-control" required>
                                     </div>
                                 </div>
 
