@@ -66,7 +66,7 @@ Route::group(['prefix' => 'v1-2019'], function() {
 		 * Prepare Response Excluding Already Answered Questions
 		 */
 		return response()->json(
-			\App\Quiz::whereNotIn('id',$answers)->get()
+			\App\Quiz::whereNotIn('id',$answers)->where('date')->get()
 		);
 	});
 

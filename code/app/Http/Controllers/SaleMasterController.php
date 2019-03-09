@@ -58,9 +58,8 @@ class SaleMasterController extends Controller
 
     public function create()
     {
-        //
         $products = ProductRegistration::get();
-//        $products = DB::table('purchase_master_product_tables')->select('id','item')->distinct('item')->get();
+        //$products = DB::table('purchase_master_product_tables')->select('id','item')->distinct('item')->get();
         $cusRegis = CustomerRegistration::select('id', 'name')->get();
         return view( 'dashboard.admin-panel.saleMaster.new', [ 'products'=>$products, 'cusRegis'=>$cusRegis ] );
     }
@@ -72,7 +71,6 @@ class SaleMasterController extends Controller
 
         $rules = [
             'date'    =>  'required|max:25',
-            'cus_invoice_no'     =>  'required|max:25',
             'cus_name'       =>  'required|max:25',
             'gross_total'   =>  'required|max:300',
             'discount'   =>  'max:300',
@@ -83,7 +81,6 @@ class SaleMasterController extends Controller
 
         $messages = [
             'date.required'    =>  'Please Select Date!.',
-            'cus_invoice_no.required'     =>  'Please enter your Supplier Invoice Number!.',
             'cus_name.required'       =>  'Please enter Supplier Name',
             'gross_total.required'   =>  'Please enter Gross Total!.',
             'net_total.required'   =>  'Please enter Net Total!.',
@@ -93,9 +90,14 @@ class SaleMasterController extends Controller
 
         $this->validate($request, $rules, $messages);
 
+        $lastInvoiceId = SaleMaster::latest()->take(1)->first();
+        if(!$lastInvoiceId){
+            $lastInvoiceId = 10000;
+        }else
+            $lastInvoiceId = ($lastInvoiceId->cus_invoice_no) + 1;
         $saleMas = new SaleMaster();
         $saleMas->date = date( 'Y-m-d', strtotime($request->input('date')) );
-        $saleMas->cus_invoice_no = $request->input('cus_invoice_no');
+        $saleMas->cus_invoice_no = $lastInvoiceId;
         $saleMas->cus_name = $request->input('cus_name');
         $saleMas->gross_total = $request->input('gross_total');
         $saleMas->discount = $request->input('discount');

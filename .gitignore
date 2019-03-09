@@ -1,13 +1,8 @@
-/node_modules
-/public/hot
-/public/storage
-/storage/*.key
 /.idea
 /.vscode
 /nbproject
 /uploads
-../uploads
-/.vagrant
+
 Homestead.json
 Homestead.yaml
 npm-debug.log

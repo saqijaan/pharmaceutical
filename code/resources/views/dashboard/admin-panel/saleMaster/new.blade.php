@@ -79,13 +79,13 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group col-md-3 col-sm-6 col-xs-12">
+                                {{-- <div class="form-group col-md-3 col-sm-6 col-xs-12">
                                     <label class="control-label col-md-12 col-sm-12 col-xs-12" for="cus_invoice_no" style="text-align: left"> Invoice No.
                                     </label>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <input type="number" id="cus_invoice_no" name="cus_invoice_no" value="{{ old('supplier_invoice_no',date('ymds')) }}" readonly maxlength="15" class="form-control" required>
+                                        <input type="number" id="cus_invoice_no" name="cus_invoice_no" value="{{ old('supplier_invoice_no',$invoiceid) }}" readonly maxlength="15" class="form-control" required>
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 <div class="form-group col-md-3 col-sm-6 col-xs-12">
                                     <label class="control-label col-md-12 col-sm-12 col-xs-12" for="cus_name" style="text-align: left"> Customer Name </label>
@@ -100,9 +100,6 @@
                                 </div>
 
                                 <div class="clearfix"></div>
-
-
-
                                 <div class="table-responsive col-md-12 col-xs-12">
                                     <div class="col-md-12 col-xs-12">
                                         <table id="datatable-buttons" class="table table-striped jambo_table bulk_action dt-responsive nowrap">
@@ -409,10 +406,10 @@
                         sr+
                     '</td>'+
                     '<td>'+
-                        '<select data-itmid="'+x+'" class="item form-control col-md-12 col-xs-12" required="required" name="item[]">'+
-                        '<option> Select Item </option>'+
+                        '<select data-itmid="'+x+'" class="item form-control col-md-12 col-xs-12" required="required" name="item[]" required>'+
+                        '<option value=""> Select Item </option>'+
                             @foreach( $products as $product )
-                                    '<option data-id="{{ $product->id }}" value="{{ $product->name }}"> {{ $product->name }}</option>'+
+                                    '<option data-id="{{ $product->id }}" data-salePrice="{{ $product->slae_price }}" value="{{ $product->name }}"> {{ $product->name }}</option>'+
                             @endforeach
                         '</select>'+
                     '</td>'+
@@ -450,7 +447,9 @@
         $(".items").on('change', '.item', function(){
             var id = $(this).find(':selected').data('id');
             var data = $(this).data("itmid");
-            $.ajax({
+            $('.cost-price'+data).val( $(this).find(":selected").attr('data-salePrice') );
+
+            {{-- $.ajax({
                 url: "{{ url('/dashboard/getproductsaleprice') }}",
                 data:{id: id,  "_token": "{{ csrf_token() }}"},
                 type:'get',
@@ -458,7 +457,7 @@
                     $(".cost-price"+data).val(r.slae_price);
                     $(".getcost-price"+data).val(r.cost_price);
                 }
-            });
+            }); --}}
         });
 
 
