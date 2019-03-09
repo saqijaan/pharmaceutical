@@ -12,7 +12,7 @@
             <!-- menu profile quick info -->
             <div class="profile clearfix">
                 <div class="profile_pic">
-                    <img src="{{ asset('images/img.jpg') }}" alt="..." class="img-circle profile_img">
+                    <img src="{{ asset('uploads/distributerRegister/m/'.Auth::guard('distributer')->user()->profile->image) }}" alt="..." class="img-circle profile_img">
                 </div>
                 <div class="profile_info">
 

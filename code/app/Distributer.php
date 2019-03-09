@@ -27,4 +27,8 @@ class Distributer extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function profile(){
+        return $this->hasOne( DistributerRegistration::class ,'id','id');
+    }
 }
