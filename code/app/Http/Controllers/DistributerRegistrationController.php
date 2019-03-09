@@ -185,6 +185,10 @@ class DistributerRegistrationController extends Controller
         }
 
         $distributerRegis->update();
+        Distributer::find($distributerRegis->id)->update([
+            'name' => $request->name,
+            'email' => $request->email,
+        ]);
 
         // Account table Update
         $get1To1Acc = OneToOneAccounts::where('distributer_id', $distributerRegis->id)->first();
