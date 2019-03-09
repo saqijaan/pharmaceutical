@@ -60,7 +60,7 @@ Route::group(['prefix' => 'v1-2019'], function() {
 		/**
 		 * Get already Answered Questions
 		 */
-		$answers = QuizAnswer::where('employe_id',$employe_id)->get()->pluck('id')->toArray();
+		$answers = \App\QuizAnswer::where('employe_id',$employe_id)->get()->pluck('id')->toArray();
 		
 		/**
 		 * Prepare Response Excluding Already Answered Questions
@@ -87,7 +87,7 @@ Route::group(['prefix' => 'v1-2019'], function() {
 			]);
 		}
 		
-		$answer = new QuizAnswer;
+		$answer = new \App\QuizAnswer;
 		$answer->employe_id = $request->employe_id;
 		$answer->quiz_id 	= $request->question;
 		$answer->answer 	= $request->answer;
