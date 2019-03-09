@@ -98,7 +98,7 @@ class PurchaseMasterController extends Controller
         $purchaseMas = new PurchaseMaster();
 
         if( $request->has('date') ){
-            $purchaseMas->date = date( 'Y,m,d', strtotime($request->input('date')) );
+            $purchaseMas->date = date( 'Y-m-d', strtotime($request->input('date')) );
         }
 
         if( $request->has('supplier_invoice_no') ){
@@ -193,7 +193,7 @@ class PurchaseMasterController extends Controller
         $accountId = Accounts::where('name', $supplier->name)->first();
         $transaction = new TransactionTable();
         $params['account_id'] = $accountId->id;
-        $params['date'] = date( 'Y,m,d', strtotime($request->date));
+        $params['date'] = date( 'Y-m-d', strtotime($request->date));
         $params['detail'] = 'Purchase Products from '.$supplier->name.'. Stock Going to Dr. with '.$request->has('net_total').'Rs/-. and Supplier going to Cr. with '.$request->has('net_total').'Rs/-.';
         $params['dr'] = $request->has('net_total');
         $params['cr'] = $request->has('net_total');
@@ -257,7 +257,7 @@ class PurchaseMasterController extends Controller
         $purchaseMas = PurchaseMaster::find($id);
 
         if( $request->has('date') ){
-            $purchaseMas->date = date( 'Y,m,d', strtotime($request->input('date')) );
+            $purchaseMas->date = date( 'Y-m-d', strtotime($request->input('date')) );
         }
 
         if( $request->has('supplier_invoice_no') ){
@@ -351,7 +351,7 @@ class PurchaseMasterController extends Controller
             $supplier = SupplyRegistration::where("id", $request->supplier_name)->first();
             $accountId = Accounts::where('name', $supplier->name)->first();
             $params['account_id'] = $accountId->id;
-            $params['date'] = date( 'Y,m,d', strtotime($request->date));
+            $params['date'] = date( 'Y-m-d', strtotime($request->date));
             $params['detail'] = 'Purchase Products from '.$supplier->name.'. Stock Going to Dr. with '.$request->net_total.'Rs/-. and Supplier going to Cr. with '.$request->net_total.'Rs/-.';
             $params['dr'] = $request->net_total;
             $params['cr'] = $request->net_total;
