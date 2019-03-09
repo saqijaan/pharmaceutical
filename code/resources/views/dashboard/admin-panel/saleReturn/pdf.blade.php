@@ -131,7 +131,7 @@
         <div style="clear:both"></div>
         <div style="width: 98%;float:left;position:relative;padding: 0 7.5px">
             <h3 style="margin-bottom: 0;font-size: 14px;font-weight: bolder;"> Detail: </h3>
-            <p style="border: 1px solid #ccc;padding: 5px 5px;"> {{ $saleMas->detail }}</p>
+            <p style="border: 1px solid #ccc;padding: 5px 5px;"> {!! $saleMas->detail !!}</p>
         </div>
         <div style="clear:both"></div>
     </div>

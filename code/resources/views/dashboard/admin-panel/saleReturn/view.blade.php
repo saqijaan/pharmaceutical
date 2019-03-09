@@ -82,7 +82,7 @@
         </div>
         <div class="col-md-12 col-sm-12 col-xs-12">
             <h3 style="margin-bottom: 0;font-size: 14px;font-weight: bolder;"> Detail: </h3>
-            <p style="border: 1px solid #ccc;padding: 5px 5px;"> {{ $saleMas->detail }}</p>
+            <p style="border: 1px solid #ccc;padding: 5px 5px;"> {!! $saleMas->detail !!}</p>
         </div>
     </div>
     <a class="btn btn-success" href="{{action('SaleReturnController@downloadPDF', $saleMas->id)}}" target="_blank">Get PDF/Print </a>
