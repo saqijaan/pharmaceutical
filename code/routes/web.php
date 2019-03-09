@@ -217,6 +217,12 @@ Route::get('/migrate',function (){
     echo Artisan::Output();
     exit;
 });;
+Route::get('/migrate:rollback',function (){
+    Artisan::call('migrate:rollback');
+    echo "<pre>";
+    echo Artisan::Output();
+    exit;
+});;
 Route::get('/migrate:fresh',function (){
     Artisan::call('migrate:fresh');
     echo "<pre>";
