@@ -60,6 +60,27 @@ Route::group(['prefix' => 'v1-2019'], function() {
 			\App\Quiz::all()
 		);
 	});
+	Route::get('/quize/answer', function (){
+		$rules = [
+			'question' 	=> 'required|integer',
+			'answer'	=> 'required|integer',
+		];
+
+		
+		$validation = Validator::make($request->all(), $rules);
+
+		if($validation->fails()){
+			return response()->json([
+				'success' => false,
+				'message' => $validator->errors()->first()
+			]);
+		}
+		
+		return response()->json([
+			'success' => true,
+			'message' => 'Answer Saved Successfully',
+		]);
+	});
 
 });
 
