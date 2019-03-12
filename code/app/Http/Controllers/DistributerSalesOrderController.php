@@ -19,17 +19,9 @@ class DistributerSalesOrderController extends Controller
      */
     public function index()
     {
-        //
-//        dd();
-//        $purchaseMas = disSaleOrder::get();
-        $disSalesOdrs = DB::table('distributer_sales_orders')
-            ->leftJoin('distributer_registrations', 'distributer_sales_orders.dis_name', '=', 'distributer_registrations.id')
-            ->select('distributer_sales_orders.*', 'distributer_registrations.name as disName')
-            ->get();
-        return view( 'dashboard.admin-panel.disSaleOrder.index', [ 'disSalesOdrs' => $disSalesOdrs ] );
-
+        $disSalesOdrs = DistributerSalesOrder::where('dis_id', \Auth::guard('distributer')->Id() )->get();
+        return view( 'dashboard.admin-panel.disSaleOrder.index', compact('disSalesOdrs') );
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -39,8 +31,7 @@ class DistributerSalesOrderController extends Controller
     {
         //
         $products = ProductRegistration::get();
-        $disRegis = DistributerRegistration::select('id', 'name')->get();
-        return view( 'dashboard.admin-panel.disSaleOrder.new', [ 'products'=>$products, 'disRegis'=>$disRegis ] );
+        return view( 'dashboard.admin-panel.disSaleOrder.new', [ 'products'=>$products ] );
     }
 
     /**
@@ -55,7 +46,6 @@ class DistributerSalesOrderController extends Controller
 
         $rules = [
             'date'    =>  'required|max:25',
-            'dis_name'     =>  'required|max:25',
             'gross_total'   =>  'required|max:300',
             'discount'   =>  'max:300',
             'net_total'   =>  'max:300',
@@ -63,35 +53,20 @@ class DistributerSalesOrderController extends Controller
 
         $messages = [
             'date.required'    =>  'Please Select Date!.',
-            'dis_name.required'     =>  'Please Select Distributer Name',
             'gross_total.required'       =>  'Please enter Gross Total',
             'net_total.required'   =>  'Please enter Net Total!.',
         ];
 
         $this->validate($request, $rules, $messages);
 
-        $disSalesOdrs = new DistributerSalesOrder();
-
-        if( $request->has('date') ){
-            $disSalesOdrs->date = date( 'Y,m,d', strtotime($request->input('date')) );
-        }
-
-        if( $request->has('dis_name') ){
-            $disSalesOdrs->dis_name = $request->input('dis_name');
-        }
-
-        if( $request->has('gross_total') ){
-            $disSalesOdrs->gross_total = $request->input('gross_total');
-        }
-
-        if( $request->has('discount') ){
-            $disSalesOdrs->discount = $request->input('discount');
-        }
-
-        if( $request->has('net_total') ){
-            $disSalesOdrs->net_total = $request->input('net_total');
-        }
-
+        $disSalesOdrs               = new DistributerSalesOrder();
+        $disSalesOdrs->date         = date( 'Y-m-d', strtotime($request->input('date')) );
+        $disSalesOdrs->dis_id       = \Auth::guard('distributer')->Id();
+        $disSalesOdrs->dis_name     = \Auth::guard('distributer')->user()->name;
+        $disSalesOdrs->gross_total  = $request->input('gross_total');
+        $disSalesOdrs->discount     = $request->input('discount');
+        $disSalesOdrs->net_total    = $request->input('net_total');
+        $disSalesOdrs->detail       = $request->input('detail');
         $disSalesOdrs->save();
 
         if( $request->has('item') ){
@@ -128,7 +103,8 @@ class DistributerSalesOrderController extends Controller
      */
     public function show($id)
     {
-        //
+        $disSalesOdrs = DistributerSalesOrder::where('id',$id)->where('dis_id', \Auth::guard('distributer')->Id())->first();
+        return view( 'dashboard.admin-panel.disSaleOrder.view', compact('disSalesOdrs') );
     }
 
     /**
@@ -143,8 +119,7 @@ class DistributerSalesOrderController extends Controller
         $products = ProductRegistration::get();
         $disSlsOdrs = DistributerSalesOrder::find($id);
         $disSlsOdrItems = DistributerSalesOrderItems::where('dis_sls_odr_id',$id)->get();
-        $disRegis = DistributerRegistration::select('id', 'name')->get();
-        return view( 'dashboard.admin-panel.disSaleOrder.edit', [ 'products'=>$products, 'disSlsOdrs'=>$disSlsOdrs, 'disSlsOdrItems'=>$disSlsOdrItems, 'disRegis'=>$disRegis ] );
+        return view( 'dashboard.admin-panel.disSaleOrder.edit', [ 'products'=>$products, 'disSlsOdrs'=>$disSlsOdrs, 'disSlsOdrItems'=>$disSlsOdrItems ] );
 
     }
 
@@ -160,7 +135,6 @@ class DistributerSalesOrderController extends Controller
         //
         $rules = [
             'date'    =>  'required|max:25',
-            'dis_name'     =>  'required|max:25',
             'gross_total'   =>  'required|max:300',
             'discount'   =>  'max:300',
             'net_total'   =>  'max:300',
@@ -168,7 +142,6 @@ class DistributerSalesOrderController extends Controller
 
         $messages = [
             'date.required'    =>  'Please Select Date!.',
-            'dis_name.required'     =>  'Please Select Distributer Name',
             'gross_total.required'       =>  'Please enter Gross Total',
             'net_total.required'   =>  'Please enter Net Total!.',
         ];
@@ -176,28 +149,11 @@ class DistributerSalesOrderController extends Controller
         $this->validate($request, $rules, $messages);
 
         $disSalesOdrs = DistributerSalesOrder::find($id);
-
-        if( $request->has('date') ){
-            $disSalesOdrs->date = date( 'Y,m,d', strtotime($request->input('date')) );
-        }
-
-        if( $request->has('dis_name') ){
-            $disSalesOdrs->dis_name = $request->input('dis_name');
-        }
-
-        if( $request->has('gross_total') ){
-            $disSalesOdrs->gross_total = $request->input('gross_total');
-        }
-
-        if( $request->has('discount') ){
-            $disSalesOdrs->discount = $request->input('discount');
-        }
-
-        if( $request->has('net_total') ){
-            $disSalesOdrs->net_total = $request->input('net_total');
-        }
-
-
+        $disSalesOdrs->date = date( 'Y-m-d', strtotime($request->input('date')) );
+        $disSalesOdrs->gross_total = $request->input('gross_total');
+        $disSalesOdrs->discount = $request->input('discount');
+        $disSalesOdrs->net_total = $request->input('net_total');
+        $disSalesOdrs->detail       = $request->input('detail');
 
         if( $request->has('item') ){
             $product = array(

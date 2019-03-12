@@ -74,25 +74,21 @@
 
                                     <tbody>
 
-                                    @foreach( $disDpstAmnts as $disDpstAmnts )
+                                    @foreach( $disDpstAmnts as $disDpstAmnt )
 
                                         <tr class="even pointer">
-                                            <td class=" "> {{ $disDpstAmnts->id }}</td>
-                                            <td class=" "> {{ $disDpstAmnts->date }} </td>
-                                            <td class=" "> {!! $disDpstAmnts->disName !!} </td>
-                                            <td class=" "> {!! $disDpstAmnts->amount !!} </td>
+                                            <td class=" "> {{ $disDpstAmnt->id }}</td>
+                                            <td class=" "> {{ $disDpstAmnt->date }} </td>
+                                            <td class=" "> {!! $disDpstAmnt->dis_name !!} </td>
+                                            <td class=" "> {!! $disDpstAmnt->amount !!} </td>
                                             <td class=" last">
-                                                <a class="btn btn-primary" href="{{route( 'employee-profile',$disDpstAmnts->id )}}">
-                                                    View
-                                                </a>
-                                                <a class="btn btn-primary" href="{{ route('distributer-deposit-amount.edit', $disDpstAmnts->id ) }}">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
-                                                <form method="post" enctype="multipart/form-data" action="{{route('distributer-deposit-amount.destroy',$disDpstAmnts->id)}}" style="display: inline">
-                                                    <input name="_method" type="hidden" value="DELETE" />
-                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                    <button type="submit"  class="btn btn-danger"  style="margin-left: 5px;"  onclick="return confirm('Do you want to delete ?');" ><i class="fa fa-trash-o"></i></button>
-                                                </form>
+                                                @if ($disDpstAmnt->approved)
+                                                    <span class="btn btn-success">Approved</span>
+                                                @else
+                                                    <a class="btn btn-primary" href="{{route( 'admin.distributers.deposits.approve',$disDpstAmnt->id )}}">
+                                                        Approve
+                                                    </a>
+                                                @endif
                                             </td>
                                         </tr>
 

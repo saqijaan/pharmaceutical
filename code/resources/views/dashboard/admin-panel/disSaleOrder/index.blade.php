@@ -74,9 +74,6 @@
                                         <th class="column-title"> Gross Total </th>
                                         <th class="column-title no-link last"><span class="nobr">Action</span>
                                         </th>
-                                        <th class="bulk-actions" colspan="7">
-                                            <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
-                                        </th>
                                     </tr>
                                     </thead>
 
@@ -87,10 +84,10 @@
                                         <tr class="even pointer">
                                             <td class=" "> {{ $disSalesOdr->id }}</td>
                                             <td class=" "> {{ $disSalesOdr->date }} </td>
-                                            <td class=" "> {!! $disSalesOdr->disName !!} </td>
+                                            <td class=" "> {!! $disSalesOdr->dis_name !!} </td>
                                             <td class=" "> {!! $disSalesOdr->gross_total !!} </td>
                                             <td class=" last">
-                                                <a class="btn btn-primary" href="{{route( 'employee-profile',$disSalesOdr->id )}}">
+                                                <a class="btn btn-primary opnBtn" href="#" data-mdlid="{{$disSalesOdr->id}}">
                                                     View
                                                 </a>
                                                 <a class="btn btn-primary" href="{{ route('distributer-sale-orders.edit', $disSalesOdr->id ) }}">
@@ -124,7 +121,21 @@
     </div>
     <!-- /page content -->
 
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Order Details</h4>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
 
+            </div>
+        </div>
+    </div>
 
 @endsection
 
@@ -152,7 +163,14 @@
     <script src="{{ asset('vendors/jszip/dist/jszip.min.js') }}"></script>
     <script src="{{ asset('vendors/pdfmake/build/pdfmake.min.js') }}"></script>
     <script src="{{ asset('vendors/pdfmake/build/vfs_fonts.js') }}"></script>
-
+    <script type="text/javascript">
+        $(".opnBtn").on('click',function(){
+           var id = $(this).data("mdlid");
+            $(".modal-body").load('{{route("distributer-sale-orders.view")}}/'+id, function(){
+                $("#myModal").modal({show:true});
+            });
+        });
+    </script>
 
 @endsection
 

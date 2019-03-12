@@ -16,10 +16,12 @@ class CreateDistributerSalesOrdersTable extends Migration
         Schema::create('distributer_sales_orders', function (Blueprint $table) {
             $table->increments('id');
             $table->string('date')->nullable();
+            $table->integer('dis_id');
             $table->string('dis_name', 45)->nullable();
             $table->string('gross_total', 11)->nullable();
             $table->string('discount', 11)->nullable();
             $table->string('net_total', 11)->nullable();
+            $table->text('detail')->nullable();
             $table->timestamps();
         });
     }

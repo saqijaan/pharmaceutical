@@ -79,18 +79,6 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group col-md-3 col-sm-6 col-xs-12">
-                                    <label class="control-label col-md-12 col-sm-12 col-xs-12" for="dis_name" style="text-align: left"> Distributer Name </label>
-                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <select class="form-control" id="dis_name" required="required" name="dis_name">
-                                            <option>Choose option</option>
-                                            @foreach( $disRegis as $disRegi )
-                                                <option value="{{ $disRegi->id }}"> {{ $disRegi->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-
                                 <div class="clearfix"></div>
 
 
@@ -160,7 +148,7 @@
                                     <label class="control-label col-md-12 col-sm-12 col-xs-12" for="discount" style="text-align: left"> Discount <span class="required">*</span>
                                     </label>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <input type="text" id="discount" name="discount" onkeyup="cargoDis()" class="major-dis form-control">
+                                        <input type="text" id="discount" name="discount" value="0" onkeyup="cargoDis()" class="major-dis form-control">
                                     </div>
                                 </div>
 
@@ -169,6 +157,13 @@
                                     </label>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                         <input type="text" id="net_total" name="net_total" readonly class="net_total form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                                    <label class="control-label col-md-12 col-sm-12 col-xs-12" for="net_total" style="text-align: left"> Details <span class="required"></span>
+                                    </label>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <textarea type="text" name="detail" class="form-control" placeholder="Enter Details"></textarea>
                                     </div>
                                 </div>
 
@@ -318,7 +313,12 @@
                         sr+
                     '</td>'+
                     '<td>'+
-                        '<input type="text" name="item[]" placeholder="Item" class="form-control autocomplete-custom-append col-md-12 col-xs-12">'+
+                        '<select data-itmid="'+x+'" class="item form-control col-md-12 col-xs-12" required="required" name="item[]" required>'+
+                        '<option value=""> Select Item </option>'+
+                            @foreach( $products as $product )
+                                    '<option data-id="{{ $product->id }}" data-salePrice="{{ $product->slae_price }}" value="{{ $product->id }}"> {{ $product->name }}</option>'+
+                            @endforeach
+                        '</select>'+
                     '</td>'+
                     '<td>'+
                         '<input type="number" name="quantity[]" placeholder="Quantity" onKeyup="costQuantity( $(this).parent().parent(&apos;tr&apos;).data(&apos;number&apos;) )" class="quantity'+x+' form-control col-md-12 col-xs-12">'+

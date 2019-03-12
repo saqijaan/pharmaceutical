@@ -71,25 +71,13 @@
                                             <div class="control-group">
                                                 <div class="controls">
                                                     <div class="col-md-11 xdisplay_inputx form-group has-feedback" style="padding-left: 0px;">
-                                                        <input type="text" value="{{ date('m,d,Y', strtotime($disDpstAmnt->date)) }}" class="form-control has-feedback-left" name="date" id="single_cal2" placeholder="First Name" aria-describedby="inputSuccess2Status2">
+                                                        <input type="text" value="{{ date('m/d/Y', strtotime($disDpstAmnt->date)) }}" class="form-control has-feedback-left" name="date" id="single_cal2" placeholder="First Name" aria-describedby="inputSuccess2Status2">
                                                         <span class="fa fa-calendar-o form-control-feedback left" style="left: 0;" aria-hidden="true"></span>
                                                         <span id="inputSuccess2Status2" class="sr-only">(success)</span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </fieldset>
-                                    </div>
-                                </div>
-
-                                <div class="form-group col-md-4 col-sm-6 col-xs-12">
-                                    <label class="control-label col-md-12 col-sm-12 col-xs-12" for="dis_name" style="text-align: left"> Distributer Name </label>
-                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <select class="form-control" id="dis_name" required="required" name="dis_name">
-                                            <option>Choose option</option>
-                                            @foreach( $disRegis as $disRegi )
-                                                <option value="{{ $disRegi->id }}" {{ ($disRegi->id == $disDpstAmnt->dis_name) ? 'selected' : '' }}> {{ $disRegi->name }}</option>
-                                            @endforeach
-                                        </select>
                                     </div>
                                 </div>
 

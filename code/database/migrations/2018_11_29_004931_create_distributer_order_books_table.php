@@ -18,6 +18,7 @@ class CreateDistributerOrderBooksTable extends Migration
             $table->string('po_id')->nullable();
             $table->string('dist_id', 11)->nullable();
             $table->string('dist_name',100)->nullable();
+            $table->boolean('delivered')->default(0);
             $table->timestamps();
         });
     }

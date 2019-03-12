@@ -80,18 +80,6 @@
                                 </div>
 
                                 <div class="form-group col-md-4 col-sm-6 col-xs-12">
-                                    <label class="control-label col-md-12 col-sm-12 col-xs-12" for="dis_name" style="text-align: left"> Distributer Name </label>
-                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <select class="form-control" id="dis_name" required="required" name="dis_name">
-                                            <option>Choose option</option>
-                                            @foreach( $disRegis as $disRegi )
-                                                <option value="{{ $disRegi->id }}"> {{ $disRegi->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="form-group col-md-4 col-sm-6 col-xs-12">
                                     <label class="control-label col-md-12 col-sm-12 col-xs-12" for="slip_name" style="text-align: left"> Slip Name <span class="required">*</span>
                                     </label>
                                     <div class="col-md-12 col-sm-12 col-xs-12">

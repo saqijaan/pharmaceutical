@@ -146,7 +146,7 @@
     <script type="text/javascript">
         $(".opnBtn").on('click',function(){
            var id = $(this).data("mdlid");
-            $(".modal-body").load('{{url("/dashboard/bank-receipt/view/")}}'+'/'+id, function(){
+            $(".modal-body").load('{{action("DistributerOrderBookController@view")}}'+'/'+id, function(){
                 $("#myModal").modal({show:true});
             });
         });

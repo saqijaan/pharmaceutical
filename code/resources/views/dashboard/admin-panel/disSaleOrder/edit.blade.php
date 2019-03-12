@@ -71,25 +71,13 @@
                                             <div class="control-group">
                                                 <div class="controls">
                                                     <div class="col-md-11 xdisplay_inputx form-group has-feedback" style="padding-left: 0px;">
-                                                        <input type="text" class="form-control has-feedback-left" value="{{ date( 'm,d,Y', strtotime($disSlsOdrs->date)) }}" name="date" id="single_cal2" placeholder="First Name" aria-describedby="inputSuccess2Status2">
+                                                        <input type="text" class="form-control has-feedback-left" value="{{ date( 'm/d/Y', strtotime($disSlsOdrs->date)) }}" name="date" id="single_cal2" placeholder="First Name" aria-describedby="inputSuccess2Status2">
                                                         <span class="fa fa-calendar-o form-control-feedback left" style="left: 0;" aria-hidden="true"></span>
                                                         <span id="inputSuccess2Status2" class="sr-only">(success)</span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </fieldset>
-                                    </div>
-                                </div>
-
-                                <div class="form-group col-md-3 col-sm-6 col-xs-12">
-                                    <label class="control-label col-md-12 col-sm-12 col-xs-12" for="dis_name" style="text-align: left"> Distributer Name </label>
-                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <select class="form-control" id="dis_name" required="required" name="dis_name">
-                                            <option>Choose option</option>
-                                            @foreach( $disRegis as $disRegi )
-                                                <option value="{{ $disRegi->id }}" {{ ($disRegi->id == $disSlsOdrs->dis_name) ? 'selected' : '' }}> {{ $disRegi->name }}</option>
-                                            @endforeach
-                                        </select>
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
@@ -129,7 +117,12 @@
                                                             {{$x}}
                                                         </td>
                                                         <td>
-                                                            <input type="text" name="item[{{$disSlsOdrItem->id}}]" placeholder="Item" value="{{$disSlsOdrItem->item}}" class="form-control autocomplete-custom-append col-md-12 col-xs-12">
+                                                            <select data-itmid="{{$x}}" class="item form-control col-md-12 col-xs-12" required="required" name="item[{{$disSlsOdrItem->id}}]">
+                                                                <option value=""> Select Item </option>
+                                                                @foreach( $products as $product )
+                                                                    <option data-id="{{ $product->id }}" value="{{ $product->id }}" {{ $product->id == $disSlsOdrItem->item ? 'selected' : '' }}> {{ $product->name }}</option>
+                                                                @endforeach
+                                                            </select>
 
                                                         </td>
                                                         <td>
@@ -202,6 +195,13 @@
                                     </label>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                         <input type="text" id="net_total" name="net_total" value="{{$disSlsOdrs->net_total}}" readonly class="net_total form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                                    <label class="control-label col-md-12 col-sm-12 col-xs-12" for="net_total" style="text-align: left"> Details <span class="required"></span>
+                                    </label>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <textarea type="text" name="detail" class="form-control" placeholder="Enter Details">{{ $disSlsOdrs->detail }}</textarea>
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>

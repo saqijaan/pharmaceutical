@@ -17,20 +17,15 @@ class DistributerDepositAmountController extends Controller
      */
     public function index()
     {
-        $disDpstAmnts = DB::table('distributer_deposit_amounts')
-            ->leftJoin('distributer_registrations', 'distributer_deposit_amounts.dis_name', '=', 'distributer_registrations.id')
-            ->select('distributer_deposit_amounts.*', 'distributer_registrations.name as disName')
-            ->get();
-        return view( 'dashboard.admin-panel.disDpstAmnt.index', [ 'disDpstAmnts' => $disDpstAmnts ] );
+        $disDpstAmnts = DistributerDepositAmount::where('dis_id',\Auth::guard('distributer')->Id())->get();
+
+        return view( 'dashboard.admin-panel.disDpstAmnt.index',compact('disDpstAmnts') );
 
     }
     public function adminindex()
     {
-        $disDpstAmnts = DB::table('distributer_deposit_amounts')
-            ->leftJoin('distributer_registrations', 'distributer_deposit_amounts.dis_name', '=', 'distributer_registrations.id')
-            ->select('distributer_deposit_amounts.*', 'distributer_registrations.name as disName')
-            ->get();
-        return view( 'dashboard.admin-panel.deposits.index', [ 'disDpstAmnts' => $disDpstAmnts ] );
+        $disDpstAmnts = DistributerDepositAmount::all();
+        return view( 'dashboard.admin-panel.deposits.index', compact('disDpstAmnts') );
 
     }
 
@@ -58,7 +53,6 @@ class DistributerDepositAmountController extends Controller
 
         $rules = [
             'date'    =>  'required|max:25',
-            'dis_name'     =>  'required|max:25',
             'slip_name'   =>  'required|max:300',
             'bank_name'   =>  'max:300',
             'amount'   =>  'required|max:300',
@@ -66,7 +60,6 @@ class DistributerDepositAmountController extends Controller
 
         $messages = [
             'date.required'    =>  'Please Select Date!.',
-            'dis_name.required'     =>  'Please Select Distributer Name',
             'slip_name.required'       =>  'Please enter Slip Name',
             'amount.required'   =>  'Please enter Amount!.',
         ];
@@ -74,27 +67,12 @@ class DistributerDepositAmountController extends Controller
         $this->validate($request, $rules, $messages);
 
         $disSalesOdrs = new DistributerDepositAmount();
-
-        if( $request->has('date') ){
-            $disSalesOdrs->date = date( 'Y,m,d', strtotime($request->input('date')) );
-        }
-
-        if( $request->has('dis_name') ){
-            $disSalesOdrs->dis_name = $request->input('dis_name');
-        }
-
-        if( $request->has('slip_name') ){
-            $disSalesOdrs->slip_name = $request->input('slip_name');
-        }
-
-        if( $request->has('bank_name') ){
-            $disSalesOdrs->bank_name = $request->input('bank_name');
-        }
-
-        if( $request->has('amount') ){
-            $disSalesOdrs->amount = $request->input('amount');
-        }
-
+        $disSalesOdrs->date = date( 'Y-m-d', strtotime($request->input('date')) );
+        $disSalesOdrs->dis_id       = \Auth::guard('distributer')->Id();
+        $disSalesOdrs->dis_name     = \Auth::guard('distributer')->user()->name;
+        $disSalesOdrs->slip_name = $request->input('slip_name');
+        $disSalesOdrs->bank_name = $request->input('bank_name');
+        $disSalesOdrs->amount = $request->input('amount');
         $disSalesOdrs->save();
 
 
@@ -138,47 +116,30 @@ class DistributerDepositAmountController extends Controller
      */
     public function update(Request $request, $id)
     {
+        //dd($id);
         //
 
         $rules = [
             'date'    =>  'required|max:25',
-            'dis_name'     =>  'required|max:25',
             'slip_name'   =>  'required|max:300',
             'bank_name'   =>  'max:300',
-            'amount'   =>  'required|max:300',
+            'amount'   =>  'required|numeric',
         ];
 
         $messages = [
             'date.required'    =>  'Please Select Date!.',
-            'dis_name.required'     =>  'Please Select Distributer Name',
             'slip_name.required'       =>  'Please enter Slip Name',
             'amount.required'   =>  'Please enter Amount!.',
         ];
 
         $this->validate($request, $rules, $messages);
-
-        $disSalesOdrs = new DistributerDepositAmount();
-
-        if( $request->has('date') ){
-            $disSalesOdrs->date = date( 'Y,m,d', strtotime($request->input('date')) );
-        }
-
-        if( $request->has('dis_name') ){
-            $disSalesOdrs->dis_name = $request->input('dis_name');
-        }
-
-        if( $request->has('slip_name') ){
-            $disSalesOdrs->slip_name = $request->input('slip_name');
-        }
-
-        if( $request->has('bank_name') ){
-            $disSalesOdrs->bank_name = $request->input('bank_name');
-        }
-
-        if( $request->has('amount') ){
-            $disSalesOdrs->amount = $request->input('amount');
-        }
-
+        
+        $disSalesOdrs = DistributerDepositAmount::findOrNew($id);
+        
+        $disSalesOdrs->date = date( 'Y-m-d', strtotime($request->input('date')) );
+        $disSalesOdrs->slip_name    = $request->input('slip_name');
+        $disSalesOdrs->bank_name    = $request->input('bank_name');
+        $disSalesOdrs->amount       = $request->input('amount');
         $disSalesOdrs->save();
 
 
@@ -186,6 +147,7 @@ class DistributerDepositAmountController extends Controller
         return redirect('/dashboard/distributer-deposit-amount');
 
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -203,6 +165,14 @@ class DistributerDepositAmountController extends Controller
         Session::flash("Success","Distributer deposit amount successfully deleted!.");
         return redirect('/dashboard/distributer-deposit-amount');
 
+    }
+
+    public function approveAmount($id){
+        $record  = DistributerDepositAmount::find($id);
+        $record->approved  = true;
+        $record->save();
+        Session::flash("Success","Distributer Deposited amount successfully Approved!.");
+        return back();
     }
 
 }

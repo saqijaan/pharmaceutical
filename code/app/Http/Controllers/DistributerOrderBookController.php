@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Intervention\Image\ImageManagerStatic as Image;
-
+use PDF;
 class DistributerOrderBookController extends Controller
 {
     /**
@@ -83,7 +83,7 @@ class DistributerOrderBookController extends Controller
         $disOdrBk->po_id        =  $PoID;
         $disOdrBk->dist_id      =  \Auth::guard('distributer')->Id();
         $disOdrBk->dist_name    =  \Auth::guard('distributer')->user()->name;
-        $disOdrBk->created_at = date( 'Y-m-d', strtotime($request->input('date')) );
+        $disOdrBk->created_at = date( 'Y-m-d H:i:s', strtotime($request->input('date')) );
 
         $disOdrBk->save();
 
@@ -214,7 +214,25 @@ class DistributerOrderBookController extends Controller
 
     }
 
+    public function view($id){
+        $order = DistributerOrderBook::find($id);
+        return view( 'dashboard.admin-panel.orders.view', compact('order') );
+    }
 
+    public function downloadPDF($id){
+        $order = DistributerOrderBook::find($id);
+
+        $pdf = PDF::loadView('dashboard.admin-panel.orders.pdf', compact('order') );
+        return $pdf->stream('invoice.pdf');
+
+    }
+    public function deliverOrder($id){
+        DistributerOrderBook::find($id)->update([
+            'delivered' => true
+        ]);
+        Session::flash("Success", "Distributer Order Delivered!.");
+        return back();
+    }
     public function productDel(Request $request)
     {
         //

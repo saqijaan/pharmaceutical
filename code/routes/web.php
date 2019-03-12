@@ -126,7 +126,12 @@ Route::group(['middleware'=> ['auth']], function(){
         Route::get('/ledger-report/getData/', 'LedgerReportController@getData')->name('lgr-rprt-data');
 
         Route::get('/distributer/orders', 'DistributerOrderBookController@adminindex')->name('admin.orders.all');
+        Route::get('/distributer/orders/view/{id?}', 'DistributerOrderBookController@view')->name('admin.orders.view');
+        Route::get('/distributer/orders/download/{id}', 'DistributerOrderBookController@downloadPDF')->name('admin.orders.download');
+        Route::get('/distributer/orders/deliver/{id}', 'DistributerOrderBookController@deliverOrder')->name('admin.orders.deliver');
+
         Route::get('/distributer/deposits', 'DistributerDepositAmountController@adminindex')->name('admin.distributers.deposits');
+        Route::get('/distributer/deposits/{id}/approve', 'DistributerDepositAmountController@approveAmount')->name('admin.distributers.deposits.approve');
     });
 
 });
@@ -139,6 +144,7 @@ Route::group(['middleware'=>['auth:distributer']], function(){
         Route::resource('/distributer-order-book', 'DistributerOrderBookController');
         Route::post('/distributer-order-book-item-del', 'DistributerOrderBookController@productDel')->name('dis-odr-del');
         Route::resource('/distributer-sale-orders', 'DistributerSalesOrderController');
+        Route::get('/distributer-sale-orders/view/{id?}', 'DistributerSalesOrderController@show')->name('distributer-sale-orders.view');
         Route::post('/distributer-sale-orders-item-del', 'DistributerSalesOrderController@productDel')->name('dis-salesodr-del');                       
         Route::resource('/distributer-deposit-amount', 'DistributerDepositAmountController');
 
@@ -210,7 +216,7 @@ Route::get('/seed',function(){
         'password' => bcrypt('12345678')
     ]);
 
-    
+
 });
 
 Route::get('/migrate',function (){

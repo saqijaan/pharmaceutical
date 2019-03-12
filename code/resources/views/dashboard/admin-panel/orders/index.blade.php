@@ -63,6 +63,7 @@
                                         <th class="column-title">ID </th>
                                         <th class="column-title"> Date </th>
                                         <th class="column-title"> Distributer Name </th>
+                                        <th class="column-title"> Order Status </th>
                                         <th class="column-title no-link last"><span class="nobr">Action</span>
                                         </th>
                                         <th class="bulk-actions" colspan="7">
@@ -76,13 +77,20 @@
                                     @foreach( $disOrderBooks as $disOrderBook )
 
                                         <tr class="even pointer">
-                                            <td class=" "> {{ $disOrderBook->id }}</td>
-                                            <td class=" "> {{ $disOrderBook->created_at }} </td>
-                                            <td class=" "> {!! $disOrderBook->dist_name !!} </td>
+                                            <td> {{ $disOrderBook->id }}</td>
+                                            <td> {{ $disOrderBook->created_at }} </td>
+                                            <td> {!! $disOrderBook->dist_name !!} </td>
+                                            <td> 
+                                                @if ($disOrderBook->delivered)
+                                                    <a href="#" class="btn btn-success"> Delivered </a>
+                                                @else
+                                                    <a href="{{ route('admin.orders.deliver',$disOrderBook->id) }}" class="btn btn-info" title="Click to Deliver"> Pending </a>
+                                                @endif
+                                            </td>
                                             <td class=" last">
-                                                {{-- <a class="btn btn-primary" href="{{route( 'employee-profile',$disOrderBook->id )}}">
+                                                <a class="btn btn-primary opnBtn" href="#" data-mdlid="{{$disOrderBook->id}}">
                                                     View
-                                                </a> --}}
+                                                </a>
                                             </td>
                                         </tr>
 
@@ -106,7 +114,21 @@
     </div>
     <!-- /page content -->
 
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Order Details</h4>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
 
+            </div>
+        </div>
+    </div>
 
 @endsection
 
@@ -135,6 +157,14 @@
     <script src="{{ asset('vendors/pdfmake/build/pdfmake.min.js') }}"></script>
     <script src="{{ asset('vendors/pdfmake/build/vfs_fonts.js') }}"></script>
 
+    <script type="text/javascript">
+        $(".opnBtn").on('click',function(){
+           var id = $(this).data("mdlid");
+            $(".modal-body").load('{{route("admin.orders.view")}}/'+id, function(){
+                $("#myModal").modal({show:true});
+            });
+        });
+    </script>
 
 @endsection
 
