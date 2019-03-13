@@ -50,7 +50,7 @@ class SchedleController extends Controller
 
         if($request->has('doctor')) {
             if ($request->has('date')) {
-                $schedules->date = date('Y,m,d', strtotime($request->date));
+                $schedules->date = date('Y-m-d', strtotime($request->date));
             }
             if ($request->has('time')) {
                 $schedules->time = Carbon::createFromFormat('H:i', $request->time)->format('H:i');

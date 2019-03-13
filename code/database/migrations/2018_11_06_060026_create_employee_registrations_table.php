@@ -23,7 +23,8 @@ class CreateEmployeeRegistrationsTable extends Migration
             $table->text('address')->nullable();
             $table->string('image')->nullable();
             $table->string('username_auto')->nullable();
-            $table->string('password_auto')->nullable();
+            $table->string('password')->nullable();
+            $table->string('api_token',100)->nullable();
             $table->string('joining_date')->nullable();
             $table->string('designation')->nullable();
             $table->timestamps();

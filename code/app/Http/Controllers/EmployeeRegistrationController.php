@@ -63,7 +63,8 @@ class EmployeeRegistrationController extends Controller
         $employeeRegis->phone           = $request->input('phone');
         $employeeRegis->address         = $request->input('address');
         $employeeRegis->username_auto   = $request->input('email');
-        $employeeRegis->password_auto   = $request->input('email');
+        $employeeRegis->password        = bcrypt($request->input('email'));
+        $employeeRegis->api_token       = str_random(40).'-'.md5(microtime());
         $employeeRegis->joining_date    = $request->input('joining_date');
         $employeeRegis->designation     = $request->input('designation');
 
@@ -159,7 +160,7 @@ class EmployeeRegistrationController extends Controller
         $employeeRegis->phone       = $request->input('phone');
         $employeeRegis->address     = $request->input('address');
         $employeeRegis->username_auto= $request->input('email');
-        $employeeRegis->password_auto= $request->input('email');
+        $employeeRegis->password     = bcrypt($request->input('email'));
         $employeeRegis->joining_date = $request->input('joining_date');
         $employeeRegis->designation  = $request->input('designation');
 

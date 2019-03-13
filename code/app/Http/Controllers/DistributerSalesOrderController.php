@@ -16,7 +16,7 @@ class DistributerSalesOrderController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
-     */
+     */ 
     public function index()
     {
         $disSalesOdrs = DistributerSalesOrder::where('dis_id', \Auth::guard('distributer')->Id() )->get();

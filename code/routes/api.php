@@ -48,7 +48,26 @@ Route::prefix('dashboard')->group(function(){
 }); 	
 
 
-Route::group(['prefix' => 'v1-2019'], function() {
+Route::post('v1-2019/login', function(Request $request) {
+	$email 		= $request->email;
+	$password 	= $request->password;
+	if (\Auth::guard('employeesApi')->attempt(['email' => $email, 'password' => $password])){
+		$data = \Auth::guard('employeesApi')->user();
+		\Auth::logout();
+		return response()->json([
+			'success' 	=> true,
+			'data'		=> $data
+		]);
+	}else{
+		return response()->json([
+			'success'	=> false,
+			'data'		=> 'Invalid Email or Password'
+		]);
+	}
+});
+
+
+Route::group(['prefix' => 'v1-2019','middleware'=>'auth:api'], function() {
 	
 	Route::get('/users',function(){
 		return response()->json(

@@ -47,7 +47,7 @@ return [
 
         'api' => [
             'driver' => 'token',
-            'provider' => 'users',
+            'provider' => 'employees',
         ],
         'distributer' => [
             'driver' => 'session',
@@ -56,6 +56,10 @@ return [
         'distributer-api' => [
             'driver' => 'token',
             'provider' => 'distributers',
+        ],
+        'employeesApi' => [
+            'driver' => 'session',
+            'provider' => 'employees',
         ],
     ],
 
@@ -84,6 +88,10 @@ return [
         'distributers' => [
             'driver' => 'eloquent',
             'model' => App\Distributer::class,
+        ],
+        'employees' => [
+            'driver' => 'eloquent',
+            'model' => App\EmployeeRegistration::class,
         ],
 
         // 'users' => [
