@@ -96,46 +96,16 @@ class PurchaseMasterController extends Controller
         $this->validate($request, $rules, $messages);
 
         $purchaseMas = new PurchaseMaster();
-
-        if( $request->has('date') ){
-            $purchaseMas->date = date( 'Y-m-d', strtotime($request->input('date')) );
-        }
-
-        if( $request->has('supplier_invoice_no') ){
-            $purchaseMas->supplier_invoice_no = $request->input('supplier_invoice_no');
-        }
-
-        if( $request->has('supplier_name') ){
-            $purchaseMas->supplier_name = $request->input('supplier_name');
-        }
-
-        if( $request->has('cargo') ){
-            $purchaseMas->cargo = $request->input('cargo');
-        }
-
-        if( $request->has('gross_total') ){
-            $purchaseMas->gross_total = $request->input('gross_total');
-        }
-
-        if( $request->has('discount') ){
-            $purchaseMas->discount = $request->input('discount');
-        }
-
-        if( $request->has('cargo_charges') ){
-            $purchaseMas->cargo_charges = $request->input('cargo_charges');
-        }
-
-        if( $request->has('net_total') ){
-            $purchaseMas->net_total = $request->input('net_total');
-        }
-
-        if( $request->has('paid_amount') ){
-            $purchaseMas->paid_amount = $request->input('paid_amount');
-        }
-
-        if( $request->has('bal_amount') ){
-            $purchaseMas->bal_amount = $request->input('bal_amount');
-        }
+        $purchaseMas->date = date( 'Y-m-d', strtotime($request->input('date')) );
+        $purchaseMas->supplier_invoice_no = $request->input('supplier_invoice_no');
+        $purchaseMas->supplier_name = $request->input('supplier_name');
+        $purchaseMas->cargo = $request->input('cargo');
+        $purchaseMas->gross_total = $request->input('gross_total');
+        $purchaseMas->discount = $request->input('discount');
+        $purchaseMas->cargo_charges = $request->input('cargo_charges');
+        $purchaseMas->net_total = $request->input('net_total');
+        $purchaseMas->paid_amount = $request->input('paid_amount');
+        $purchaseMas->bal_amount = $request->input('bal_amount');
         $purchaseMas->detail = $request->input('detail');
         $purchaseMas->save();
 
@@ -194,9 +164,9 @@ class PurchaseMasterController extends Controller
         $transaction = new TransactionTable();
         $params['account_id'] = $accountId->id;
         $params['date'] = date( 'Y-m-d', strtotime($request->date));
-        $params['detail'] = 'Purchase Products from '.$supplier->name.'. Stock Going to Dr. with '.$request->has('net_total').'Rs/-. and Supplier going to Cr. with '.$request->has('net_total').'Rs/-.';
-        $params['dr'] = $request->has('net_total');
-        $params['cr'] = $request->has('net_total');
+        $params['detail'] = 'Purchase Products from '.$supplier->name.'. Stock Going to Dr. with '.$request->get('net_total').'Rs/-. and Supplier going to Cr. with '.$request->get('net_total').'Rs/-.';
+        $params['dr'] = $request->net_total;
+        $params['cr'] = $request->net_total;
         $params['voucher_type'] = 'supplier';
         $params['purchase_invoice'] = $purchaseMas->id;
         $transaction->create($params);
@@ -226,7 +196,6 @@ class PurchaseMasterController extends Controller
 
     public function update(Request $request, $id)
     {
-        //dd($request->all());
         $rules = [
             'date'    =>  'required|max:25',
             'supplier_invoice_no'     =>  'required|max:25',
@@ -255,46 +224,16 @@ class PurchaseMasterController extends Controller
         $this->validate($request, $rules, $messages);
 
         $purchaseMas = PurchaseMaster::find($id);
-
-        if( $request->has('date') ){
-            $purchaseMas->date = date( 'Y-m-d', strtotime($request->input('date')) );
-        }
-
-        if( $request->has('supplier_invoice_no') ){
-            $purchaseMas->supplier_invoice_no = $request->input('supplier_invoice_no');
-        }
-
-        if( $request->has('supplier_name') ){
-            $purchaseMas->supplier_name = $request->input('supplier_name');
-        }
-
-        if( $request->has('cargo') ){
-            $purchaseMas->cargo = $request->input('cargo');
-        }
-
-        if( $request->has('gross_total') ){
-            $purchaseMas->gross_total = $request->input('gross_total');
-        }
-
-        if( $request->has('discount') ){
-            $purchaseMas->discount = $request->input('discount');
-        }
-
-        if( $request->has('cargo_charges') ){
-            $purchaseMas->cargo_charges = $request->input('cargo_charges');
-        }
-
-        if( $request->has('net_total') ){
-            $purchaseMas->net_total = $request->input('net_total');
-        }
-
-        if( $request->has('paid_amount') ){
-            $purchaseMas->paid_amount = $request->input('paid_amount');
-        }
-
-        if( $request->has('bal_amount') ){
-            $purchaseMas->bal_amount = $request->input('bal_amount');
-        }
+        $purchaseMas->date = date( 'Y-m-d', strtotime($request->input('date')) );
+        $purchaseMas->supplier_invoice_no = $request->input('supplier_invoice_no');
+        $purchaseMas->supplier_name = $request->input('supplier_name');
+        $purchaseMas->cargo = $request->input('cargo');
+        $purchaseMas->gross_total = $request->input('gross_total');
+        $purchaseMas->discount = $request->input('discount');
+        $purchaseMas->cargo_charges = $request->input('cargo_charges');
+        $purchaseMas->net_total = $request->input('net_total');
+        $purchaseMas->paid_amount = $request->input('paid_amount');
+        $purchaseMas->bal_amount = $request->input('bal_amount');
         $purchaseMas->detail = $request->input('detail');
 
         if( $request->has('item') ){
@@ -308,7 +247,6 @@ class PurchaseMasterController extends Controller
             $x = 0;
             foreach( $request->get('item') as $key=>$item ){
                 $productTable = PurchaseMasterProductTable::findOrNew($key);
-//                dd($item);
                 $productTable->pur_mas_id = $purchaseMas->id;
                 $productTable->item = $product['item'][$key];
                 $productTable->quantity = $product['quantity'][$key];
@@ -347,7 +285,6 @@ class PurchaseMasterController extends Controller
 
         if( $purchaseMas->update() ) {
 
-//            dd($request->supplier_name);
             $supplier = SupplyRegistration::where("id", $request->supplier_name)->first();
             $accountId = Accounts::where('name', $supplier->name)->first();
             $params['account_id'] = $accountId->id;
@@ -356,12 +293,7 @@ class PurchaseMasterController extends Controller
             $params['dr'] = $request->net_total;
             $params['cr'] = $request->net_total;
             $params['voucher_type'] = 'supplier';
-            $params['purchase_invoice'] = $purchaseMas->id;
-            TransactionTable::firstOrCreate($params);
-//            $transaction->update();
-
-
-
+            TransactionTable::where('purchase_invoice',$purchaseMas->id)->update($params);
 
             Session::flash("Success", "Purchase Master item successfully updated!.");
         }

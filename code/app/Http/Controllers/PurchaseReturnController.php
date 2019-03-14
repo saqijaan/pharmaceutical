@@ -87,46 +87,16 @@ class PurchaseReturnController extends Controller
         $this->validate($request, $rules, $messages);
 
         $purchaseMas = new PurchaseReturn();
-
-        if( $request->has('date') ){
-            $purchaseMas->date = date( 'Y-m-d', strtotime($request->input('date')) );
-        }
-
-        if( $request->has('supplier_invoice_no') ){
-            $purchaseMas->supplier_invoice_no = $request->input('supplier_invoice_no');
-        }
-
-        if( $request->has('supplier_name') ){
-            $purchaseMas->supplier_name = $request->input('supplier_name');
-        }
-
-        if( $request->has('cargo') ){
-            $purchaseMas->cargo = $request->input('cargo');
-        }
-
-        if( $request->has('gross_total') ){
-            $purchaseMas->gross_total = $request->input('gross_total');
-        }
-
-        if( $request->has('discount') ){
-            $purchaseMas->discount = $request->input('discount');
-        }
-
-        if( $request->has('cargo_charges') ){
-            $purchaseMas->cargo_charges = $request->input('cargo_charges');
-        }
-
-        if( $request->has('net_total') ){
-            $purchaseMas->net_total = $request->input('net_total');
-        }
-
-        if( $request->has('paid_amount') ){
-            $purchaseMas->paid_amount = $request->input('paid_amount');
-        }
-
-        if( $request->has('bal_amount') ){
-            $purchaseMas->bal_amount = $request->input('bal_amount');
-        }
+        $purchaseMas->date = date( 'Y-m-d', strtotime($request->input('date')) );
+        $purchaseMas->supplier_invoice_no = $request->input('supplier_invoice_no');
+        $purchaseMas->supplier_name = $request->input('supplier_name');
+        $purchaseMas->cargo = $request->input('cargo');
+        $purchaseMas->gross_total = $request->input('gross_total');
+        $purchaseMas->discount = $request->input('discount');
+        $purchaseMas->cargo_charges = $request->input('cargo_charges');
+        $purchaseMas->net_total = $request->input('net_total');
+        $purchaseMas->paid_amount = $request->input('paid_amount');
+        $purchaseMas->bal_amount = $request->input('bal_amount');
         $purchaseMas->detail = $request->input('detail');
         $purchaseMas->save();
 
@@ -183,10 +153,10 @@ class PurchaseReturnController extends Controller
         $supplier = SupplyRegistration::where("id", $request->input('supplier_name'))->first();
         $accountId = Accounts::where('name', $supplier->name)->first();
         $params['account_id'] = $accountId->id;
-        $params['date'] = date( 'Y,m,d', strtotime($request->date));
-        $params['detail'] = 'Purchase Products from '.$supplier->name.'. Stock Going to Dr. with '.$request->has('net_total').'Rs/-. and Supplier going to Cr. with '.$request->has('net_total').'Rs/-.';
-        $params['dr'] = $request->has('net_total');
-        $params['cr'] = $request->has('net_total');
+        $params['date'] = date( 'Y-m-d', strtotime($request->date));
+        $params['detail'] = 'Purchase Products from '.$supplier->name.'. Stock Going to Dr. with '.$request->get('net_total').'Rs/-. and Supplier going to Cr. with '.$request->get('net_total').'Rs/-.';
+        $params['dr'] = $request->get('net_total');
+        $params['cr'] = $request->get('net_total');
         $params['voucher_type'] = 'supplier';
         $params['purchase_invoice'] = $purchaseMas->id;
         TransactionTable::create(
@@ -245,46 +215,16 @@ class PurchaseReturnController extends Controller
         $this->validate($request, $rules, $messages);
 
         $purchaseMas = PurchaseReturn::find($id);
-
-        if( $request->has('date') ){
-            $purchaseMas->date = date( 'Y-m-d', strtotime($request->input('date')) );
-        }
-
-        if( $request->has('supplier_invoice_no') ){
-            $purchaseMas->supplier_invoice_no = $request->input('supplier_invoice_no');
-        }
-
-        if( $request->has('supplier_name') ){
-            $purchaseMas->supplier_name = $request->input('supplier_name');
-        }
-
-        if( $request->has('cargo') ){
-            $purchaseMas->cargo = $request->input('cargo');
-        }
-
-        if( $request->has('gross_total') ){
-            $purchaseMas->gross_total = $request->input('gross_total');
-        }
-
-        if( $request->has('discount') ){
-            $purchaseMas->discount = $request->input('discount');
-        }
-
-        if( $request->has('cargo_charges') ){
-            $purchaseMas->cargo_charges = $request->input('cargo_charges');
-        }
-
-        if( $request->has('net_total') ){
-            $purchaseMas->net_total = $request->input('net_total');
-        }
-
-        if( $request->has('paid_amount') ){
-            $purchaseMas->paid_amount = $request->input('paid_amount');
-        }
-
-        if( $request->has('bal_amount') ){
-            $purchaseMas->bal_amount = $request->input('bal_amount');
-        }
+        $purchaseMas->date = date( 'Y-m-d', strtotime($request->input('date')) );
+        $purchaseMas->supplier_invoice_no = $request->input('supplier_invoice_no');
+        $purchaseMas->supplier_name = $request->input('supplier_name');
+        $purchaseMas->cargo = $request->input('cargo');
+        $purchaseMas->gross_total = $request->input('gross_total');
+        $purchaseMas->discount = $request->input('discount');
+        $purchaseMas->cargo_charges = $request->input('cargo_charges');
+        $purchaseMas->net_total = $request->input('net_total');
+        $purchaseMas->paid_amount = $request->input('paid_amount');
+        $purchaseMas->bal_amount = $request->input('bal_amount');
         $purchaseMas->detail = $request->input('detail');
 
         if( $request->has('item') ){
@@ -341,17 +281,13 @@ class PurchaseReturnController extends Controller
             $supplier = SupplyRegistration::where("id", $request->supplier_name)->first();
             $accountId = Accounts::where('name', $supplier->name)->first();
             $params['account_id'] = $accountId->id;
-            $params['date'] = date( 'Y,m,d', strtotime($request->date));
+            $params['date'] = date( 'Y-m-d', strtotime($request->date));
             $params['detail'] = 'Purchase Products from '.$supplier->name.'. Stock Going to Dr. with '.$request->net_total.'Rs/-. and Supplier going to Cr. with '.$request->net_total.'Rs/-.';
             $params['dr'] = $request->net_total;
             $params['cr'] = $request->net_total;
             $params['voucher_type'] = 'supplier';
             $params['purchase_invoice'] = $purchaseMas->id;
-            TransactionTable::firstOrCreate($params);
-//            $transaction->update();
-
-
-
+            TransactionTable::where('purchase_invoice',$purchaseMas->id)->update($params);
 
             Session::flash("Success", "Purchase Return item successfully updated!.");
         }

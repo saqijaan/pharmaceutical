@@ -16,6 +16,7 @@ class CreateSchedleModelsTable extends Migration
         Schema::create('schedle_models', function (Blueprint $table) {
             $table->increments('id');
             $table->string('date')->nullable();
+            $table->integer('employee_id')->nullable();
             $table->string('doctor', 70)->nullable();
             $table->string('address', 70)->nullable();
             $table->string('detail', 70)->nullable();
