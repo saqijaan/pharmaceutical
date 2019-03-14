@@ -68,6 +68,13 @@ class Handler extends ExceptionHandler
      */
     protected function unauthenticated($request, AuthenticationException $exception)
     {
+        if( strpos($request->route()->getPrefix(),'pi/v1-2019') >0){
+            header('Content-Type:application/json');
+            exit (json_encode([
+                'success'   => false,
+                'data'      => '401 Unauthorized Access'
+            ]));
+        }
         if ($request->expectsJson()) {
             return response()->json(['error' => 'Unauthenticated.'],401);
         }
