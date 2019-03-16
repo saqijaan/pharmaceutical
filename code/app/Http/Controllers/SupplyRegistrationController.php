@@ -87,8 +87,8 @@ class SupplyRegistrationController extends Controller
         // Account table create data
         $accountRegis = new Accounts();
         $accountRegis->name = $request->input('name');
-        $accountRegis->head_id = 2;
-        $accountRegis->sub_head_id = 7;
+        $accountRegis->head_id = SupplyRegistration::ACCOUNT_HEAD;
+        $accountRegis->sub_head_id = SupplyRegistration::ACCOUNT_SUB_HEAD;
         $accountRegis->save();
 
         // One to ONe Account table create data
@@ -182,8 +182,8 @@ class SupplyRegistrationController extends Controller
         $get1To1Acc = OneToOneAccounts::where('supplier_id', $supRegis->id)->first();
         $accountRegis = Accounts::find($get1To1Acc->account_id);
         $accountRegis->name = $request->input('name');
-        $accountRegis->head_id = 2;
-        $accountRegis->sub_head_id = 7;
+        $accountRegis->head_id = SupplyRegistration::ACCOUNT_HEAD;
+        $accountRegis->sub_head_id = SupplyRegistration::ACCOUNT_SUB_HEAD;
         $accountRegis->update();
         
         // One to One Account table Update

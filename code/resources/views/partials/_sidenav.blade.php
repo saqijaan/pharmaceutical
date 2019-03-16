@@ -83,9 +83,9 @@
                                 <li>
                                     <a href="{{ url('/dashboard/purchase-master') }}"> Purchase OP </a>
                                 </li>
-                                <li>
+                                {{-- <li>
                                     <a href="{{ url('/dashboard/purchase-return') }}"> Purchase Return </a>
-                                </li>
+                                </li> --}}
                                 <li>
                                     <a href="{{ url('/dashboard/supply-registration') }}"> Supplier Registration </a>
                                 </li>
@@ -100,9 +100,9 @@
                                 <li>
                                     <a href="{{ url('/dashboard/sale-master') }}"> Sales Form </a>
                                 </li>
-                                <li>
+                                {{-- <li>
                                     <a href="{{ url('/dashboard/sale-return') }}"> Sales Return </a>
-                                </li>
+                                </li> --}}
                                 <li>
                                     <a href="{{ url('/dashboard/customer-registration') }}"> Customer Registration </a>
                                 </li>

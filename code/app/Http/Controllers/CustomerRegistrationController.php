@@ -87,8 +87,8 @@ class CustomerRegistrationController extends Controller
         // Account table create data
         $accountRegis = new Accounts();
         $accountRegis->name = $request->input('name');
-        $accountRegis->head_id = 1;
-        $accountRegis->sub_head_id = 3;
+        $accountRegis->head_id = CustomerRegistration::ACCOUNT_HEAD;
+        $accountRegis->sub_head_id = CustomerRegistration::ACCOUNT_SUB_HEAD;
         $accountRegis->save();
 
         // One to ONe Account table create data
@@ -148,6 +148,7 @@ class CustomerRegistrationController extends Controller
         ));
 
         $customerRegis = CustomerRegistration::find($id);
+        
         $customerRegis->name        = $request->input('name');
         $customerRegis->email       = $request->input('email');
         $customerRegis->nic         = $request->input('nic');
@@ -180,8 +181,8 @@ class CustomerRegistrationController extends Controller
         $get1To1Acc = OneToOneAccounts::where('customer_id', $id)->first();
         $accountRegis = Accounts::find($get1To1Acc->account_id);
         $accountRegis->name = $request->input('name');
-        $accountRegis->head_id = 1;
-        $accountRegis->sub_head_id = 3;
+        $accountRegis->head_id = CustomerRegistration::ACCOUNT_HEAD;
+        $accountRegis->sub_head_id = CustomerRegistration::ACCOUNT_SUB_HEAD;
         $accountRegis->update();
 
         // One to One Account table Update
@@ -209,17 +210,8 @@ class CustomerRegistrationController extends Controller
             \File::delete(public_path('uploads/customerRegister/s/' . $customerRegis->image));
             \File::delete(public_path('uploads/customerRegister/' . $customerRegis->image));
         }
+        OneToOneAccounts::where('customer_id',$id)->delete();
         $customerRegis->delete();
-
-        // Account table delete
-        $get1To1Acc = OneToOneAccounts::where('customer_id', $id)->first();
-        $accountRegis = Accounts::find($get1To1Acc->account_id);
-        $accountRegis->delete();
-
-        // One to One Account table delete
-        OneToOneAccounts::where('customer_id', $get1To1Acc->customer_id)->delete();
-
-
 
         Session::flash('Success', $id.' Customer has been successfully deleted!.');
         return redirect('/dashboard/customer-registration');

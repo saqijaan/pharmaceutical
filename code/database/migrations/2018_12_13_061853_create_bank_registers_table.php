@@ -15,6 +15,7 @@ class CreateBankRegistersTable extends Migration
     {
         Schema::create('bank_registers', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('account_id');
             $table->string('name', 100)->nullable();
             $table->timestamps();
         });

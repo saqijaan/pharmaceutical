@@ -159,7 +159,7 @@ class SaleReturnController extends Controller
         $params['dr'] = $request->net_total;
         $params['cr'] = $request->net_total;
         $params['voucher_type'] = 'customer';
-        $params['purchase_invoice'] = $saleMas->id;
+        $params['sale_invoice'] = $saleMas->id;
         TransactionTable::firstOrCreate($params);
 
 
@@ -285,10 +285,7 @@ class SaleReturnController extends Controller
             $params['dr'] = $request->net_total;
             $params['cr'] = $request->net_total;
             $params['voucher_type'] = 'customer';
-            $params['purchase_invoice'] = $saleMas->id;
-            TransactionTable::firstOrCreate($params);
-
-
+            TransactionTable::where('sale_invoice',$saleMas->id)->update($params);
             Session::flash("Success", "Sales Return items successfully updated!.");
 
         }

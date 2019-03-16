@@ -96,8 +96,8 @@ class DistributerRegistrationController extends Controller
         // Account table create data
         $accountRegis = new Accounts();
         $accountRegis->name = $request->input('name');
-        $accountRegis->head_id = 1;
-        $accountRegis->sub_head_id = 4;
+        $accountRegis->head_id = DistributerRegistration::ACCOUNT_HEAD;
+        $accountRegis->sub_head_id = DistributerRegistration::ACCOUNT_SUB_HEAD;
         
         $accountRegis->save();
 
@@ -194,8 +194,8 @@ class DistributerRegistrationController extends Controller
         $get1To1Acc = OneToOneAccounts::where('distributer_id', $distributerRegis->id)->first();
         $accountRegis = Accounts::find($get1To1Acc->account_id);
         $accountRegis->name = $request->input('name');
-        $accountRegis->head_id = 1;
-        $accountRegis->sub_head_id = 4;
+        $accountRegis->head_id = DistributerRegistration::ACCOUNT_HEAD;
+        $accountRegis->sub_head_id = DistributerRegistration::ACCOUNT_SUB_HEAD;
         $accountRegis->update();
         
         $oneToOneAcc['account_id'] = $accountRegis->id;
@@ -225,17 +225,9 @@ class DistributerRegistrationController extends Controller
             \File::delete(public_path('uploads/distributerRegister/' . $distributerRegis->image));
         }
         
+        $distributerRegis->accounts->delete();
         Distributer::find($distributerRegis->id)->delete();
         $distributerRegis->delete();
-        // Account table delete
-        $get1To1Acc = OneToOneAccounts::where('distributer_id', $id)->first();
-        $accountRegis = Accounts::find($get1To1Acc->account_id);
-        $accountRegis->delete();
-
-        // One to One Account table delete
-        OneToOneAccounts::where('distributer_id', $get1To1Acc->distributer_id)->delete();
-
-
 
         Session::flash('Success', $id.' Distributer has been successfully deleted!.');
         return redirect('/dashboard/distributer-registration');

@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use PDF;
+use Exception;
 use App\Accounts;
-use App\ProductRegistration;
 use App\PurchaseMaster;
-use App\PurchaseMasterInvoiceImageTable;
-use App\PurchaseMasterProductTable;
-use App\SupplyRegistration;
 use App\TransactionTable;
+use App\SupplyRegistration;
+use App\ProductRegistration;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\PurchaseMasterProductTable;
 use Illuminate\Support\Facades\Session;
+use App\PurchaseMasterInvoiceImageTable;
 use Intervention\Image\ImageManagerStatic as Image;
-use PDF;
 
 class PurchaseMasterController extends Controller
 {
@@ -95,83 +96,146 @@ class PurchaseMasterController extends Controller
 
         $this->validate($request, $rules, $messages);
 
-        $purchaseMas = new PurchaseMaster();
-        $purchaseMas->date = date( 'Y-m-d', strtotime($request->input('date')) );
-        $purchaseMas->supplier_invoice_no = $request->input('supplier_invoice_no');
-        $purchaseMas->supplier_name = $request->input('supplier_name');
-        $purchaseMas->cargo = $request->input('cargo');
-        $purchaseMas->gross_total = $request->input('gross_total');
-        $purchaseMas->discount = $request->input('discount');
-        $purchaseMas->cargo_charges = $request->input('cargo_charges');
-        $purchaseMas->net_total = $request->input('net_total');
-        $purchaseMas->paid_amount = $request->input('paid_amount');
-        $purchaseMas->bal_amount = $request->input('bal_amount');
-        $purchaseMas->detail = $request->input('detail');
-        $purchaseMas->save();
+        try{
+            DB::transaction(function () use($request){
 
-        if( $request->has('item') ){
-            $product = array(
-                    'item' => $request->get('item'),
-                    'quantity' => $request->get('quantity'),
-                    'cost_price' => $request->get('cost_price'),
-                    'per_item_dis' => $request->get('per_item_dis'),
-                    'total' => $request->get('total'),
-                );
-            $x = 0;
-            foreach( $request->get('item') as $item ){
-                $productTable = new PurchaseMasterProductTable();
-                $productTable->pur_mas_id = $purchaseMas->id;
-                $productTable->item = $product['item'][$x];
-                $productTable->quantity = $product['quantity'][$x];
-                $productTable->cost_price = $product['cost_price'][$x];
-                $productTable->per_item_dis = $product['per_item_dis'][$x];
-                $productTable->total = $product['total'][$x];
-                $productTable->save();
-                $x++;
-            }
+                $purchaseMas = new PurchaseMaster();
+                $purchaseMas->date = date( 'Y-m-d', strtotime($request->input('date')) );
+                $purchaseMas->supplier_invoice_no = $request->input('supplier_invoice_no');
+                $purchaseMas->supplier_name = $request->input('supplier_name');
+                $purchaseMas->cargo = $request->input('cargo');
+                $purchaseMas->gross_total = $request->input('gross_total');
+                $purchaseMas->discount = $request->input('discount');
+                $purchaseMas->cargo_charges = $request->input('cargo_charges');
+                $purchaseMas->net_total = $request->input('net_total');
+                $purchaseMas->paid_amount = $request->input('paid_amount');
+                $purchaseMas->bal_amount = $request->input('bal_amount');
+                $purchaseMas->detail = $request->input('detail');
+                $purchaseMas->save();
+
+                /**
+                 * Save Items to Databse 
+                 */
+                if( $request->has('item') ){
+                    $product = array(
+                            'item' => $request->get('item'),
+                            'quantity' => $request->get('quantity'),
+                            'cost_price' => $request->get('cost_price'),
+                            'per_item_dis' => $request->get('per_item_dis'),
+                            'total' => $request->get('total'),
+                        );
+                    $x = 0;
+                    foreach( $request->get('item') as $item ){
+                        $productTable = new PurchaseMasterProductTable();
+                        $productTable->pur_mas_id = $purchaseMas->id;
+                        $productTable->item = $product['item'][$x];
+                        $productTable->quantity = $product['quantity'][$x];
+                        $productTable->cost_price = $product['cost_price'][$x];
+                        $productTable->per_item_dis = $product['per_item_dis'][$x];
+                        $productTable->total = $product['total'][$x];
+                        $productTable->save();
+                        $x++;
+                    }
+                }
+
+                /**
+                 * Save Images to Database
+                 */
+                if( $request->hasFile('image') ) {
+
+                    foreach( $request->image as $image ) {
+                        $purMasInvoiceImage = new PurchaseMasterInvoiceImageTable();
+                        $apk_file =  $image;
+                        $ext = $apk_file->extension();
+                        $name = uniqid();
+                        $imageName = $name . '.' . $ext;
+                        $s_path =  'uploads/purMasterInvoiceImage/s';
+                        $m_path =  'uploads/purMasterInvoiceImage/m';
+                        if (!file_exists($s_path))
+                            mkdir($s_path, 777, true);
+                        if (!file_exists($m_path))
+                            mkdir($m_path, 777, true);
+                        Image::make($apk_file)->resize(100, 60)->save($s_path . '/' . $imageName);
+                        Image::make($apk_file)->resize(220, 220)->save($m_path . '/' . $imageName);
+                        $apk_file->move( 'uploads/purMasterInvoiceImage', $imageName);
+                        $purMasInvoiceImage->image = $imageName;
+                        $purMasInvoiceImage->pur_mas_invoice_img_id = $purchaseMas->id;
+                        $purMasInvoiceImage->save();
+                    }
+
+                }
+
+                /**
+                 * Save Transactions
+                 */
+                $supplier           = SupplyRegistration::find($request->input('supplier_name'));
+                $supplierAccount    = $supplier->accounts->account;
+                $supplierAccountId  = $supplierAccount->id;
+
+                $details = 'Purchase Products from '.$supplier->name.'. Stock Going to Dr. with '.$request->get('net_total').'Rs/-. and Supplier going to Cr. with '.$request->get('net_total').'Rs/-.';
+                /**
+                 * Transaction 1 Stock Debit
+                 */
+                TransactionTable::create([
+                    'account_id'    => Accounts::STOCK_ACCOUNT,
+                    'sr'            => 1,
+                    'date'          => date( 'Y-m-d', strtotime($request->date)),
+                    'detail'        => $details,
+                    'dr'            => $request->net_total,
+                    'cr'            => 0,
+                    'purchase_invoice'  => $purchaseMas->id,
+                ]);
+
+            
+                /**
+                 * Transaction 2 Supplier Credit
+                 */
+                TransactionTable::create([
+                    'account_id'    => $supplierAccountId,
+                    'sr'            => 2,
+                    'date'          => date( 'Y-m-d', strtotime($request->date)),
+                    'detail'        => $details,
+                    'dr'            => 0,
+                    'cr'            => $request->net_total,
+                    'purchase_invoice'  => $purchaseMas->id,
+                ]);
+
+                /**
+                 * if We Pay we have Two other Transactions
+                 */
+
+                if ($request->paid_amount > 0) :
+                    /**
+                     * Transaction 3 Supplier Debit 
+                     */
+                    TransactionTable::create([
+                        'account_id'    => Accounts::STOCK_ACCOUNT,
+                        'sr'            => 3,
+                        'date'          => date( 'Y-m-d', strtotime($request->date)),
+                        'detail'        => $details,
+                        'dr'            => $request->paid_amount,
+                        'cr'            => 0,
+                        'purchase_invoice'  => $purchaseMas->id,
+                    ]); 
+                    /**
+                     * Transaction 4 Cash Credit
+                     */
+
+                    TransactionTable::create([
+                        'account_id'    => Accounts::STOCK_ACCOUNT,
+                        'sr'            => 4,
+                        'date'          => date( 'Y-m-d', strtotime($request->date)),
+                        'detail'        => $details,
+                        'dr'            => 0,
+                        'cr'            => $request->paid_amount,
+                        'purchase_invoice'  => $purchaseMas->id,
+                    ]); 
+                endif;
+            });
+            Session::flash("Success","Purhcase Successfull");
+        }catch(Exception $ex){
+            Session::flash("Success","Purchase Error!. Erro:".$ex->getMessage());
         }
-
-        if( $request->hasFile('image') ) {
-
-            foreach( $request->image as $image ) {
-                $purMasInvoiceImage = new PurchaseMasterInvoiceImageTable();
-                $apk_file =  $image;
-                $ext = $apk_file->extension();
-                $name = uniqid();
-                $imageName = $name . '.' . $ext;
-                $s_path =  'uploads/purMasterInvoiceImage/s';
-                $m_path =  'uploads/purMasterInvoiceImage/m';
-                if (!file_exists($s_path))
-                    mkdir($s_path, 777, true);
-                if (!file_exists($m_path))
-                    mkdir($m_path, 777, true);
-                Image::make($apk_file)->resize(100, 60)->save($s_path . '/' . $imageName);
-                Image::make($apk_file)->resize(220, 220)->save($m_path . '/' . $imageName);
-                $apk_file->move( 'uploads/purMasterInvoiceImage', $imageName);
-                $purMasInvoiceImage->image = $imageName;
-                $purMasInvoiceImage->pur_mas_invoice_img_id = $purchaseMas->id;
-                $purMasInvoiceImage->save();
-            }
-
-        }
-
-
-
-
-
-        $supplier = SupplyRegistration::where("id", $request->input('supplier_name'))->first();
-        $accountId = Accounts::where('name', $supplier->name)->first();
-        $transaction = new TransactionTable();
-        $params['account_id'] = $accountId->id;
-        $params['date'] = date( 'Y-m-d', strtotime($request->date));
-        $params['detail'] = 'Purchase Products from '.$supplier->name.'. Stock Going to Dr. with '.$request->get('net_total').'Rs/-. and Supplier going to Cr. with '.$request->get('net_total').'Rs/-.';
-        $params['dr'] = $request->net_total;
-        $params['cr'] = $request->net_total;
-        $params['voucher_type'] = 'supplier';
-        $params['purchase_invoice'] = $purchaseMas->id;
-        $transaction->create($params);
-
-        Session::flash("Success","Purchase Master item successfully register!.");
         return redirect('/dashboard/purchase-master');
 
     }
@@ -222,80 +286,145 @@ class PurchaseMasterController extends Controller
         ];
 
         $this->validate($request, $rules, $messages);
-
-        $purchaseMas = PurchaseMaster::find($id);
-        $purchaseMas->date = date( 'Y-m-d', strtotime($request->input('date')) );
-        $purchaseMas->supplier_invoice_no = $request->input('supplier_invoice_no');
-        $purchaseMas->supplier_name = $request->input('supplier_name');
-        $purchaseMas->cargo = $request->input('cargo');
-        $purchaseMas->gross_total = $request->input('gross_total');
-        $purchaseMas->discount = $request->input('discount');
-        $purchaseMas->cargo_charges = $request->input('cargo_charges');
-        $purchaseMas->net_total = $request->input('net_total');
-        $purchaseMas->paid_amount = $request->input('paid_amount');
-        $purchaseMas->bal_amount = $request->input('bal_amount');
-        $purchaseMas->detail = $request->input('detail');
-
-        if( $request->has('item') ){
-            $product = array(
-                'item' => $request->get('item'),
-                'quantity' => $request->get('quantity'),
-                'cost_price' => $request->get('cost_price'),
-                'per_item_dis' => $request->get('per_item_dis'),
-                'total' => $request->get('total'),
-            );
-            $x = 0;
-            foreach( $request->get('item') as $key=>$item ){
-                $productTable = PurchaseMasterProductTable::findOrNew($key);
-                $productTable->pur_mas_id = $purchaseMas->id;
-                $productTable->item = $product['item'][$key];
-                $productTable->quantity = $product['quantity'][$key];
-                $productTable->cost_price = $product['cost_price'][$key];
-                $productTable->per_item_dis = $product['per_item_dis'][$key];
-                $productTable->total = $product['total'][$key];
-                $productTable->save();
-                $x++;
-            }
-
-        }
-
-        if( $request->hasFile('image') ) {
-
-            foreach( $request->image as $key=>$image ) {
-                $purMasInvoiceImage = PurchaseMasterInvoiceImageTable::findOrNew($key);
-                $apk_file =  $image;
-                $ext = $apk_file->extension();
-                $name = uniqid();
-                $imageName = $name . '.' . $ext;
-                $s_path =  'uploads/purMasterInvoiceImage/s';
-                $m_path =  'uploads/purMasterInvoiceImage/m';
-                if (!file_exists($s_path))
-                    mkdir($s_path, 777, true);
-                if (!file_exists($m_path))
-                    mkdir($m_path, 777, true);
-                Image::make($apk_file)->resize(100, 60)->save($s_path . '/' . $imageName);
-                Image::make($apk_file)->resize(220, 220)->save($m_path . '/' . $imageName);
-                $apk_file->move( 'uploads/purMasterInvoiceImage', $imageName);
-                $purMasInvoiceImage->image = $imageName;
-                $purMasInvoiceImage->pur_mas_invoice_img_id = $purchaseMas->id;
-                $purMasInvoiceImage->save();
-            }
-
-        }
-
-        if( $purchaseMas->update() ) {
-
-            $supplier = SupplyRegistration::where("id", $request->supplier_name)->first();
-            $accountId = Accounts::where('name', $supplier->name)->first();
-            $params['account_id'] = $accountId->id;
-            $params['date'] = date( 'Y-m-d', strtotime($request->date));
-            $params['detail'] = 'Purchase Products from '.$supplier->name.'. Stock Going to Dr. with '.$request->net_total.'Rs/-. and Supplier going to Cr. with '.$request->net_total.'Rs/-.';
-            $params['dr'] = $request->net_total;
-            $params['cr'] = $request->net_total;
-            $params['voucher_type'] = 'supplier';
-            TransactionTable::where('purchase_invoice',$purchaseMas->id)->update($params);
-
-            Session::flash("Success", "Purchase Master item successfully updated!.");
+        try{
+            DB::transaction(function () use($request,$id) {
+                $purchaseMas = PurchaseMaster::find($id);
+                $purchaseMas->date = date( 'Y-m-d', strtotime($request->input('date')) );
+                $purchaseMas->supplier_invoice_no = $request->input('supplier_invoice_no');
+                $purchaseMas->supplier_name = $request->input('supplier_name');
+                $purchaseMas->cargo = $request->input('cargo');
+                $purchaseMas->gross_total = $request->input('gross_total');
+                $purchaseMas->discount = $request->input('discount');
+                $purchaseMas->cargo_charges = $request->input('cargo_charges');
+                $purchaseMas->net_total = $request->input('net_total');
+                $purchaseMas->paid_amount = $request->input('paid_amount');
+                $purchaseMas->bal_amount = $request->input('bal_amount');
+                $purchaseMas->detail = $request->input('detail');
+    
+                if( $request->has('item') ){
+                    $product = array(
+                        'item' => $request->get('item'),
+                        'quantity' => $request->get('quantity'),
+                        'cost_price' => $request->get('cost_price'),
+                        'per_item_dis' => $request->get('per_item_dis'),
+                        'total' => $request->get('total'),
+                    );
+                    $x = 0;
+                    foreach( $request->get('item') as $key=>$item ){
+                        $productTable = PurchaseMasterProductTable::findOrNew($key);
+                        $productTable->pur_mas_id = $purchaseMas->id;
+                        $productTable->item = $product['item'][$key];
+                        $productTable->quantity = $product['quantity'][$key];
+                        $productTable->cost_price = $product['cost_price'][$key];
+                        $productTable->per_item_dis = $product['per_item_dis'][$key];
+                        $productTable->total = $product['total'][$key];
+                        $productTable->save();
+                        $x++;
+                    }
+    
+                }
+    
+                if( $request->hasFile('image') ) {
+    
+                    foreach( $request->image as $key=>$image ) {
+                        $purMasInvoiceImage = PurchaseMasterInvoiceImageTable::findOrNew($key);
+                        $apk_file =  $image;
+                        $ext = $apk_file->extension();
+                        $name = uniqid();
+                        $imageName = $name . '.' . $ext;
+                        $s_path =  'uploads/purMasterInvoiceImage/s';
+                        $m_path =  'uploads/purMasterInvoiceImage/m';
+                        if (!file_exists($s_path))
+                            mkdir($s_path, 777, true);
+                        if (!file_exists($m_path))
+                            mkdir($m_path, 777, true);
+                        Image::make($apk_file)->resize(100, 60)->save($s_path . '/' . $imageName);
+                        Image::make($apk_file)->resize(220, 220)->save($m_path . '/' . $imageName);
+                        $apk_file->move( 'uploads/purMasterInvoiceImage', $imageName);
+                        $purMasInvoiceImage->image = $imageName;
+                        $purMasInvoiceImage->pur_mas_invoice_img_id = $purchaseMas->id;
+                        $purMasInvoiceImage->save();
+                    }
+    
+                }
+    
+                if( $purchaseMas->update() ) {
+    
+                    /**
+                     * Save Transactions
+                     */
+                    $supplier           = SupplyRegistration::find($request->input('supplier_name'));
+                    $supplierAccount    = $supplier->accounts->account;
+                    $supplierAccountId  = $supplierAccount->id;
+    
+                    $details = 'Purchase Products from '.$supplier->name.'. Stock Going to Dr. with '.$request->get('net_total').'Rs/-. and Supplier going to Cr. with '.$request->get('net_total').'Rs/-.';
+    
+                    /**
+                     * Transaction 1 Stock Debit
+                     */
+                    TransactionTable::firstOrCreate(['sr'=>1,'purchase_invoice'=>$purchaseMas->id])->update([
+                        'account_id'    => Accounts::STOCK_ACCOUNT,
+                        'sr'            => 1,
+                        'date'          => date( 'Y-m-d', strtotime($request->date)),
+                        'detail'        => $details,
+                        'dr'            => $request->net_total,
+                        'cr'            => 0,
+                        'purchase_invoice'  => $purchaseMas->id,
+                    ]);
+       
+                    /**
+                     * Transaction 2 Supplier Credit
+                     */
+                    TransactionTable::firstOrCreate(['sr'=>2,'purchase_invoice'=>$purchaseMas->id])->update([
+                        'account_id'    => $supplierAccountId,
+                        'sr'            => 2,
+                        'date'          => date( 'Y-m-d', strtotime($request->date)),
+                        'detail'        => $details,
+                        'dr'            => 0,
+                        'cr'            => $request->net_total,
+                        'purchase_invoice'  => $purchaseMas->id,
+                    ]);
+    
+                    /**
+                     * if We Pay we have Two other Transactions
+                     */
+    
+                    if ($request->paid_amount > 0) :
+                        /**
+                         * Transaction 3 Supplier Debit 
+                         */
+                        TransactionTable::firstOrCreate(['sr'=>3,'purchase_invoice'=>$purchaseMas->id])->update([
+                            'account_id'    => Accounts::STOCK_ACCOUNT,
+                            'sr'            => 3,
+                            'date'          => date( 'Y-m-d', strtotime($request->date)),
+                            'detail'        => $details,
+                            'dr'            => $request->paid_amount,
+                            'cr'            => 0,
+                            'purchase_invoice'  => $purchaseMas->id,
+                        ]); 
+                        /**
+                         * Transaction 4 Cash Credit
+                         */
+    
+                        TransactionTable::firstOrCreate(['sr'=>4,'purchase_invoice'=>$purchaseMas->id])->update([
+                            'account_id'    => Accounts::STOCK_ACCOUNT,
+                            'sr'            => 4,
+                            'date'          => date( 'Y-m-d', strtotime($request->date)),
+                            'detail'        => $details,
+                            'dr'            => 0,
+                            'cr'            => $request->paid_amount,
+                            'purchase_invoice'  => $purchaseMas->id,
+                        ]);
+                    else:
+                        TransactionTable::whereIn('sr', [3,4])->where('purchase_invoice',$purchaseMas->id)->delete(); 
+                    endif;
+                
+                    Session::flash("Success", "Purchase Master item successfully updated!.");
+                }
+            });
+        }catch(Exception $ex){
+            dd($ex);
+            Session::flash("Success", "Purchase Update Error. Error: ".$ex->getMessage());
         }
         return redirect('/dashboard/purchase-master');
 
@@ -304,6 +433,7 @@ class PurchaseMasterController extends Controller
     public function destroy($id)
     {
         //
+        TransactionTable::where('purchase_invoice',$id)->delete();
         $purchaseMas = PurchaseMaster::find($id);
         $purchaseMas->delete();
         $purchaseMasPros = PurchaseMasterProductTable::where('pur_mas_id',$id)->delete();

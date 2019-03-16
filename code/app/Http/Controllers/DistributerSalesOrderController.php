@@ -165,7 +165,6 @@ class DistributerSalesOrderController extends Controller
             $x = 0;
             foreach( $request->get('item') as $key=>$item ){
                 $productTable = DistributerSalesOrderItems::findOrNew($key);
-//                dd($item);
                 $productTable->dis_sls_odr_id = $disSalesOdrs->id;
                 $productTable->item = $product['item'][$key];
                 $productTable->quantity = $product['quantity'][$key];

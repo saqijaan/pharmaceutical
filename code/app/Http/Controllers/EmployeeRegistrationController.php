@@ -90,8 +90,8 @@ class EmployeeRegistrationController extends Controller
         // Account table create data
         $accountRegis = new Accounts();
         $accountRegis->name = $request->input('name');
-        $accountRegis->head_id = 2;
-        $accountRegis->sub_head_id = 8;
+        $accountRegis->head_id = EmployeeRegistration::ACCOUNT_HEAD;
+        $accountRegis->sub_head_id = EmployeeRegistration::ACCOUNT_SUB_HEAD;
         $accountRegis->save();
 
         // One to ONe Account table create data
@@ -187,8 +187,8 @@ class EmployeeRegistrationController extends Controller
         $get1To1Acc = OneToOneAccounts::where('employe_id', $employeeRegis->id)->first();
         $accountRegis = Accounts::find($get1To1Acc->account_id);
         $accountRegis->name = $request->input('name');
-        $accountRegis->head_id = 2;
-        $accountRegis->sub_head_id = 8;
+        $accountRegis->head_id = EmployeeRegistration::ACCOUNT_HEAD;
+        $accountRegis->sub_head_id = EmployeeRegistration::ACCOUNT_SUB_HEAD;
         $accountRegis->update();
 
         // One to One Account table Update

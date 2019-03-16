@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Accounts;
 use App\BankRegister;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -35,15 +36,19 @@ class BankRegisterController extends Controller
 
         $this->validate($request, $rules, $message);
 
+        $bankAccount = new Accounts;
+        $bankAccount->name          = $request->input('name');
+        $bankAccount->sub_head_id   = BankRegister::ACCOUNT_HEAD;
+        $bankAccount->head_id       = BankRegister::ACCOUNT_SUB_HEAD;
+        $bankAccount->save();
+
         $bnkRgstrs = new BankRegister();
-
-        if( $request->has('name') ){
-            $bnkRgstrs->name = $request->input('name');
-        }
-
+        $bnkRgstrs->name        = $request->input('name');
+        $bnkRgstrs->account_id  = $bankAccount->id;
         $bnkRgstrs->save();
+        
 
-        Session::flash('Success', 'Account Head has been successfully registered');
+        Session::flash('Success', 'Bank has successfully registered');
 
         return redirect('/dashboard/bank-register');
 
@@ -75,12 +80,13 @@ class BankRegisterController extends Controller
 
         $this->validate($request, $rules, $customMessages);
         $bnkRgstrs = BankRegister::find($id);
-
-        if( $request->has('name') ){
-            $bnkRgstrs->name = $request->input('name');
-        }
-
+        $bnkRgstrs->name = $request->input('name');
         $bnkRgstrs->update();
+
+        $bnkRgstrs->account->update([
+            'name' => $request->input('name')
+        ]);
+
         Session::flash('Success', $id.' Bank Name has been successfully updated');
 
         return redirect('/dashboard/bank-register');
