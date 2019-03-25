@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('pharma-theme.index');
+    return redirect()->route('login');
 });
 
 Route::resource('/top3Cols', 'IndexTopThreeColumnController');
