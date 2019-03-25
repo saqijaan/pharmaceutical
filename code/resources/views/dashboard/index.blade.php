@@ -35,7 +35,7 @@
 
         <!-- top tiles -->
         <div class="row tile_count">
-           <h2 class="text-center">
+           <h2 class="text-center" style="font-size: 46pt;color: #ff7f27;">
                Biomerge Pharmaceuticals
            </h2>
         </div>
