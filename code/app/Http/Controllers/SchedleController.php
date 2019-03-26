@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\DoctorRegis;
+use PDF;
 use App\QuizAnswer;
+use App\DoctorRegis;
 use App\SchedleModel;
 use Illuminate\Http\Request;
+use App\EmployeeRegistration;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
-use PDF;
 
 class SchedleController extends Controller
 {
@@ -113,7 +114,7 @@ class SchedleController extends Controller
     public function index()
     {
 
-        $schedules = DB::table('schedle_models')->get();
+        $schedules = SchedleModel::all();
 
         return view('dashboard.admin-panel.scheduleRegis.index', ['schedules'=>$schedules] );
     }
@@ -121,8 +122,10 @@ class SchedleController extends Controller
     public function create()
     {
         //
-        $schedules = DB::table('schedle_models')->get();
-        return view('dashboard.admin-panel.scheduleRegis.new', [ 'schedules'=>$schedules] );
+        $docters = DoctorRegis::all();
+        $emloyees = EmployeeRegistration::all();
+        $schedules = SchedleModel::all();
+        return view('dashboard.admin-panel.scheduleRegis.new', compact( 'schedules','docters','emloyees'));
 
     }
 
@@ -130,7 +133,8 @@ class SchedleController extends Controller
     {
         //
         $rules = [
-            'doctor'  =>  'required|max:70',
+            'doctor'  =>  'required|integer',
+            'employee' => 'required|integer',
             'date'  =>  'required|max:25',
             'address'  =>  'required|max:99',
             'detail'  =>  'max:150',
@@ -150,6 +154,9 @@ class SchedleController extends Controller
 
         $this->validate($request, $rules, $messages);
 
+        $request->merge([
+            'employee_id' => $request->employee
+        ]);
         $data = $request->all();
 
         $data['date'] = date('Y-m-d',strtotime($request->date)).' '.$request->time;

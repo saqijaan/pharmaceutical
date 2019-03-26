@@ -68,14 +68,18 @@ Route::post('v1-2019/login', function(Request $request) {
 
 
 Route::group(['prefix' => 'v1-2019','middleware'=>'auth:api'], function() {
-	
+
 	Route::get('/users',function(){
 		return response()->json(
 			\App\EmployeeRegistration::with('answers','answers.quiz')->get()
 		);
 	});
+
+	/**
+	 * Get All Quizes
+	 */
 	Route::get('/quize/list', function (Request $request){
-		$employe_id = $request->employe_id;
+		$employe_id = \Auth::guard('api')->Id();
 		/**
 		 * Get already Answered Questions
 		 */
@@ -89,11 +93,13 @@ Route::group(['prefix' => 'v1-2019','middleware'=>'auth:api'], function() {
 		);
 	});
 
+	/**
+	 * Save User Answer
+	 */
 	Route::post('/quize/answer', function (Request $request){
 		$rules = [
 			'question' 	 => 'required|integer',
 			'answer'	 => 'string',
-			'employe_id' => 'required'
 		];
 
 		
@@ -107,7 +113,7 @@ Route::group(['prefix' => 'v1-2019','middleware'=>'auth:api'], function() {
 		}
 		
 		$answer = new \App\QuizAnswer;
-		$answer->employe_id = $request->employe_id;
+		$answer->employe_id = \Auth::guard('api')->Id();
 		$answer->quiz_id 	= $request->question;
 		$answer->answer 	= $request->answer;
 		$answer->save();
@@ -118,6 +124,32 @@ Route::group(['prefix' => 'v1-2019','middleware'=>'auth:api'], function() {
 		]);
 	});
 
+	/**
+	 * Get user Schedules
+	 */
+	Route::get('/schedule', function(Request $request){
+		$start_date = $request->has('start_date') 	? $request->start_date.' 00:00:00' : date('Y-m-d 00:00:00');
+		$end_date   = $request->has('end_date') 	? $request->end_date.' 00:59:59'   : date('Y-m-d 23:59:59');
+
+		$empId = \Auth::guard('api')->Id();
+
+		return \App\SchedleModel::
+								where('employee_id',$empId)
+								->with(['Doctor'=>function($query){
+									$query->select('id','name','x','y');
+								}])
+								->whereBetween('created_at',[$start_date,$end_date])
+								->get();
+	});
+
+	Route::post('/schedule/store',function(Request $request){
+
+		$empId = \Auth::guard('api')->Id();
+		$scheduleId = $request->scheduleId;
+
+
+
+	});
 });
 
 

@@ -93,10 +93,27 @@
                                     <label class="control-label col-md-12 col-sm-12 col-xs-12" for="doctor" style="text-align:left;"> Doctor <span class="required">*</span>
                                     </label>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <input type="text" id="doctor" required="required" name="doctor" class="form-control col-md-7 col-xs-12">
+                                        <select name="doctor" id="" class="form-control" required>
+                                            <option value=""> Select Docter </option>
+                                            @foreach ($docters as $docter)
+                                                <option value="{{ $docter->id }}">{{ $docter->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-3 col-sm-6 col-xs-12">
+                                    <label class="control-label col-md-12 col-sm-12 col-xs-12" for="doctor" style="text-align:left;"> Employee <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <select name="employee" id="" class="form-control" required>
+                                            <option value=""> Select Employee </option>
+                                            @foreach ($emloyees as $emp)
+                                                <option value="{{ $emp->id }}">{{ $emp->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-12 col-sm-12 col-xs-12">
                                     <label class="control-label col-md-12 col-sm-12 col-xs-12" for="city" style="text-align:left;"> City <span class="required">*</span>
                                     </label>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
