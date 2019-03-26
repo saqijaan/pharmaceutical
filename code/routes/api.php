@@ -145,10 +145,35 @@ Route::group(['prefix' => 'v1-2019','middleware'=>'auth:api'], function() {
 	Route::post('/schedule/store',function(Request $request){
 
 		$empId = \Auth::guard('api')->Id();
-		$scheduleId = $request->scheduleId;
 
+		$schedule = \App\SchedleModel::find($request->scheduleId);
 
+		if(!$schedule){
+			return response()->json([
+				'success' => false,
+				'message' => 'Invalid Schedule'
+			]);
+		}
+		$result = $schedule->update([
+			'detail' 		=> $request->detail,
+			'gift'   		=> $request->gift,
+			'sample'  		=> $request->sample,
+			'brochure' 		=> $request->brochure,
+			'x' 			=> $request->x,
+			'y' 			=> $request->y,
+			'visited' 		=> 1
+		]);
 
+		if($result){
+			return response()->json([
+				'success' => true,
+				'message' => 'Call Submitted'
+			]);
+		}
+		return response()->json([
+			'success' => false,
+			'message' => 'Call Submission Error'
+		]);
 	});
 });
 
