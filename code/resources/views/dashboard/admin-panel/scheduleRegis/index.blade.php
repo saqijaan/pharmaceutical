@@ -83,7 +83,7 @@
                                         <tr class="even pointer">
                                             <td class=" "> {{ $schedule->id }}</td>
                                             <td class=" "> {{ $schedule->date }} </td>
-                                            <td class=" "> {{ $schedule->Docter ? $schedule->Docter->name : 'Docter not found' }}  </td>
+                                            <td class=" "> {{ $schedule->doctor ? $schedule->doctor->name : 'Docter not found' }}  </td>
                                             <td class=" "> {{ $schedule->address  }}  </td>
                                             <td class=" last">
                                                 <a class="btn btn-primary opnBtn" data-mdlid="{{$schedule->id}}" type="button"> view </a>
