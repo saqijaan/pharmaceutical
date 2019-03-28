@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\DailySummary;
 
 /*
 |--------------------------------------------------------------------------
@@ -185,7 +186,29 @@ Route::group(['prefix' => 'v1-2019','middleware'=>'auth:api'], function() {
 
 	});
 
+	Route::post('/summary/daily/store',function(Request $request){
+		$rules = [
+			'employee_id' => 'required|integer'
+		];
 
+		
+		$validation = Validator::make($request->all(), $rules);
+
+		if($validation->fails()){
+			return response()->json([
+				'success' => false,
+				'message' => $validation->errors()->first()
+			]);
+		}
+		$result = DailySummary::create([
+			'name' => 'Flight 10'
+		]);
+
+		return response()->json([
+			'success' => true,
+			'message' => 'Summary Saved'
+		]);
+	});
 });
 
 

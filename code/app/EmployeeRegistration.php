@@ -18,4 +18,8 @@ class EmployeeRegistration extends Authenticatable
     public function answers(){
         return $this->hasMany( QuizAnswer::class , 'employe_id','id' );
     }
+
+    public function dailySummaries(){
+        return $this->hasMany( DailySummary::class );
+    }
 }
