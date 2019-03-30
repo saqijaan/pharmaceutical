@@ -150,8 +150,8 @@ Route::group(['prefix' => 'v1-2019','middleware'=>'auth:api'], function() {
 
 	Route::post('/docter/location/lock',function(Request $request){
 		$rules = [
-			'x'		=> 'required|integer',
-			'y'	 	=> 'required|integer',
+			'x'		=> 'required|numeric',
+			'y'	 	=> 'required|numeric',
 			'docter_id' => 'required|integer'
 		];
 
