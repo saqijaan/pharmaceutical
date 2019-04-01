@@ -152,6 +152,9 @@
                                         </select>
                                     </div>
                                 </div>
+
+                                <hr>
+                                <h2>  </h2>
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="image"> Profile Image
                                     </label>

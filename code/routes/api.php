@@ -97,7 +97,6 @@ Route::group(['prefix' => 'v1-2019','middleware'=>'auth:api'], function() {
 		$empId = \Auth::guard('api')->Id();
 
 		return \App\CallSubmission::where('employe_id',$empId)
-							->with('employee')
 							->with(['docter'=>function($query){
 								$query->select('id','name','x','y');
 							}])
