@@ -22,4 +22,8 @@ class EmployeeRegistration extends Authenticatable
     public function dailySummaries(){
         return $this->hasMany( DailySummary::class );
     }
+
+    public function reportsTo(){
+        return $this->belongsTo( EmployeeRegistration::class , 'reports_to' );
+    }
 }

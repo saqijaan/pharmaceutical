@@ -4,7 +4,6 @@
     <!-- Bootstrap -->
     <script src="{{ asset('vendors/bootstrap/dist/js/bootstrap.min.js') }}"></script>
     <!-- Parsley -->
-    <script src="{{ asset('vendors/parsleyjs/dist/parsley.min.js') }}"></script>
 
 
     @yield('bottom_script')

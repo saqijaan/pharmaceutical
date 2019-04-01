@@ -87,6 +87,14 @@
                                             <li>
                                                 <i class="fa fa-briefcase user-profile-icon"></i> {{ $employeeRegis->designation }}
                                             </li>
+
+                                            <li>
+                                                <i class="fa fa-briefcase user-profile-icon"></i> {{ $employeeRegis->level }} <= Level
+                                            </li>
+
+                                            <li>
+                                                <i class="fa fa-briefcase user-profile-icon"></i> {{ $employeeRegis->reportsTo ?$employeeRegis->reportsTo->name: 'Not Reporting yet' }} <= Reports To
+                                            </li>
     
                                             <li>
                                                 <i class="fa fa-briefcase user-profile-icon"></i> {{ $employeeRegis->joining_date }}

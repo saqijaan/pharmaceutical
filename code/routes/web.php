@@ -60,9 +60,9 @@ Route::group(['middleware'=> ['auth']], function(){
         //transactions
         Route::resource('/transaction-registration', 'TransactionTableController');
         //schedules
-        Route::resource('/schedule-regis', 'SchedleController');
-        Route::get('/schedule-regis/view/{id}', 'SchedleController@view');
-        Route::get('/schedule-regis/downloadPDF/{id}','SchedleController@downloadPDF');
+        Route::resource('/schedules', 'ScheduleController');
+        Route::get('/schedules/view/{id}', 'ScheduleController@show')->name('schedules.view');
+        Route::get('schedules/downloadPDF/{id}','ScheduleController@downloadPDF')->name('schedules.download');
         //doctor
         Route::resource('/doctor-regis', 'DoctorRegisController');
         //quiz

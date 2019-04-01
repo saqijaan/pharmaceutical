@@ -128,6 +128,32 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="level"> Level <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-8 col-sm-6 col-xs-12">
+                                        <select required="required" name="level" class="form-control col-md-7 col-xs-12" title="Select Level">
+                                            <option {{ $employeeRegis->level == 'MM' ? 'selected' : '' }} value="MM">MM</option>
+                                            <option {{ $employeeRegis->level == 'ZSM' ? 'selected' : '' }} value="ZSM">ZSM</option>
+                                            <option {{ $employeeRegis->level == 'RSM' ? 'selected' : '' }} value="RSM">RSM</option>
+                                            <option {{ $employeeRegis->level == 'FM' ? 'selected' : '' }} value="FM">FM</option>
+                                            <option {{ $employeeRegis->level == 'SFM' ? 'selected' : '' }} value="SFM">SFM</option>
+                                            <option {{ $employeeRegis->level == 'AFM' ? 'selected' : '' }} value="AFM">AFM</option>
+                                            <option {{ $employeeRegis->level == 'SPO' ? 'selected' : '' }} value="SPO">SPO</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="reports_to"> Reports To <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-8 col-sm-6 col-xs-12">
+                                        <select name="reports_to" class="form-control col-md-7 col-xs-12" title="Select Top Level">
+                                            @foreach ($employees as $employee)
+                                                <option value="{{ $employee->id }}" {{ $employeeRegis->reports_to == $employee->id ? 'selected' :'' }}>{{ $employee->name }} - {{ $employee->level }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="image"> Profile Image
                                     </label>
                                     <div class="col-md-8 col-sm-6 col-xs-12">
@@ -175,7 +201,13 @@
     <script src="{{ asset('vendors/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
     <script src="{{ asset('vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
 
-
+    <script>
+        $(function(){
+            $('select').selectpicker({
+                liveSearch : true
+            })
+        })
+    </script>
 @endsection
 
 

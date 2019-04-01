@@ -35,7 +35,7 @@
                         </li>
 
                         <li>
-                            <a href="{{ url('/dashboard/schedule-regis') }}"><i class="fa fa-edit"></i> Schedule Register </a>
+                            <a href="{{ route('schedules.index') }}"><i class="fa fa-edit"></i> Schedule Register </a>
                         </li>
 
                         <li>

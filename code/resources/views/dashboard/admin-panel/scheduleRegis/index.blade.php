@@ -30,7 +30,7 @@
                 <div class="title_left">
                     <div class="col-md-5 col-sm-12 col-xs-12 form-group top_search">
 
-                        <a href="{{route('schedule-regis.create')}}" class="btn btn-lg btn-primary waves-effect"> Create New </a>
+                        <a href="{{route('schedules.create')}}" class="btn btn-lg btn-primary waves-effect"> Create New </a>
                         <div class="clearfix"></div>
                     </div>
                 </div>
@@ -66,9 +66,10 @@
                                     <tr class="headings">
 
                                         <th class="column-title">ID </th>
-                                        <th class="column-title"> Date </th>
-                                        <th class="column-title"> Doctor </th>
-                                        <th class="column-title"> Address </th>
+                                        <th class="column-title"> Employee </th>
+                                        <th class="column-title"> City </th>
+                                        <th class="column-title"> Day </th>
+                                        <th class="column-title"> Doctors </th>
                                         <th class="column-title no-link last"><span class="nobr">Action</span>
                                         </th>
                                         <th class="bulk-actions" colspan="7">
@@ -82,15 +83,22 @@
                                     @foreach( $schedules as $schedule )
                                         <tr class="even pointer">
                                             <td class=" "> {{ $schedule->id }}</td>
-                                            <td class=" "> {{ $schedule->date }} </td>
-                                            <td class=" "> {{ $schedule->Doctor ? $schedule->Doctor->name : 'Docter not found' }}  </td>
-                                            <td class=" "> {{ $schedule->address  }}  </td>
+                                            <td class=" "> {{ $schedule->employee->name  }}  </td>
+                                            <td class=" "> {{ $schedule->city->name  }}  </td>
+                                            <td class=" "> {{ $schedule->day }}  </td>
+                                            <td class=" ">
+                                                <ul>
+                                                    @foreach ($schedule->docters() as $docter)
+                                                        <li>{{ $docter->name }}</li>
+                                                    @endforeach
+                                                </ul>
+                                            </td>
                                             <td class=" last">
-                                                <a class="btn btn-primary opnBtn" data-mdlid="{{$schedule->id}}" type="button"> view </a>
-                                                <a class="btn btn-primary" href="{{ route('schedule-regis.edit', $schedule->id ) }}">
+                                                {{--  <a class="btn btn-primary opnBtn" data-mdlid="{{$schedule->id}}" type="button"> view </a>  --}}
+                                                <a class="btn btn-primary" href="{{ route('schedules.edit', $schedule->id ) }}">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
-                                                <form method="post" enctype="multipart/form-data" action="{{route('schedule-regis.destroy',$schedule->id)}}" style="display: inline">
+                                                <form method="post" enctype="multipart/form-data" action="{{route('schedules.destroy',$schedule->id)}}" style="display: inline">
                                                     <input name="_method" type="hidden" value="DELETE" />
                                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                     <button type="submit"  class="btn btn-danger"  style="margin-left: 5px;"  onclick="return confirm('Do you want to delete ?');" ><i class="fa fa-trash-o"></i></button>

@@ -31,8 +31,8 @@ class EmployeeRegistrationController extends Controller
      */
     public function create()
     {
-        //
-        return view( 'dashboard.admin-panel.employeeRegistrations.new' );
+        $employees = EmployeeRegistration::all();
+        return view( 'dashboard.admin-panel.employeeRegistrations.new',compact('employees') );
 
     }
 
@@ -52,7 +52,8 @@ class EmployeeRegistrationController extends Controller
             'nic'       =>  'max:25',
             'email'     =>  'unique:users',
             'address'   =>  'max:300',
-            'image'     =>  'image|mimes:jpeg,jpg,png,gif,svg|max:10000'
+            'image'     =>  'image|mimes:jpeg,jpg,png,gif,svg|max:10000',
+            'level'     => 'required',
         ));
 
         $employeeRegis = new EmployeeRegistration();
@@ -67,6 +68,9 @@ class EmployeeRegistrationController extends Controller
         $employeeRegis->api_token       = str_random(40).'-'.md5(microtime());
         $employeeRegis->joining_date    = $request->input('joining_date');
         $employeeRegis->designation     = $request->input('designation');
+
+        $employeeRegis->level           = $request->input('level');
+        $employeeRegis->reports_to      = $request->input('reports_to');
 
         if($apk_file =  $request->file('image')) {
 
@@ -128,7 +132,8 @@ class EmployeeRegistrationController extends Controller
     {
         //
         $employeeRegis = EmployeeRegistration::find($id);
-        return view( 'dashboard.admin-panel.employeeRegistrations.edit', ['employeeRegis'=>$employeeRegis] );
+        $employees = EmployeeRegistration::all();
+        return view( 'dashboard.admin-panel.employeeRegistrations.edit', compact('employeeRegis','employees') );
 
     }
 
@@ -163,6 +168,9 @@ class EmployeeRegistrationController extends Controller
         $employeeRegis->password     = bcrypt($request->input('email'));
         $employeeRegis->joining_date = $request->input('joining_date');
         $employeeRegis->designation  = $request->input('designation');
+
+        $employeeRegis->level           = $request->input('level');
+        $employeeRegis->reports_to      = $request->input('reports_to');
 
         if($apk_file =  $request->file('image')) {
 

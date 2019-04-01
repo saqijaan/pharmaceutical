@@ -18,6 +18,8 @@
     <!-- bootstrap-daterangepicker -->
     <link href="{{ asset('vendors/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet">
     <link href="{{ asset('vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/css/bootstrap-select.min.css">
+
 
 @endsection
 
@@ -57,59 +59,63 @@
                         </div>
                         <div class="x_content">
                             <br />
-                            <form id="demo-form2" method="post" enctype="multipart/form-data" action="{{ route('schedule-regis.update', [$schedules->id] ) }}" data-parsley-validate class="form-horizontal form-label-left">
-                                <input type="hidden" name="_method" value="PUT">
-                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
-
-                                <div class="form-group calendar-exibit col-md-3 col-sm-6 col-xs-12">
-                                    <label class="control-label col-md-12 col-sm-12 col-xs-12" for="date" style="text-align: left"> Date <span class="required">*</span>
+                            <form id="demo-form2" method="post" enctype="multipart/form-data" action="{{ route('schedules.update',$schedule->id) }}" data-parsley-validate class="form-horizontal form-label-left">
+                                @csrf
+                                @method('PUT')
+                                <div class="form-group col-md-3 col-sm-6 col-xs-12">
+                                    <label class="control-label col-md-12 col-sm-12 col-xs-12" for="doctor" style="text-align:left;"> Doctors <span class="required">*</span>
                                     </label>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
-                                        {{--<input type="text" id="joining_date" required="required" value="{{ $employeeRegis->joining_date }}" name="joining_date" class="form-control col-md-7 col-xs-12">--}}
-                                        <fieldset class="">
-                                            <div class="control-group">
-                                                <div class="controls">
-                                                    <div class="col-md-11 xdisplay_inputx form-group has-feedback" style="padding-left: 0px;">
-                                                        <input type="text" class="form-control has-feedback-left" value="{{date( 'm/d/y', strtotime($schedules->date))}}" name="date" id="single_cal2" placeholder="First Name" aria-describedby="inputSuccess2Status2">
-                                                        <span class="fa fa-calendar-o form-control-feedback left" style="left: 0;" aria-hidden="true"></span>
-                                                        <span id="inputSuccess2Status2" class="sr-only">(success)</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </fieldset>
+                                        <select name="doctors[]" id="docters" multiple id="" class="form-control" title="Select Docters">
+                                            @foreach ($docters as $docter)
+                                                <option value="{{ $docter->id }}" {{ in_array($docter->id,$schedule->docters) ? 'selected' : ''  }}>{{ $docter->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-3 col-sm-6 col-xs-12">
-                                    <label class="control-label col-md-12 col-sm-12 col-xs-12" for="time" style="text-align:left;"> Time <span class="required">*</span>
+                                    <label class="control-label col-md-12 col-sm-12 col-xs-12" for="doctor" style="text-align:left;"> Employee <span class="required">*</span>
                                     </label>
-                                    <div class='input-group date' id='myDatepicker3'>
-                                        <input type='text' name="time" value="{{date( 'H:i', strtotime($schedules->date))}}" id="start_time" class="form-control" />
-                                        <span class="input-group-addon">
-                                           <span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <select name="employee" id="employee" class="form-control" required title="Select Employee">
+                                            @foreach ($employees as $emp)
+                                                <option value="{{ $emp->id }}"  {{ $emp->id == $schedule->employee_id ? 'selected' : ''  }}>{{ $emp->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-3 col-sm-6 col-xs-12">
-                                    <label class="control-label col-md-12 col-sm-12 col-xs-12" for="doctor" style="text-align:left;"> Doctor <span class="required">*</span>
+                                    <label class="control-label col-md-12 col-sm-12 col-xs-12" for="doctor" style="text-align:left;"> Day <span class="required">*</span>
                                     </label>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <input type="text" id="doctor" required="required" name="doctor" value="{{$schedules->doctor}}" class="form-control col-md-7 col-xs-12">
+                                        <select name="day" id="employee" class="form-control" required title="Select Day">
+                                            <option {{ 'Monday' == $schedule->day ? 'selected' : ''  }} value="Monday">Monday</option>
+                                            <option {{ 'Tuesday' == $schedule->day ? 'selected' : ''  }} value="Tuesday">Tuesday</option>
+                                            <option {{ 'Wednesday' == $schedule->day ? 'selected' : ''  }} value="Wednesday">Wednesday</option>
+                                            <option {{ 'Thursday' == $schedule->day ? 'selected' : ''  }} value="Thursday">Thursday</option>
+                                            <option {{ 'Friday' == $schedule->day ? 'selected' : ''  }} value="Friday">Friday</option>
+                                            <option {{ 'Saturday' == $schedule->day ? 'selected' : ''  }} value="Saturday">Saturday</option>
+                                            <option {{ 'Sunday' == $schedule->day ? 'selected' : ''  }} value="Sunday">Sunday</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-3 col-sm-6 col-xs-12">
-                                    <label class="control-label col-md-12 col-sm-12 col-xs-12" for="city" style="text-align:left;"> City <span class="required">*</span>
+                                    <label class="control-label col-md-12 col-sm-12 col-xs-12" for="doctor" style="text-align:left;"> City <span class="required">*</span>
                                     </label>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <input type="text" id="city" required="required" name="city" value="{{$schedules->city}}" class="form-control col-md-7 col-xs-12">
+                                        <select name="city" id="cities" class="form-control" required title="Select City">
+                                            @foreach ($cities as $city)
+                                                <option value="{{ $city->id }}" {{ $city->id == $schedule->city_id ? 'selected' : ''  }}>{{ $city->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
                                 <div class="form-group col-md-12 col-sm-12 col-xs-12">
-                                    <label class="control-label col-md-12 col-sm-12 col-xs-12" for="address" style="text-align:left;"> Address <span class="required">*</span>
+                                    <label class="control-label col-md-12 col-sm-12 col-xs-12" for="address" style="text-align:left;"> Detail <span class="required">*</span>
                                     </label>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <input type="text" id="address" required="required" value="{{$schedules->address}}" name="address" class="form-control col-md-7 col-xs-12">
+                                        <textarea type="text" id="address" required="required" name="detail" class="form-control col-md-7 col-xs-12">{{ $schedule->detail }}</textarea>
                                     </div>
                                 </div>
 
@@ -118,7 +124,7 @@
                                 <div class="ln_solid"></div>
                                 <div class="form-group">
                                     <div class="col-md-8 col-sm-6 col-xs-12 col-md-offset-3">
-                                        <a href="{{url('/dashboard/schedule-regis')}}" class="btn btn-danger">Cancel</a>
+                                        <a href="{{ route('schedules.index') }}" class="btn btn-danger">Cancel</a>
                                         <button class="btn btn-warning" type="reset">Reset</button>
                                         <button type="submit" class="btn btn-success">Submit</button>
                                     </div>
@@ -152,13 +158,14 @@
     <script src="{{ asset('vendors/moment/min/moment.min.js') }}"></script>
     <script src="{{ asset('vendors/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
     <script src="{{ asset('vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/js/bootstrap-select.min.js"></script>
 
 
     <script type="text/javascript">
 
 
-        $('#myDatepicker3').datetimepicker({
-            format: 'HH:mm'
+        $('select').selectpicker({
+            liveSearch:true
         });
 
 

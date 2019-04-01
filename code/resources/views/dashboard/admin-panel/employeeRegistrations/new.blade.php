@@ -127,6 +127,32 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="level"> Level <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-8 col-sm-6 col-xs-12">
+                                        <select required="required" name="level" class="form-control col-md-7 col-xs-12" title="Select Level">
+                                            <option value="MM">MM</option>
+                                            <option value="ZSM">ZSM</option>
+                                            <option value="RSM">RSM</option>
+                                            <option value="FM">FM</option>
+                                            <option value="SFM">SFM</option>
+                                            <option value="AFM">AFM</option>
+                                            <option value="SPO">SPO</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="reports_to"> Reports To <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-8 col-sm-6 col-xs-12">
+                                        <select name="reports_to" class="form-control col-md-7 col-xs-12" title="Select Top Level">
+                                            @foreach ($employees as $employee)
+                                                <option value="{{ $employee->id }}">{{ $employee->name }} - {{ $employee->level }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="image"> Profile Image
                                     </label>
                                     <div class="col-md-8 col-sm-6 col-xs-12">
@@ -174,6 +200,13 @@
     <script src="{{ asset('vendors/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
     <script src="{{ asset('vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
 
+    <script>
+        $(function(){
+            $('select').selectpicker({
+                liveSearch : true
+            })
+        })
+    </script>
 
 @endsection
 
