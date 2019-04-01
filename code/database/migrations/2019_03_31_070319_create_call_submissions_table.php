@@ -22,7 +22,7 @@ class CreateCallSubmissionsTable extends Migration
             $table->string('day');
             $table->double('x');
             $table->double('y');
-            $table->integer('detail');
+            $table->text('detail');
             $table->boolean('product');
             $table->boolean('gift');
             $table->boolean('sample');

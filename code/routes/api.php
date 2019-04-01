@@ -183,6 +183,7 @@ Route::group(['prefix' => 'v1-2019','middleware'=>'auth:api'], function() {
 	});
 
 	Route::post('/summary/daily/store',function(Request $request){
+		$empId = \Auth::guard('api')->Id();
 		$rules = [
 			'employee_id' => 'required|integer'
 		];
@@ -197,7 +198,8 @@ Route::group(['prefix' => 'v1-2019','middleware'=>'auth:api'], function() {
 			]);
 		}
 		$result = DailySummary::create([
-			'name' => 'Flight 10'
+			'employee_id' => $empId,
+			'2'
 		]);
 
 		return response()->json([
