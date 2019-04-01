@@ -94,25 +94,22 @@ Route::group(['prefix' => 'v1-2019','middleware'=>'auth:api'], function() {
 	 * Get user Schedules
 	 */
 	Route::get('/schedule', function(Request $request){
-		$start_date = $request->has('start_date') 	? $request->start_date.' 00:00:00' : date('Y-m-d 00:00:00');
-		$end_date   = $request->has('end_date') 	? $request->end_date.' 00:59:59'   : date('Y-m-d 23:59:59');
-
 		$empId = \Auth::guard('api')->Id();
 
-		return \App\SchedleModel::
-								where('employee_id',$empId)
-								->with(['Doctor'=>function($query){
-									$query->select('id','name','x','y');
-								}])
-								->whereBetween('created_at',[$start_date,$end_date])
-								->get();
+		return \App\CallSubmission::where('employe_id',$empId)
+							->with('employee')
+							->with(['docter'=>function($query){
+								$query->select('id','name','x','y');
+							}])
+							->where('created_at','LIKE',date('Y-m-d%'))
+							->get();
 	});
 
 	Route::post('/schedule/store',function(Request $request){
 
 		$empId = \Auth::guard('api')->Id();
 
-		$schedule = \App\SchedleModel::find($request->scheduleId);
+		$schedule = \App\CallSubmission::find($request->scheduleId);
 
 		if(!$schedule){
 			return response()->json([
@@ -124,7 +121,7 @@ Route::group(['prefix' => 'v1-2019','middleware'=>'auth:api'], function() {
 			'detail' 		=> $request->detail,
 			'gift'   		=> $request->gift,
 			'sample'  		=> $request->sample,
-			'brochure' 		=> $request->brochure,
+			'product' 		=> $request->brochure,
 			'x' 			=> $request->x,
 			'y' 			=> $request->y,
 			'visited' 		=> 1
@@ -150,8 +147,8 @@ Route::group(['prefix' => 'v1-2019','middleware'=>'auth:api'], function() {
 
 	Route::post('/docter/location/lock',function(Request $request){
 		$rules = [
-			'x'		=> 'required|numeric',
-			'y'	 	=> 'required|numeric',
+			'x'			=> 'required|numeric',
+			'y'	 		=> 'required|numeric',
 			'docter_id' => 'required|integer'
 		];
 
