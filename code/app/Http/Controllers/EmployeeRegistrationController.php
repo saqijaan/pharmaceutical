@@ -69,6 +69,10 @@ class EmployeeRegistrationController extends Controller
         $employeeRegis->joining_date    = $request->input('joining_date');
         $employeeRegis->designation     = $request->input('designation');
 
+        $employeeRegis->daily_fixed_amount          = $request->input('daily_fixed_amount');
+        $employeeRegis->per_km_charges              = $request->input('per_km_charges');
+        $employeeRegis->night_stay_allowns          = $request->input('night_stay_allowns');
+
         $employeeRegis->level           = $request->input('level');
         $employeeRegis->reports_to      = $request->input('reports_to');
 
@@ -168,6 +172,10 @@ class EmployeeRegistrationController extends Controller
         $employeeRegis->password     = bcrypt($request->input('email'));
         $employeeRegis->joining_date = $request->input('joining_date');
         $employeeRegis->designation  = $request->input('designation');
+
+        $employeeRegis->daily_fixed_amount          = $request->input('daily_fixed_amount');
+        $employeeRegis->per_km_charges              = $request->input('per_km_charges');
+        $employeeRegis->night_stay_allowns          = $request->input('night_stay_allowns');
 
         $employeeRegis->level           = $request->input('level');
         $employeeRegis->reports_to      = $request->input('reports_to');

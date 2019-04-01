@@ -154,7 +154,29 @@
                                 </div>
 
                                 <hr>
-                                <h2>  </h2>
+                                <h2> Employee Fixed Amounts </h2>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="daily_fixed_amount"> Daily Fixed Amount <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-8 col-sm-6 col-xs-12">
+                                        <input type="text" id="daily_fixed_amount" required="required" name="daily_fixed_amount" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="per_km_charges"> Per Km Charges <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-8 col-sm-6 col-xs-12">
+                                        <input type="text" id="per_km_charges" required="required" name="per_km_charges" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="night_stay_allowns"> Night Staty Allowns <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-8 col-sm-6 col-xs-12">
+                                        <input type="text" id="night_stay_allowns" required="required" name="night_stay_allowns" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="image"> Profile Image
                                     </label>
