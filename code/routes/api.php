@@ -185,7 +185,12 @@ Route::group(['prefix' => 'v1-2019','middleware'=>'auth:api'], function() {
 	Route::post('/summary/daily/store',function(Request $request){
 		$empId = \Auth::guard('api')->Id();
 		$rules = [
-			'employee_id' => 'required|integer'
+			'work_type'				=> 'required|in:local,outstation',
+			'dailyFixedAmount' 		=> 'required|numeric',
+			'total_km' 				=> 'required_if:work_type,outstation|numeric',
+			'night_stay'			=> 'required_if:work_type,outstation|in,0,1',
+			'night_stay_allownce' 	=> 'required_if:night_stay,1',
+			'night_stay_description'=> 'required_if:night_stay,1',
 		];
 
 		
@@ -197,9 +202,24 @@ Route::group(['prefix' => 'v1-2019','middleware'=>'auth:api'], function() {
 				'message' => $validation->errors()->first()
 			]);
 		}
-		$result = DailySummary::create([
-			'employee_id' => $empId,
-			'2'
+
+		if (
+			DailySummary::where('employee_id',$empId)->where('created_at','LIKE',date('Y-m-d%'))->first()
+			){
+				return response()->json([
+					'success' => false,
+					'message' => 'You already have been saved daily summary for today'
+				]);
+		}
+
+		DailySummary::Create([
+			'employee_id'			=> $empId,
+			'work_type'				=> $request->work_type,
+			'dailyfixedAmount' 		=> $request->dailyFixedAmount,
+			'total_km' 				=> $request->total_km,
+			'night_stay'			=> $request->night_stay??false,
+			'night_stay_allownce' 	=> $request->night_stay_allownce,
+			'night_stay_description'=> $request->night_stay_description,
 		]);
 
 		return response()->json([
