@@ -186,7 +186,7 @@ Route::group(['prefix' => 'v1-2019','middleware'=>'auth:api'], function() {
 		$empId = \Auth::guard('api')->Id();
 		$rules = [
 			'work_type'				=> 'required|in:local,outstation',
-			'dailyFixedAmount' 		=> 'required|numeric',
+			'dailyFixedAmount' 		=> 'required_if:work_type,local|numeric',
 			'total_km' 				=> 'required_if:work_type,outstation|numeric',
 			'night_stay'			=> 'required_if:work_type,outstation|in,0,1',
 			'night_stay_allownce' 	=> 'required_if:night_stay,1',
@@ -226,7 +226,7 @@ Route::group(['prefix' => 'v1-2019','middleware'=>'auth:api'], function() {
 		DailySummary::Create([
 			'employee_id'			=> $empId,
 			'work_type'				=> $request->work_type,
-			'dailyfixedAmount' 		=> $request->dailyFixedAmount,
+			'dailyfixedAmount' 		=> $request->dailyFixedAmount ??0,
 			'total_km' 				=> $request->total_km,
 			'night_stay'			=> $request->night_stay??false,
 			'night_stay_allownce' 	=> $request->night_stay_allownce,
