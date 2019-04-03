@@ -255,3 +255,9 @@ Route::get('log/{cmd?}',function($cmd=null){
 	echo "<pre>";
 	echo file_get_contents($file);
 });
+
+Route::get('/schedule:make', function(){
+    Artisan::call('schedule:make');
+    echo "<pre>";
+    echo Artisan::Output();
+});
