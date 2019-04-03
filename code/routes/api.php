@@ -191,6 +191,7 @@ Route::group(['prefix' => 'v1-2019','middleware'=>'auth:api'], function() {
 			'night_stay'			=> 'required_if:work_type,outstation|in,0,1',
 			'night_stay_allownce' 	=> 'required_if:night_stay,1',
 			'night_stay_description'=> 'required_if:night_stay,1',
+			'image'					=> 'required_if:work_type,outstation|image',
 		];
 
 		
@@ -203,6 +204,16 @@ Route::group(['prefix' => 'v1-2019','middleware'=>'auth:api'], function() {
 			]);
 		}
 
+		$imageName = null;
+		if($request->hasFile('image')) {
+
+			$image = $request->file('image');
+            $imageName = md5(microtime()).'.'.$image->extension();
+            $s_path = 'uploads/employees/vouchers';
+            if(!file_exists($s_path))
+                mkdir($s_path, 777, true);
+            Image::make($image)->save($s_path.'/'.$imageName);
+        }
 		if (
 			DailySummary::where('employee_id',$empId)->where('created_at','LIKE',date('Y-m-d%'))->first()
 			){
@@ -220,6 +231,7 @@ Route::group(['prefix' => 'v1-2019','middleware'=>'auth:api'], function() {
 			'night_stay'			=> $request->night_stay??false,
 			'night_stay_allownce' 	=> $request->night_stay_allownce,
 			'night_stay_description'=> $request->night_stay_description,
+			'image'					=> $imageName,
 		]);
 
 		return response()->json([

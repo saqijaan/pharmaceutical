@@ -53,6 +53,10 @@ return [
             'driver' => 'session',
             'provider' => 'distributers',
         ],
+        'employee' => [
+            'driver' => 'session',
+            'provider' => 'employees',
+        ],
         'distributer-api' => [
             'driver' => 'token',
             'provider' => 'distributers',

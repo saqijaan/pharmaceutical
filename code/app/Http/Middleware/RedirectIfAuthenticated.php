@@ -32,6 +32,11 @@ class RedirectIfAuthenticated
                     return redirect()->route('distributer.home');
                 }
                 break;
+            case 'employee' :
+                if (Auth::guard($guard)->check()) {
+                    return redirect()->route('employee.home');
+                }
+                break;
             default:
                 if (Auth::guard($guard)->check()) {
                     return redirect()->route('home');

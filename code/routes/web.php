@@ -157,6 +157,11 @@ Route::prefix('distributer')->group(function() {
     Route::post('/login', 'Auth\DistributerLoginController@login')->name('distributer.login.submit');
     Route::get('/home', 'DistributerController@index')->name('distributer.home');
 });
+Route::prefix('employee')->group(function() {
+    Route::get('/login', 'Auth\EmployeeLoginController@showLoginForm')->name('employee.login');
+    Route::post('/login', 'Auth\EmployeeLoginController@login')->name('employee.login.submit');
+    Route::get('/home', 'EmployeeController@index')->name('employee.home');
+});
 
 
 

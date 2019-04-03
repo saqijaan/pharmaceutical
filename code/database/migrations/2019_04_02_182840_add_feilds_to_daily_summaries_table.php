@@ -22,6 +22,7 @@ class AddFeildsToDailySummariesTable extends Migration
             $table->boolean('night_stay')->default(false);
             $table->double('night_stay_allownce')->nullable();
             $table->text('night_stay_description')->nullable();
+            $table->string('image')->nullable();
 
         });
     }

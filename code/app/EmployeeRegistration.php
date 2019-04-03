@@ -9,8 +9,28 @@ use Illuminate\Support\Facades\Auth;
 class EmployeeRegistration extends Authenticatable
 {
     use Notifiable;
+
     public const ACCOUNT_HEAD     = 2;
     public const ACCOUNT_SUB_HEAD = 9;
+
+    protected $guard = 'employee';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'id','name','email','password',
+    ];
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'password', 'remember_token',
+    ];
 
     public function accounts(){
         return $this->hasOne( OneToOneAccounts::class ,'employe_id','id' );
