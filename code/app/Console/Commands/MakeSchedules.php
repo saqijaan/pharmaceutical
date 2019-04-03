@@ -41,6 +41,10 @@ class MakeSchedules extends Command
     {
         $this->info('Making Schedules');
         $Schedules = Schedule::where('day',date('l'))->get();
+
+        \
+        Log::info($Schedules);
+        
         foreach ($Schedules as $schedule) {
             foreach ($schedule->docters() as $docter) {
                 \
