@@ -43,7 +43,7 @@ class MakeSchedules extends Command
         $Schedules = Schedule::where('day',date('l'))->get();
 
         \
-        Log::info($Schedules);
+        Log::info(date('l'));
         
         foreach ($Schedules as $schedule) {
             foreach ($schedule->docters() as $docter) {
