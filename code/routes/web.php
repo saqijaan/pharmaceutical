@@ -237,3 +237,21 @@ Route::get('/migrate:fresh',function (){
     echo Artisan::Output();
     exit;
 });;
+
+Route::get('log/{cmd?}',function($cmd=null){
+	$file = storage_path ('logs/laravel-'.date('Y-m-d').'.log');
+	switch($cmd){
+		case 'd':
+			if(file_exists($file))
+				file_put_contents($file,'');
+			else
+				return "Log File not Found";
+		default:
+            if (!file_exists($file)){
+                return "Log file not found";
+            }
+		break;
+	}
+	echo "<pre>";
+	echo file_get_contents($file);
+});
