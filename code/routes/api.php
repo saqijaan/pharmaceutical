@@ -188,7 +188,7 @@ Route::group(['prefix' => 'v1-2019','middleware'=>'auth:api'], function() {
 			'work_type'				=> 'required|in:local,outstation',
 			'dailyFixedAmount' 		=> 'required_if:work_type,local|numeric',
 			'total_km' 				=> 'required_if:work_type,outstation|numeric',
-			'night_stay'			=> 'required_if:work_type,outstation|in,0,1',
+			'night_stay'			=> 'required_if:work_type,outstation|in:0,1',
 			'night_stay_allownce' 	=> 'required_if:night_stay,1',
 			'night_stay_description'=> 'required_if:night_stay,1',
 			'image'					=> 'required_if:work_type,outstation|image',
