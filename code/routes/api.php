@@ -116,8 +116,15 @@ Route::group(['prefix' => 'v1-2019','middleware'=>'auth:api'], function() {
 
 		];
 
-		$this->validate($request,$rules);
-		
+		$validation = Validator::make($request->all(), $rules);
+
+		if($validation->fails()){
+			return response()->json([
+				'success' => false,
+				'message' => $validation->errors()->first()
+			]);
+		}
+
 		// $empId = \Auth::guard('api')->Id();
 
 		$schedule = \App\CallSubmission::find($request->scheduleId);
