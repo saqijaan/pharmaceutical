@@ -113,6 +113,7 @@ Route::group(['prefix' => 'v1-2019','middleware'=>'auth:api'], function() {
 			'product'	=> 'required|in:0,1',
 			'x'			=> 'required|numeric',
 			'y'			=> 'required|numeric',
+			
 		];
 		$empId = \Auth::guard('api')->Id();
 
