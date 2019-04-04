@@ -106,6 +106,14 @@ Route::group(['prefix' => 'v1-2019','middleware'=>'auth:api'], function() {
 
 	Route::post('/schedule/store',function(Request $request){
 
+		$rules = [
+			'detail'	=> 'required|string|max:191',
+			'gift'		=> 'required|in:0,1',
+			'sample'	=> 'required|in:0,1',
+			'product'	=> 'required|in:0,1',
+			'x'			=> 'required|numeric',
+			'y'			=> 'required|numeric',
+		];
 		$empId = \Auth::guard('api')->Id();
 
 		$schedule = \App\CallSubmission::find($request->scheduleId);
@@ -120,7 +128,7 @@ Route::group(['prefix' => 'v1-2019','middleware'=>'auth:api'], function() {
 			'detail' 		=> $request->detail,
 			'gift'   		=> $request->gift,
 			'sample'  		=> $request->sample,
-			'product' 		=> $request->brochure,
+			'product' 		=> $request->product,
 			'x' 			=> $request->x,
 			'y' 			=> $request->y,
 			'visited' 		=> 1
