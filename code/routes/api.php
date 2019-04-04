@@ -211,7 +211,7 @@ Route::group(['prefix' => 'v1-2019','middleware'=>'auth:api'], function() {
             $imageName = md5(microtime()).'.'.$image->extension();
             $s_path = 'uploads/employees/vouchers';
             if(!file_exists($s_path))
-				mkdir($s_path, 777, true);
+				mkdir($s_path);
 			// $image->move('uploads/employees/vouchers',$imageName);
             Image::make($image)->save($s_path.'/'.$imageName);
         }
