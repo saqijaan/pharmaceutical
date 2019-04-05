@@ -246,6 +246,7 @@ Route::group(['prefix' => 'v1-2019','middleware'=>'auth:api'], function() {
 			'work_type'				=> $request->work_type,
 			'dailyfixedAmount' 		=> $request->dailyFixedAmount ??0,
 			'total_km' 				=> $request->total_km,
+			'travelHitory' 			=> $request->travelHitory,
 			'night_stay'			=> $request->night_stay??false,
 			'night_stay_allownce' 	=> $request->night_stay_allownce,
 			'night_stay_description'=> $request->night_stay_description,
