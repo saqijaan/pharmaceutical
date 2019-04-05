@@ -206,11 +206,12 @@ Route::group(['prefix' => 'v1-2019','middleware'=>'auth:api'], function() {
 		$rules = [
 			'work_type'				=> 'required|in:local,outstation',
 			'dailyFixedAmount' 		=> 'required_if:work_type,local|numeric',
+			'travelHitory' 			=> 'required_if:work_type,outstation',
 			'total_km' 				=> 'required_if:work_type,outstation|numeric',
 			'night_stay'			=> 'required_if:work_type,outstation|in:0,1',
 			'night_stay_allownce' 	=> 'required_if:night_stay,1',
 			'night_stay_description'=> 'required_if:night_stay,1',
-			// 'image'					=> 'required_if:work_type,outstation|image',
+			'image'					=> 'required_if:work_type,outstation',
 		];
 
 		
@@ -224,16 +225,13 @@ Route::group(['prefix' => 'v1-2019','middleware'=>'auth:api'], function() {
 		}
 
 		$imageName = null;
-		if($request->hasFile('image')) {
-
-			$image = $request->file('image');
-            $imageName = md5(microtime()).'.'.$image->extension();
-            $s_path = 'uploads/employees/vouchers';
-            if(!file_exists($s_path))
-				mkdir($s_path,0777,true);
-			// $image->move('uploads/employees/vouchers',$imageName);
-            Image::make($image)->save($s_path.'/'.$imageName);
-        }
+		$imageName = md5(microtime()).'.jpg';
+		$s_path = 'uploads/employees/vouchers';
+		if(!file_exists($s_path))
+			mkdir($s_path,0777,true);
+		file_put_contents($s_path.'/'.$imageName,base64_decode($request->image));
+		// Image::make($image)->save($s_path.'/'.$imageName);
+			
 		if (
 			DailySummary::where('employee_id',$empId)->where('created_at','LIKE',date('Y-m-d%'))->first()
 			){
