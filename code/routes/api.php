@@ -98,7 +98,7 @@ Route::group(['prefix' => 'v1-2019','middleware'=>'auth:api'], function() {
 
 		return \App\CallSubmission::where('employe_id',$empId)
 							->with(['docter'=>function($query){
-								$query->select('id','name','x','y');
+								$query->select('id','name','x','y','address');
 							}])
 							->where('created_at','LIKE',date('Y-m-d%'))
 							->get();

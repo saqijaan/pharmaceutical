@@ -70,6 +70,7 @@
 
                                         <th class="column-title">ID </th>
                                         <th class="column-title"> Doctor Name </th>
+                                        <th class="column-title"> Address </th>
                                         <th class="column-title no-link last"><span class="nobr">Action</span>
                                         </th>
                                         <th class="bulk-actions" colspan="7">
@@ -85,6 +86,7 @@
                                         <tr class="even pointer">
                                             <td class=" "> {{ $doc->id }}</td>
                                             <td class=" "> {{ $doc->name }} </td>
+                                            <td class=" "> {{ $doc->address }} </td>
                                             <td class=" last">
                                                 <a class="btn btn-primary" href="{{ route('doctor-regis.edit', $doc->id ) }}">
                                                     <i class="fa fa-edit"></i>
