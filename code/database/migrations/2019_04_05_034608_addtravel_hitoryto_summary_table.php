@@ -14,7 +14,7 @@ class AddtravelHitorytoSummaryTable extends Migration
     public function up()
     {
         Schema::table('daily_summaries', function (Blueprint $table) {
-            $table->text('travelHitory');
+            $table->text('travelHitory')->nullable();
         });
     }
 
