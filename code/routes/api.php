@@ -225,11 +225,13 @@ Route::group(['prefix' => 'v1-2019','middleware'=>'auth:api'], function() {
 		}
 
 		$imageName = null;
-		$imageName = md5(microtime()).'.jpg';
-		$s_path = 'uploads/employees/vouchers';
-		if(!file_exists($s_path))
-			mkdir($s_path,0777,true);
-		file_put_contents($s_path.'/'.$imageName,base64_decode($request->image));
+		if($request->has('image')){
+			$imageName = md5(microtime()).'.jpg';
+			$s_path = 'uploads/employees/vouchers';
+			if(!file_exists($s_path))
+				mkdir($s_path,0777,true);
+			file_put_contents($s_path.'/'.$imageName,base64_decode($request->image));
+		}
 		// Image::make($image)->save($s_path.'/'.$imageName);
 			
 		if (
