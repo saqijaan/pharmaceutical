@@ -15,7 +15,7 @@ class DailySummary extends Model
         'night_stay_allownce',
         'night_stay_description',
         'image',
-        ''
+        'travelHitory'
     ];
     public function employe(){
         return $this->belongsTo( EmployeeRegistration::class );
