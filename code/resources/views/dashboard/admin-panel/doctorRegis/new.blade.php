@@ -68,6 +68,13 @@
                                         <input type="text" id="name" required="required" name="name" class="form-control col-md-7 col-xs-12">
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name"> Doctor Name <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-8 col-sm-6 col-xs-12">
+                                        <textarea type="text" id="name" required="required" name="address" class="form-control col-md-7 col-xs-12"></textarea>
+                                    </div>
+                                </div>
 
 
 

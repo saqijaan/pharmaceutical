@@ -44,6 +44,7 @@ class DoctorRegisController extends Controller
         //
         $rules = [
             'name'  =>  'required|max:70',
+            'address' => 'required'
         ];
 
         $message = [
@@ -56,6 +57,7 @@ class DoctorRegisController extends Controller
 
         if( $request->has('name') ){
             $doctorRegis->name = $request->input('name');
+            $doctorRegis->address = $request->input('address');
         }
 
         $doctorRegis->save();
@@ -103,6 +105,7 @@ class DoctorRegisController extends Controller
 
         $rules = [
             'name'  =>  'required|max:99',
+            'address' => 'required',
         ];
 
         $customMessages = [
@@ -114,6 +117,7 @@ class DoctorRegisController extends Controller
 
         if( $request->has('name') ){
             $doctorRegis->name = $request->input('name');
+            $doctorRegis->address = $request->input('address');
         }
 
         $doctorRegis->update();
