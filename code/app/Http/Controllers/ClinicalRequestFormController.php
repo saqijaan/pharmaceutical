@@ -8,6 +8,19 @@ use App\Http\Controllers\Controller;
 
 class ClinicalRequestFormController extends Controller
 {
+
+    public function adminIndex(){
+        $forms = ClinicalRequestForm::all();
+        return view('dashboard.admin-panel.activityforms.request',compact('forms'));
+    }
+    public function adminView($id){
+        $form = ClinicalRequestForm::find($id);
+        if (!$form){
+            $form =new ClinicalRequestForm;
+        }
+        $form = $form->data;
+        return view('dashboard.admin-panel.activityforms.viewrequest',compact('form'));
+    }
     /**
      * Display a listing of the resource.
      *
@@ -40,7 +53,7 @@ class ClinicalRequestFormController extends Controller
             'employee_id' => auth('employee')->Id(),
             'data'       => $request->except(['_token']),
         ]);
-        session()->flash('success','Form submitted Successfully');
+        session()->flash('Success','Form submitted Successfully');
         return back();
     }
 

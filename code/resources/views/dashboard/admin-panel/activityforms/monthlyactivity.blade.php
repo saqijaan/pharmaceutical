@@ -59,15 +59,12 @@
 
                                     @foreach( $forms as $form )
                                         <tr class="even pointer">
-                                            <td class=" "> {{ $form->employee? $form->employee->name }} </td>
+                                            <td class=" "> {{ $form->employee ? $form->employee->name: '' }} </td>
                                             <td class=" "> {{ $form->created_at }} </td>
                                             <td>
-                                                <a href="@" class="btn btn-sm btn-success">View</a>
+                                                <a href="{{ route('admin.monthlyActivity.show',$form->id) }}" class="btn btn-sm btn-success">View</a>
                                             </td>
                                         </tr>
-                                        @php
-                                            $i++;
-                                        @endphp
                                     @endforeach
 
 

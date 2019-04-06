@@ -65,6 +65,6 @@
         isFullscreen ? document.cancelFullScreen() : element.requestFullScreen();
     }
 </script>
-
+@yield('bottom_script')
 </body>
 </html>

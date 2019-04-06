@@ -20,7 +20,7 @@
     <link href="{{ asset('build/css/custom.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
 
-    @yield('stylesheet-employee')
+    @yield('stylesheet')
 
 
 </head>

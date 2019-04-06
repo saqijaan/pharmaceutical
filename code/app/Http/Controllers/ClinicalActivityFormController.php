@@ -9,6 +9,19 @@ use App\Http\Controllers\Employees\ClinicalActivityController;
 
 class ClinicalActivityFormController extends Controller
 {
+
+    public function adminIndex(){
+        $forms = ClinicalActivityForm::all();
+        return view('dashboard.admin-panel.activityforms.monthlyactivity',compact('forms'));
+    }
+    public function adminView($id){
+        $form = ClinicalActivityForm::find($id);
+        if (!$form){
+            $form =new ClinicalActivityForm;
+        }
+        return view('dashboard.admin-panel.activityforms.viewmonthly',compact('form'));
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -39,7 +52,7 @@ class ClinicalActivityFormController extends Controller
     public function store(Request $request)
     {
         if (ClinicalActivityForm::where('created_at','Like',date('Y-m-').'%')->first()){
-            session()->flash('danger','You already submitted form for this month');
+            session()->flash('Danger','You already submitted form for this month');
             return redirect()->route('clinical-activity-form.index');
         }
         ClinicalActivityForm::create([
@@ -47,7 +60,7 @@ class ClinicalActivityFormController extends Controller
             'data'          => $request->form,
             'level_id'      => auth('employee')->user()->reports_to,
         ]);
-        session()->flash('success','Form Submitted Successfully');
+        session()->flash('Success','Form Submitted Successfully');
         return redirect()->route('clinical-activity-form.index');
     }
 
@@ -87,7 +100,7 @@ class ClinicalActivityFormController extends Controller
             'data'          => $request->form,
             'level_id'      => auth('employee')->user()->reports_to ?? -1,
         ]);
-        session()->flash('success','Form Submitted Successfully');
+        session()->flash('Success','Form Submitted Successfully');
         return redirect()->route('clinical-activity-form.index');
     }
 

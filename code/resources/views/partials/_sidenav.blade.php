@@ -37,6 +37,12 @@
                         <li>
                             <a href="{{ route('schedules.index') }}"><i class="fa fa-edit"></i> Schedule Register </a>
                         </li>
+                        <li>
+                            <a href="{{ route('admin.monthlyActivity.index') }}"><i class="fa fa-edit"></i> Monthly Activity Forms </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.requestforms.index') }}"><i class="fa fa-edit"></i> Clinical Request Forms </a>
+                        </li>
 
                         <li>
                             <a href="{{ url('/dashboard/quiz-regis') }}"><i class="fa fa-edit"></i> Quiz </a>

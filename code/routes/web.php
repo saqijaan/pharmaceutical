@@ -23,6 +23,15 @@ Route::resource('/top3Cols', 'IndexTopThreeColumnController');
 Route::group(['middleware'=> ['auth']], function(){
     
     Route::prefix('dashboard')->group(function(){
+
+        Route::get('/monthlyActivity', 'ClinicalActivityFormController@adminIndex')->name('admin.monthlyActivity.index');
+        Route::get('/monthlyActivity/{id}/show', 'ClinicalActivityFormController@adminView')->name('admin.monthlyActivity.show');
+
+        Route::get('/requestforms', 'ClinicalRequestFormController@adminIndex')->name('admin.requestforms.index');
+        Route::get('/requestforms/{id}/show', 'ClinicalRequestFormController@adminView')->name('admin.requestforms.show');
+
+        Route::post('/login', 'Auth\EmployeeLoginController@login')->name('employee.login.submit');
+
         //brand regis
         Route::resource('/brand-registration', 'BrandRegistrationController' );
         Route::get('/brand-registration/view/{id}', 'BrandRegistrationController@view');
@@ -154,7 +163,9 @@ Route::group(['middleware'=>['auth:distributer']], function(){
 
 
 Route::group(['prefix' => 'employee', 'middleware'=>['auth:employee']], function() {
-    Route::get('/home', 'EmployeeController@index')->name('employee.home');
+    Route::get('/home', function(){
+        return redirect()->route('clinical-request-form.index');
+    })->name('employee.home');
     Route::resource('/clinical-activity-form', 'ClinicalActivityFormController');
     Route::resource('/clinical-request-form', 'ClinicalRequestFormController');
 });

@@ -42,9 +42,7 @@
                         </div>
 
                         <div class="x_content">
-                                <form id="demo-form2" method="post" enctype="multipart/form-data" action="{{ route('clinical-activity-form.update',$form->id) }}" data-parsley-validate class="form-horizontal form-label-left">
-                                    @csrf
-                                    @method('PUT')
+                                <form id="demo-form2" class="form-horizontal form-label-left">
                                     <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="form[a]"> Doctor Name <span class="required">*</span>
                                         </label>
@@ -160,15 +158,6 @@
     
     
     
-                                    <div class="ln_solid"></div>
-                                    <div class="form-group">
-                                        <div class="col-md-8 col-sm-6 col-xs-12 col-md-offset-3">
-                                            <a href="/dashboard/doctor-regis" class="btn btn-danger">Cancel</a>
-                                            <button class="btn btn-warning" type="reset">Reset</button>
-                                            <button type="submit" class="btn btn-success">Submit</button>
-                                        </div>
-                                    </div>
-    
                                 </form>
                         </div>
                     </div>
@@ -187,30 +176,16 @@
 
 @section('bottom_script')
 
-    <!-- FastClick -->
-    <script src="{{ asset('vendors/fastclick/lib/fastclick.js') }}"></script>
-    <!-- NProgress -->
-    <script src="{{ asset('vendors/nprogress/nprogress.js') }}"></script>
-    <!-- iCheck -->
-    <script src="{{ asset('vendors/iCheck/icheck.min.js') }}"></script>
-    <!-- Datatables -->
-    <script src="{{ asset('vendors/datatables.net/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('vendors/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
-    <script src="{{ asset('vendors/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
-    <script src="{{ asset('vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js') }}"></script>
-    <script src="{{ asset('vendors/datatables.net-buttons/js/buttons.flash.min.js') }}"></script>
-    <script src="{{ asset('vendors/datatables.net-buttons/js/buttons.html5.min.js') }}"></script>
-    <script src="{{ asset('vendors/datatables.net-buttons/js/buttons.print.min.js') }}"></script>
-    <script src="{{ asset('vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js') }}"></script>
-    <script src="{{ asset('vendors/datatables.net-keytable/js/dataTables.keyTable.min.js') }}"></script>
-    <script src="{{ asset('vendors/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
-    <script src="{{ asset('vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js') }}"></script>
-    <script src="{{ asset('vendors/datatables.net-scroller/js/dataTables.scroller.min.js') }}"></script>
-    <script src="{{ asset('vendors/jszip/dist/jszip.min.js') }}"></script>
-    <script src="{{ asset('vendors/pdfmake/build/pdfmake.min.js') }}"></script>
-    <script src="{{ asset('vendors/pdfmake/build/vfs_fonts.js') }}"></script>
+
     <script>
-        $('input').replaceWith('p');
+            $(function(){
+                jQuery($('textarea')).each(function() {
+                    var val = jQuery(this).val();
+                    jQuery(this).attr("readonly",true);
+                });
+                $('input').attr('readonly',true);
+                
+            })
     </script>
 @endsection
 

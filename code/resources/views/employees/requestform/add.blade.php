@@ -15,6 +15,14 @@
 <!-- bootstrap-daterangepicker -->
 <link href="{{ asset('vendors/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet">
 <link href="{{ asset('vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css') }}" rel="stylesheet">
+<style>
+    input {
+        width:100% !important;
+    }
+    .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+        border : 0px;
+    }
+</style>
 @endsection
 @section('content')
 <!-- page content -->
@@ -23,14 +31,14 @@
         <div class="page-title">
             <!-- page title and search bar column start -->
             <div class="title_left">
-                <h3> Monthly Activity Form </h3>
+                <h3> Clinical Request Form </h3>
             </div>
-            @include('partials.message')
         </div>
         <!-- page title and search bar column end -->
         <div class="clearfix"></div>
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
+                @include('partials.message')
                 <div class="x_panel">
                     <div class="x_title">
                         <h2> Create New    </h2>
@@ -49,7 +57,7 @@
                                             <div data-type="pdf-image-inner" data-image-width="103" class="pde-image-inner obj_4" ></div>
                                         </div>
                                         <div class="pde-table pde-table-form ">
-                                            <table class="table table-responsive table-hover">
+                                            <table class="table">
                                                 <colgroup>
                                                     <col style="width:8%">
                                                     <col style="width:14%">
@@ -75,7 +83,7 @@
                                                         </div>
                                                     </td>
                                                     <td class="aleft obj_9 " colspan = "3" rowspan = "1" >
-                                                        <select form="acroform" class="pde-form-field pdf-annot obj_10  pdf-obj acroform-field " name="Dropdown10" data-field-id="16148016" data-annot-id="16471960" data-default-value="-" >
+                                                        <select form="acroform" class="pde-form-field pdf-annot obj_10  pdf-obj acroform-field " name="zone" data-field-id="16148016" data-annot-id="16471960" data-default-value="-" >
                                                             <option value="-">-</option>
                                                             <option value="A-1 N">A-1 N</option>
                                                             <option value="A-1 L">A-1 L</option>
@@ -116,7 +124,9 @@
                                                             <p class="obj_13" ><span class="obj_14 pdf-obj">DATE:</span></p>
                                                         </div>
                                                     </td>
-                                                    <td class="obj_15 " colspan = "2" rowspan = "1" ><input form="acroform" class="pde-form-field pdf-annot obj_16  pdf-obj acroform-field " value="23acasads" name="DATE" data-field-id="16063720" data-annot-id="16471024" value="" type="text" ></td>
+                                                    <td class="obj_15 " colspan = "2" rowspan = "1" >
+                                                        <input form="acroform" class="pde-form-field pdf-annot obj_16  pdf-obj acroform-field " value="23acasads" name="date" data-field-id="16063720" data-annot-id="16471024" value="" type="text" >
+                                                    </td>
                                                     <td class="obj_17 " colspan = "3" rowspan = "1" >&nbsp;</td>
                                                 </tr>
                                                 <tr>
@@ -135,14 +145,14 @@
                                                             <p class="obj_24" ><span class="obj_25 pdf-obj">CLIENT NAME:</span></p>
                                                         </div>
                                                     </td>
-                                                    <td class="aleft obj_26 " colspan = "6" rowspan = "1" ><input form="acroform" class="pde-form-field pdf-annot obj_27  pdf-obj acroform-field " name="CLIENT NAME" data-field-id="16063976" data-annot-id="16471312" value="" type="text" ></td>
+                                                    <td class="aleft obj_26 " colspan = "6" rowspan = "1" ><input form="acroform" class="pde-form-field pdf-annot obj_27  pdf-obj acroform-field " name="CLIENT_NAME" data-field-id="16063976" data-annot-id="16471312" value="" type="text" ></td>
                                                     <td class="obj_28 " colspan = "2" rowspan = "1" >&nbsp;</td>
                                                     <td class="obj_29 " colspan = "1" rowspan = "1" >
                                                         <div class="pde-text">
                                                             <p class="obj_30" ><span class="obj_31 pdf-obj">CONTACT NO:</span></p>
                                                         </div>
                                                     </td>
-                                                    <td class="obj_32 " colspan = "3" rowspan = "1" ><input form="acroform" class="pde-form-field pdf-annot obj_33  pdf-obj acroform-field " name="CONTACT NO" data-field-id="16063912" data-annot-id="16471744" value="" type="text" ></td>
+                                                    <td class="obj_32 " colspan = "3" rowspan = "1" ><input form="acroform" class="pde-form-field pdf-annot obj_33  pdf-obj acroform-field " name="CONTACT_NO" data-field-id="16063912" data-annot-id="16471744" value="" type="text" ></td>
                                                     <td class="obj_34 " colspan = "1" rowspan = "2" >&nbsp;</td>
                                                 </tr>
                                                 <tr>
@@ -160,7 +170,7 @@
                                                         </div>
                                                     </td>
                                                     <td class="aleft obj_43 " colspan = "13" rowspan = "1" >
-                                                        <select form="acroform" class="pde-form-field pdf-annot obj_44  pdf-obj acroform-field " name="Dropdown3" data-field-id="16064424" data-annot-id="16470808" data-default-value="-" >
+                                                        <select form="acroform" class="pde-form-field pdf-annot obj_44  pdf-obj acroform-field " name="Type" data-field-id="16064424" data-annot-id="16470808" data-default-value="-" >
                                                             <option value="-">-</option>
                                                             <option selected value="A">A</option>
                                                             <option value="B">B</option>
@@ -184,7 +194,7 @@
                                                         </div>
                                                     </td>
                                                     <td class="aleft obj_52 " colspan = "3" rowspan = "1" >
-                                                        <select form="acroform" class="pde-form-field pdf-annot obj_53  pdf-obj acroform-field " name="Dropdown2" data-field-id="16064296" data-annot-id="16471816" data-default-value="-" >
+                                                        <select form="acroform" class="pde-form-field pdf-annot obj_53  pdf-obj acroform-field " name="PaymentType" data-field-id="16064296" data-annot-id="16471816" data-default-value="-" >
                                                             <option value="-">-</option>
                                                             <option value="CHEQUE">CHEQUE</option>
                                                             <option selected value="CASH">CASH</option>
@@ -198,13 +208,15 @@
                                                             <p class="obj_56" ><span class="obj_57 pdf-obj">NAME OF BANK :</span></p>
                                                         </div>
                                                     </td>
-                                                    <td class="aleft obj_58 " colspan = "5" rowspan = "1" ><input form="acroform" class="pde-form-field pdf-annot obj_59  pdf-obj acroform-field " name="NAME OF BANK" data-field-id="16062888" data-annot-id="16470880" value="" type="text" ></td>
+                                                    <td class="aleft obj_58 " colspan = "5" rowspan = "1" >
+                                                        <input form="acroform" class="pde-form-field pdf-annot obj_59  pdf-obj acroform-field " name="NAME_OF_BANK" data-field-id="16062888" data-annot-id="16470880" value="" type="text" ></td>
                                                     <td class="aright obj_60 " colspan = "3" rowspan = "1" >
                                                         <div class="pde-text">
                                                             <p class="obj_61" ><span class="obj_62 pdf-obj">ACCOUNT TITLE :</span></p>
                                                         </div>
                                                     </td>
-                                                    <td class="obj_63 " colspan = "4" rowspan = "1" ><input form="acroform" class="pde-form-field pdf-annot obj_64  pdf-obj acroform-field " name="ACCOUNT TITLE" data-field-id="16063400" data-annot-id="16471384" value="" type="text" ></td>
+                                                    <td class="obj_63 " colspan = "4" rowspan = "1" >
+                                                        <input form="acroform" class="pde-form-field pdf-annot obj_64  pdf-obj acroform-field " name="ACCOUNT_TITLE" data-field-id="16063400" data-annot-id="16471384" value="" type="text" ></td>
                                                     <td class="obj_65 " colspan = "1" rowspan = "2" >&nbsp;</td>
                                                 </tr>
                                                 <tr>
@@ -213,13 +225,15 @@
                                                             <p class="obj_67" ><span class="obj_68 pdf-obj">BRANCH CODE NUMBER :</span></p>
                                                         </div>
                                                     </td>
-                                                    <td class="aleft obj_69 " colspan = "5" rowspan = "1" ><input form="acroform" class="pde-form-field pdf-annot obj_70  pdf-obj acroform-field " name="BRANCH CODE NUMBER" data-field-id="16063272" data-annot-id="16471528" value="" type="text" ></td>
+                                                    <td class="aleft obj_69 " colspan = "5" rowspan = "1" >
+                                                        <input form="acroform" class="pde-form-field pdf-annot obj_70  pdf-obj acroform-field " name="BRANCH_CODE_NUMBER" data-field-id="16063272" data-annot-id="16471528" value="" type="text" ></td>
                                                     <td class="aright obj_71 " colspan = "3" rowspan = "1" >
                                                         <div class="pde-text">
                                                             <p class="obj_72" ><span class="obj_73 pdf-obj">ACCOUNT NUMBER :</span></p>
                                                         </div>
                                                     </td>
-                                                    <td class="obj_74 " colspan = "4" rowspan = "1" ><input form="acroform" class="pde-form-field pdf-annot obj_75  pdf-obj acroform-field " name="ACCOUNT NUMBER" data-field-id="16062824" data-annot-id="16471888" value="" type="text" ></td>
+                                                    <td class="obj_74 " colspan = "4" rowspan = "1" >
+                                                        <input form="acroform" class="pde-form-field pdf-annot obj_75  pdf-obj acroform-field " name="ACCOUNT_NUMBER" data-field-id="16062824" data-annot-id="16471888" value="" type="text" ></td>
                                                 </tr>
                                                 <tr>
                                                     <td class="obj_76 " colspan = "15" rowspan = "1" >
@@ -251,7 +265,7 @@
                                                         </div>
                                                     </td>
                                                     <td class="obj_90 " colspan = "3" rowspan = "1" >
-                                                        <select form="acroform" class="pde-form-field pdf-annot obj_91  pdf-obj acroform-field " name="Dropdown1" data-field-id="16064040" data-annot-id="16471456" data-default-value="-" >
+                                                        <select form="acroform" class="pde-form-field pdf-annot obj_91  pdf-obj acroform-field " name="TOI" data-field-id="16064040" data-annot-id="16471456" data-default-value="-" >
                                                             <option selected value="-">-</option>
                                                             <option value="3 Months">3 Months</option>
                                                             <option value="6 Months">6 Months</option>
@@ -266,7 +280,8 @@
                                                             <p class="obj_94" ><span class="obj_95 pdf-obj">SINCE HOW LONG IS THE CLIENT WITH US </span><span class="obj_96 pdf-obj"><sub>:</sub></span></p>
                                                         </div>
                                                     </td>
-                                                    <td class="aleft obj_97 " colspan = "5" rowspan = "1" ><input form="acroform" class="pde-form-field pdf-annot obj_98  pdf-obj acroform-field " name="SINCE HOW LONG IS THE" data-field-id="16064168" data-annot-id="16472032" value="" type="text" ></td>
+                                                    <td class="aleft obj_97 " colspan = "5" rowspan = "1" >
+                                                        <input form="acroform" class="pde-form-field pdf-annot obj_98  pdf-obj acroform-field " name="SINCE_HOW_LONG_IS_THE" data-field-id="16064168" data-annot-id="16472032" value="" type="text" ></td>
                                                     <td class="aright obj_99 " colspan = "8" rowspan = "1" >&nbsp;</td>
                                                 </tr>
                                                 <tr>
@@ -275,13 +290,15 @@
                                                             <p class="obj_101 h5" ><span class="obj_102 pdf-obj">INVESTMENT AMOUNT:</span></p>
                                                         </div>
                                                     </td>
-                                                    <td class="aleft obj_103 " colspan = "9" rowspan = "1" ><input form="acroform" class="pde-form-field pdf-annot obj_104  pdf-obj acroform-field " name="INV" data-field-id="16147632" data-annot-id="15868904" value="" type="text" ></td>
+                                                    <td class="aleft obj_103 " colspan = "9" rowspan = "1" >
+                                                        <input form="acroform" class="pde-form-field pdf-annot obj_104  pdf-obj acroform-field " name="INV" data-field-id="16147632" data-annot-id="15868904" value="" type="text" ></td>
                                                     <td class="obj_105 " colspan = "1" rowspan = "1" >
                                                         <div class="pde-text">
                                                             <p class="obj_106" ><span class="obj_107 pdf-obj">%</span></p>
                                                         </div>
                                                     </td>
-                                                    <td class="obj_108 " colspan = "2" rowspan = "1" ><input form="acroform" class="pde-form-field pdf-annot obj_109  pdf-obj acroform-field " name="%" data-field-id="16147056" data-annot-id="16677304" readonly value="NaN" type="text" ></td>
+                                                    <td class="obj_108 " colspan = "2" rowspan = "1" >
+                                                        <input form="acroform" class="pde-form-field pdf-annot obj_109  pdf-obj acroform-field " name="Perc" data-field-id="16147056" data-annot-id="16677304" value="0" type="text" ></td>
                                                     <td class="obj_110 " colspan = "1" rowspan = "1" >&nbsp;</td>
                                                 </tr>
                                                 <tr>
@@ -290,7 +307,8 @@
                                                             <p class="obj_112 h5" ><span class="obj_113 pdf-obj">EXPECTED FUTURE SALE:</span></p>
                                                         </div>
                                                     </td>
-                                                    <td class="aleft obj_114 " colspan = "9" rowspan = "1" ><input form="acroform" class="pde-form-field pdf-annot obj_115  pdf-obj acroform-field " name="SALE" data-field-id="16147760" data-annot-id="16676368" value="" type="text" ></td>
+                                                    <td class="aleft obj_114 " colspan = "9" rowspan = "1" >
+                                                        <input form="acroform" class="pde-form-field pdf-annot obj_115  pdf-obj acroform-field " name="SALE" data-field-id="16147760" data-annot-id="16676368" value="" type="text" ></td>
                                                     <td class="obj_116 " colspan = "4" rowspan = "1" >&nbsp;</td>
                                                 </tr>
                                                 <tr>
@@ -300,13 +318,15 @@
                                                             <p class="obj_119" ><span class="obj_120 pdf-obj">PRODUCTS INVOLVED ON THIS INVESTMENT:</span></p>
                                                         </div>
                                                     </td>
-                                                    <td class="aleft obj_121 " colspan = "5" rowspan = "1" ><input form="acroform" class="pde-form-field pdf-annot obj_122  pdf-obj acroform-field " name="PRODUCTS INVOLVED" data-field-id="16148144" data-annot-id="16676728" value="" type="text" ></td>
+                                                    <td class="aleft obj_121 " colspan = "5" rowspan = "1" >
+                                                        <input form="acroform" class="pde-form-field pdf-annot obj_122  pdf-obj acroform-field " name="PRODUCTS_INVOLVED" data-field-id="16148144" data-annot-id="16676728" value="" type="text" ></td>
                                                     <td class="aright obj_123 " colspan = "3" rowspan = "1" >
                                                         <div class="pde-text">
                                                             <p class="obj_124" ><span class="obj_125 pdf-obj">EXPECTED DATE OF NEXT INVESTMENT:</span></p>
                                                         </div>
                                                     </td>
-                                                    <td class="obj_126 " colspan = "4" rowspan = "1" ><input form="acroform" class="pde-form-field pdf-annot obj_127  pdf-obj acroform-field " name="EXPECTED DATE OF" data-field-id="16063528" data-annot-id="16677592" value="" type="text" ></td>
+                                                    <td class="obj_126 " colspan = "4" rowspan = "1" >
+                                                        <input form="acroform" class="pde-form-field pdf-annot obj_127  pdf-obj acroform-field " name="EXPECTED_DATE_OF" data-field-id="16063528" data-annot-id="16677592" value="" type="text" ></td>
                                                     <td class="obj_128 " colspan = "1" rowspan = "1" >&nbsp;</td>
                                                 </tr>
                                                 <tr>
@@ -317,7 +337,7 @@
                                                         </div>
                                                     </td>
                                                     <td class="aleft obj_132 " colspan = "8" rowspan = "2" >
-                                                        <input form="acroform" style="width:100%" class="pde-form-field pdf-annot obj_133  pdf-obj acroform-field " name="WHO WILL FOLLOW IT" data-field-id="16063464" data-annot-id="16677880" value="" type="text" ></td>
+                                                        <input form="acroform" style="width:100%" class="pde-form-field pdf-annot obj_133  pdf-obj acroform-field " name="WHO_WILL_FOLLOW_IT" data-field-id="16063464" data-annot-id="16677880" value="" type="text" ></td>
                                                     <td class="obj_134 " colspan = "7" rowspan = "2" >&nbsp;</td>
                                                 </tr>
                                                 <tr>
@@ -332,43 +352,35 @@
                                                     <td class="obj_141 " colspan = "1" rowspan = "5" >&nbsp;</td>
                                                     <td class="aright obj_142 " colspan = "1" rowspan = "1" >
                                                         <div class="pde-text">
-                                                            <p class="obj_143" ><span class="obj_144 pdf-obj">CLIENT&#39;S PERSONAL</span></p>
+                                                            <p class="obj_143" ><span class="obj_144 pdf-obj">CLIENT&#39;S PERSONAL CHEMIST NAME:</span></p>
                                                         </div>
                                                     </td>
-                                                    <td class="aleft obj_145 " colspan = "5" rowspan = "2" ><input form="acroform" class="pde-form-field pdf-annot obj_146  pdf-obj acroform-field " name="CLIENTS PERSONAL" data-field-id="16063656" data-annot-id="16676800" value="" type="text" ></td>
-                                                    <td class="aright obj_147 " colspan = "3" rowspan = "1" >
+                                                    <td class="aleft obj_145 " colspan = "5" rowspan = "1" >
+                                                        <input form="acroform" class="pde-form-field pdf-annot obj_146  pdf-obj acroform-field " name="CLIENTS_PERSONAL" data-field-id="16063656" data-annot-id="16676800" value="" type="text" ></td>
+                                                    <td class="aright obj_147 " colspan = "2" rowspan = "1" >
                                                         <div class="pde-text">
-                                                            <p class="obj_148" ><span class="obj_149 pdf-obj">CLIENTS PERSONAL</span></p>
+                                                            <p class="obj_148" ><span class="obj_149 pdf-obj">CLIENTS PERSONAL CHEMIST PRESENT SALES:</span></p>
                                                         </div>
                                                     </td>
-                                                    <td class="obj_150 " colspan = "4" rowspan = "2" ><input form="acroform" class="pde-form-field pdf-annot obj_151  pdf-obj acroform-field " name="CLIENTS PERSONAL_2" data-field-id="16063592" data-annot-id="16677952" value="" type="text" ></td>
+                                                    <td class="obj_150 " colspan = "5" rowspan = "1" >
+                                                        <input form="acroform" class="pde-form-field pdf-annot obj_151  pdf-obj acroform-field " name="CLIENTS_PERSONAL_2" data-field-id="16063592" data-annot-id="16677952" value="" type="text" ></td>
                                                     <td class="obj_152 " colspan = "1" rowspan = "5" >&nbsp;</td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="aright obj_153 " colspan = "1" rowspan = "1" >
-                                                        <div class="pde-text">
-                                                            <p class="obj_154" ><span class="obj_155 pdf-obj">CHEMIST NAME:</span></p>
-                                                        </div>
-                                                    </td>
-                                                    <td class="aright obj_156 " colspan = "3" rowspan = "1" >
-                                                        <div class="pde-text">
-                                                            <p class="obj_157" ><span class="obj_158 pdf-obj">CHEMIST PRESENT SALES:</span></p>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="aright obj_159 " colspan = "1" rowspan = "1" >
+                                                    <td class="aright obj_159 " colspan = "1" >
                                                         <div class="pde-text">
                                                             <p class="obj_160" ><span class="obj_161 pdf-obj">PRESENT SALES OF THE NEARBY CHEMIST:</span></p>
                                                         </div>
                                                     </td>
-                                                    <td class="aleft obj_162 " colspan = "5" rowspan = "1" ><input form="acroform" class="pde-form-field pdf-annot obj_163  pdf-obj acroform-field " name="PRESENT SALES OF THE" data-field-id="16063208" data-annot-id="16678096" value="" type="text" ></td>
-                                                    <td class="aright obj_164 " colspan = "3" rowspan = "1" >
+                                                    <td class="aleft obj_162 " colspan = "5" >
+                                                        <input form="acroform" class="pde-form-field pdf-annot obj_163  pdf-obj acroform-field " name="PRESENT_SALES_OF_THE" data-field-id="16063208" data-annot-id="16678096" value="" type="text" ></td>
+                                                    <td class="aright obj_164 " colspan = "2" rowspan = "1" >
                                                         <div class="pde-text">
                                                             <p class="obj_165" ><span class="obj_166 pdf-obj">CLIENT&#39;S NEAR BY CHEMIST NAMES:</span></p>
                                                         </div>
                                                     </td>
-                                                    <td class="obj_167 " colspan = "4" rowspan = "1" ><input form="acroform" class="pde-form-field pdf-annot obj_168  pdf-obj acroform-field " name="CLIENTS NEAR BY" data-field-id="16064232" data-annot-id="16677088" value="" type="text" ></td>
+                                                    <td class="obj_167 " colspan = "4" rowspan = "1" >
+                                                        <input form="acroform" class="pde-form-field pdf-annot obj_168  pdf-obj acroform-field " name="CLIENTS_NEAR_BY" data-field-id="16064232" data-annot-id="16677088" value="" type="text" ></td>
                                                 </tr>
                                                 <tr>
                                                     <td class="aright obj_169 " colspan = "1" rowspan = "1" >
@@ -376,13 +388,15 @@
                                                             <p class="obj_170" ><span class="obj_171 pdf-obj">CLIENT&#39;S AREA NAME:</span></p>
                                                         </div>
                                                     </td>
-                                                    <td class="aleft obj_172 " colspan = "5" rowspan = "1" ><input form="acroform" class="pde-form-field pdf-annot obj_173  pdf-obj acroform-field " name="CLIENTS AREA NAME" data-field-id="16063336" data-annot-id="16676656" value="" type="text" ></td>
+                                                    <td class="aleft obj_172 " colspan = "5" rowspan = "1" >
+                                                        <input form="acroform" class="pde-form-field pdf-annot obj_173  pdf-obj acroform-field " name="CLIENTS_AREA_NAME" data-field-id="16063336" data-annot-id="16676656" value="" type="text" ></td>
                                                     <td class="aright obj_174 " colspan = "3" rowspan = "1" >
                                                         <div class="pde-text">
                                                             <p class="obj_175" ><span class="obj_176 pdf-obj">TOTAL SALES OF CLIENT&#39;S AREA:</span></p>
                                                         </div>
                                                     </td>
-                                                    <td class="obj_177 " colspan = "4" rowspan = "1" ><input form="acroform" class="pde-form-field pdf-annot obj_178  pdf-obj acroform-field " name="TOTAL SALES OF" data-field-id="16063144" data-annot-id="16676512" value="" type="text" ></td>
+                                                    <td class="obj_177 " colspan = "4" rowspan = "1" >
+                                                        <input form="acroform" class="pde-form-field pdf-annot obj_178  pdf-obj acroform-field " name="TOTAL_SALES_OF" data-field-id="16063144" data-annot-id="16676512" value="" type="text" ></td>
                                                 </tr>
                                                 <tr>
                                                     <td class="aright obj_179 " colspan = "5" rowspan = "1" >
@@ -390,7 +404,8 @@
                                                             <p class="obj_180" ><span class="obj_181 pdf-obj">NAMES OF ALL THE CLIENTS PRESCRIBING OUR PRODUCTS IN THIS AREA:</span></p>
                                                         </div>
                                                     </td>
-                                                    <td class="obj_182 " colspan = "8" rowspan = "1" ><input form="acroform" class="pde-form-field pdf-annot obj_183  pdf-obj acroform-field " name="NAMES OF ALL THE CLIENTS PRESCRIBING" data-field-id="16063784" data-annot-id="16676584" value="" type="text" ></td>
+                                                    <td class="obj_182 " colspan = "8" rowspan = "1" >
+                                                        <input form="acroform" class="pde-form-field pdf-annot obj_183  pdf-obj acroform-field " name="NAMES_OF_ALL_THE_CLIENTS_PRESCRIBING" data-field-id="16063784" data-annot-id="16676584" value="" type="text" ></td>
                                                 </tr>
                                                 <tr>
                                                     <td class="obj_184 " colspan = "15" rowspan = "1" >
@@ -407,7 +422,8 @@
                                                             <p class="obj_189" ><span class="obj_190 pdf-obj">PREVIOUS PAYMENT DATE:</span></p>
                                                         </div>
                                                     </td>
-                                                    <td class="aleft obj_191 " colspan = "5" rowspan = "1" ><input form="acroform" class="pde-form-field pdf-annot obj_192  pdf-obj acroform-field " name="PREVIOUS PAYMENT DATE" data-field-id="16062952" data-annot-id="16677664" value="" type="text" ></td>
+                                                    <td class="aleft obj_191 " colspan = "5" rowspan = "1" >
+                                                        <input form="acroform" class="pde-form-field pdf-annot obj_192  pdf-obj acroform-field " name="PREVIOUS_PAYMENT_DATE" data-field-id="16062952" data-annot-id="16677664" value="" type="text" ></td>
                                                     <td class="aright obj_193 " colspan = "8" rowspan = "1" >&nbsp;</td>
                                                 </tr>
                                                 <tr>
@@ -416,17 +432,19 @@
                                                             <p class="obj_195" ><span class="obj_196 pdf-obj">PREVIOUS PAID AMOUNT:</span></p>
                                                         </div>
                                                     </td>
-                                                    <td class="aleft obj_197 " colspan = "12" rowspan = "1" ><input form="acroform" class="pde-form-field pdf-annot obj_198  pdf-obj acroform-field " name="PREVIOUS PAID AMOUNT" data-field-id="16062760" data-annot-id="16676872" value="" type="text" ></td>
+                                                    <td class="aleft obj_197 " colspan = "12" rowspan = "1" >
+                                                        <input form="acroform" class="pde-form-field pdf-annot obj_198  pdf-obj acroform-field " name="PREVIOUS_PAID_AMOUNT" data-field-id="16062760" data-annot-id="16676872" value="" type="text" ></td>
                                                     <td class="obj_199 " colspan = "1" rowspan = "2" >&nbsp;</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="obj_200 " colspan = "1" rowspan = "1" >&nbsp;</td>
-                                                    <td class="aright obj_201 " colspan = "1" rowspan = "1" >
+                                                    <td class="aright obj_201 " colspan = "4" rowspan = "1" >
                                                         <div class="pde-text">
                                                             <p class="obj_202" ><span class="obj_203 pdf-obj">SALES ACHIEVED ON PREVIOUS PAYMENT :</span></p>
                                                         </div>
                                                     </td>
-                                                    <td class="aleft obj_204 " colspan = "12" rowspan = "1" ><input form="acroform" class="pde-form-field pdf-annot obj_205  pdf-obj acroform-field " name="SALES ACHIEVED ON" data-field-id="16063016" data-annot-id="16677232" value="" type="text" ></td>
+                                                    <td class="aleft obj_204 " colspan = "12" rowspan = "1" >
+                                                        <input form="acroform" class="pde-form-field pdf-annot obj_205  pdf-obj acroform-field " name="SALES_ACHIEVED_ON" data-field-id="16063016" data-annot-id="16677232" value="" type="text" ></td>
                                                 </tr>
                                                 <tr>
                                                     <td class="obj_206 " colspan = "15" rowspan = "1" >
@@ -439,12 +457,12 @@
                                                 </tr>
                                                 <tr>
                                                     <td class="obj_210 " colspan = "1" rowspan = "2" >&nbsp;</td>
-                                                    <td class="aright obj_211 " colspan = "1" rowspan = "1" >
+                                                    <td class="aright obj_211 " colspan = "2" rowspan = "1" >
                                                         <div class="pde-text">
                                                             <p class="obj_212" ><span class="obj_213 pdf-obj">DOES THIS CLIENT GO FOR CME </span><span class="obj_214 pdf-obj">‐ </span><span class="obj_215 pdf-obj">TOURS</span></p>
                                                         </div>
                                                     </td>
-                                                    <td class="aleft obj_216 " colspan = "2" rowspan = "1" >
+                                                    <td class="aleft obj_216 " colspan = "3" rowspan = "1" >
                                                         <select form="acroform" class="pde-form-field pdf-annot obj_217  pdf-obj acroform-field " name="Dropdown7" data-field-id="16147312" data-annot-id="16678528" data-default-value="-" >
                                                             <option value="-">-</option>
                                                             <option value="YES">YES</option>
@@ -459,7 +477,8 @@
                                                             <p class="obj_220" ><span class="obj_221 pdf-obj">ANY OTHER COMMENTS:</span></p>
                                                         </div>
                                                     </td>
-                                                    <td class="aleft obj_222 " colspan = "12" rowspan = "1" ><input form="acroform" class="pde-form-field pdf-annot obj_223  pdf-obj acroform-field " name="ANY OTHER COMMENTS" data-field-id="16064552" data-annot-id="16676944" value="" type="text" ></td>
+                                                    <td class="aleft obj_222 " colspan = "12" rowspan = "1" >
+                                                        <input form="acroform" class="pde-form-field pdf-annot obj_223  pdf-obj acroform-field " name="ANY_OTHER_COMMENTS" data-field-id="16064552" data-annot-id="16676944" value="" type="text" ></td>
                                                     <td class="obj_224 " colspan = "1" rowspan = "1" >&nbsp;</td>
                                                 </tr>
                                                 <tr>
@@ -477,13 +496,14 @@
                                                             <p class="obj_228" ><span class="obj_229 pdf-obj">FORM FILLED BY:</span></p>
                                                         </div>
                                                     </td>
-                                                    <td class="aleft obj_230 " colspan = "5" rowspan = "1" ><input form="acroform" class="pde-form-field pdf-annot obj_231  pdf-obj acroform-field " name="FORM FILLED BY" data-field-id="16064616" data-annot-id="16677376" value="" type="text" ></td>
+                                                    <td class="aleft obj_230 " colspan = "5" rowspan = "1" >
+                                                        <input form="acroform" class="pde-form-field pdf-annot obj_231  pdf-obj acroform-field " name="FORM_FILLED_BY" data-field-id="16064616" data-annot-id="16677376" value="" type="text" ></td>
                                                     <td class="aright obj_232 " colspan = "3" rowspan = "1" >
                                                         <div class="pde-text">
                                                             <p class="obj_233" ><span class="obj_234 pdf-obj">SUB MANAGER NAME:</span></p>
                                                         </div>
                                                     </td>
-                                                    <td class="obj_235 " colspan = "4" rowspan = "1" ><input form="acroform" class="pde-form-field pdf-annot obj_236  pdf-obj acroform-field " name="SUB MANAGER NAME" data-field-id="16064360" data-annot-id="16677448" value="" type="text" ></td>
+                                                    <td class="obj_235 " colspan = "4" rowspan = "1" ><input form="acroform" class="pde-form-field pdf-annot obj_236  pdf-obj acroform-field " name="SUB_MANAGER_NAME" data-field-id="16064360" data-annot-id="16677448" value="" type="text" ></td>
                                                     <td class="obj_237 " colspan = "1" rowspan = "2" >&nbsp;</td>
                                                 </tr>
                                                 <tr>
@@ -492,13 +512,13 @@
                                                             <p class="obj_239" ><span class="obj_240 pdf-obj">MANAGER NAME:</span></p>
                                                         </div>
                                                     </td>
-                                                    <td class="aleft obj_241 " colspan = "5" rowspan = "1" ><input form="acroform" class="pde-form-field pdf-annot obj_242  pdf-obj acroform-field " name="MANAGER NAME" data-field-id="16063080" data-annot-id="16678024" value="" type="text" ></td>
+                                                    <td class="aleft obj_241 " colspan = "5" rowspan = "1" ><input form="acroform" class="pde-form-field pdf-annot obj_242  pdf-obj acroform-field " name="MANAGER_NAME" data-field-id="16063080" data-annot-id="16678024" value="" type="text" ></td>
                                                     <td class="aright obj_243 " colspan = "3" rowspan = "1" >
                                                         <div class="pde-text">
                                                             <p class="obj_244" ><span class="obj_245 pdf-obj">BUH / BUM / SSM NAME:</span></p>
                                                         </div>
                                                     </td>
-                                                    <td class="obj_246 " colspan = "4" rowspan = "1" ><input form="acroform" class="pde-form-field pdf-annot obj_247  pdf-obj acroform-field " name="BUH  BUM  SSM NAME" data-field-id="16063848" data-annot-id="16677520" value="" type="text" ></td>
+                                                    <td class="obj_246 " colspan = "4" rowspan = "1" ><input form="acroform" class="pde-form-field pdf-annot obj_247  pdf-obj acroform-field " name="BUH_BUM_SSM_NAME" data-field-id="16063848" data-annot-id="16677520" value="" type="text" ></td>
                                                 </tr>
                                                 <tr>
                                                     <td class="obj_248 " colspan = "13" rowspan = "1" >

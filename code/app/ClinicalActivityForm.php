@@ -19,6 +19,9 @@ class ClinicalActivityForm extends Model
     public function filledBy(){
         return $this->belongsTo( EmployeeRegistration::class, 'employee_id' );
     }
+    public function employee(){
+        return $this->belongsTo( EmployeeRegistration::class, 'employee_id' );
+    }
 
     public function currentLevel(){
         return $this->belongsTo( EmployeeRegistration::class, 'level_id' );
