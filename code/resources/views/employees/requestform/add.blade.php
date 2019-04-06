@@ -125,7 +125,7 @@
                                                         </div>
                                                     </td>
                                                     <td class="obj_15 " colspan = "2" rowspan = "1" >
-                                                        <input form="acroform" class="pde-form-field pdf-annot obj_16  pdf-obj acroform-field " value="23acasads" name="date" data-field-id="16063720" data-annot-id="16471024" value="" type="text" >
+                                                        <input form="acroform" class="pde-form-field pdf-annot obj_16  pdf-obj acroform-field " value="{{ date('Y-m-d') }}" name="date" data-field-id="16063720" data-annot-id="16471024" value="" type="text" >
                                                     </td>
                                                     <td class="obj_17 " colspan = "3" rowspan = "1" >&nbsp;</td>
                                                 </tr>

@@ -7,7 +7,7 @@
 @if(Session::has('Danger'))
     <div class="clearfix"></div>
     <div class="alert alert-warning" role="alert" style="margin-top: 24px;z-index:10000">
-        <strong>Success: </strong>{{Session::get('Danger')}}
+        <strong>Error: </strong>{{Session::get('Danger')}}
     </div>
 @endif
 @if(count($errors)>0)
