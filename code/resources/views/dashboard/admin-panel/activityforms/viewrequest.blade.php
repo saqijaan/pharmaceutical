@@ -317,12 +317,12 @@
                                                 </tr>
                                                 <tr>
   
-                                                    <td class="aright obj_142 " colspan = "1" rowspan = "1" >
+                                                    <td class="aright obj_142 " colspan = "3" rowspan = "1" >
                                                         <div class="pde-text">
                                                             <p class="obj_143" ><span class="obj_144 pdf-obj">CLIENT&#39;S PERSONAL CHEMIST NAME:</span></p>
                                                         </div>
                                                     </td>
-                                                    <td class="aleft obj_145 " colspan = "5" rowspan = "1" >
+                                                    <td class="aleft obj_145 " colspan = "4" rowspan = "1" >
                                                         {{ $form->CLIENTS_PERSONAL }}
                                                     </td>
 
@@ -331,19 +331,19 @@
                                                         <p class="obj_148" ><span class="obj_149 pdf-obj">CLIENTS PERSONAL CHEMIST PRESENT SALES:</span></p>
                                                     </div>
                                                     </td>
-                                                    <td class="obj_150 " colspan = "6" rowspan = "1" >
+                                                    <td class="obj_150 " colspan = "5" rowspan = "1" >
                                                         {{ $form->CLIENTS_PERSONAL_2 }}
                                                     </td>
                                                     
                                                 </tr>
                                                 
                                                 <tr>
-                                                    <td class="aright obj_159 " colspan = "1" >
+                                                    <td class="aright obj_159 " colspan = "3" >
                                                         <div class="pde-text">
                                                             <p class="obj_160" ><span class="obj_161 pdf-obj">PRESENT SALES OF THE NEARBY CHEMIST:</span></p>
                                                         </div>
                                                     </td>
-                                                    <td class="aleft obj_162 " colspan = "5" >
+                                                    <td class="aleft obj_162 " colspan = "4" >
                                                         {{ $form->PRESENT_SALES_OF_THE }}
                                                     </td>
                                                     <td class="aright obj_164 " colspan = "3" rowspan = "1">
@@ -351,17 +351,17 @@
                                                             <p class="obj_165" ><span class="obj_166 pdf-obj">CLIENT&#39;S NEAR BY CHEMIST NAMES:</span></p>
                                                         </div>
                                                     </td>
-                                                    <td class="obj_167 " colspan = "6" rowspan = "1" >
+                                                    <td class="obj_167 " colspan = "5" rowspan = "1" >
                                                         {{ $form->CLIENTS_NEAR_BY }}
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="aright obj_169 " colspan = "1" >
+                                                    <td class="aright obj_169 " colspan = "3" >
                                                         <div class="pde-text">
                                                             <p class="obj_170" ><span class="obj_171 pdf-obj">CLIENT&#39;S AREA NAME:</span></p>
                                                         </div>
                                                     </td>
-                                                    <td class="aleft obj_172 " colspan = "5" >
+                                                    <td class="aleft obj_172 " colspan = "4" >
                                                         {{ $form->CLIENTS_AREA_NAME }}
                                                     </td>
                                                     <td class="aright obj_174 " colspan = "3" >
@@ -369,7 +369,7 @@
                                                             <p class="obj_175" ><span class="obj_176 pdf-obj">TOTAL SALES OF CLIENT&#39;S AREA:</span></p>
                                                         </div>
                                                     </td>
-                                                    <td class="obj_177 " colspan = "6" >
+                                                    <td class="obj_177 " colspan = "5" >
                                                         {{ $form->TOTAL_SALES_OF }}
                                                     </td>
                                                 </tr>
