@@ -49,7 +49,8 @@
                                 <table id="datatable-buttons" class="table table-striped jambo_table bulk_action dt-responsive nowrap">
                                     <thead>
                                     <tr class="headings">
-                                        <th class="column-title"> Employee Name </th>
+                                        <th class="column-title"> Submitted By Name </th>
+                                        <th class="column-title"> Current Employee </th>
                                         <th class="column-title"> Current Level </th>
                                         <th class="column-title"> Submitted At </th>
                                         <th class="column-title no-link last"><span class="nobr">Action</span> </th>
@@ -60,8 +61,9 @@
 
                                     @foreach( $forms as $form )
                                         <tr class="even pointer">
-                                            <td class=" "> {{ $form->employee ? $form->employee->name: '' }} </td>
-                                            <td class=" "> {{ $form->currentLevel ? $form->currentLevel->name: 'All Level Passed' }} </td>
+                                            <td class=" "> {{ $form->employee       ? $form->employee->name: '' }} </td>
+                                            <td class=" "> {{ $form->currentLevel   ? $form->currentLevel->name: 'All Level Passed' }} </td>
+                                            <td class=" "> {{ $form->currentLevel   ? $form->currentLevel->level: 'All Level Passed' }} </td>
                                             <td class=" "> {{ $form->created_at }} </td>
                                             <td>
                                                 <a href="{{ route('admin.monthlyActivity.show',$form->id) }}" class="btn btn-sm btn-success">View</a>
