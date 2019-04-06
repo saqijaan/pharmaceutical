@@ -152,6 +152,14 @@ Route::group(['middleware'=>['auth:distributer']], function(){
 
 });
 
+
+Route::group(['prefix' => 'employee', 'middleware'=>['auth:employee']], function() {
+    Route::get('/home', 'EmployeeController@index')->name('employee.home');
+    Route::resource('/clinical-activity-form', 'ClinicalActivityFormController');
+    Route::resource('/clinical-request-form', 'ClinicalRequestFormController');
+});
+
+
 Route::prefix('distributer')->group(function() {
     Route::get('/login', 'Auth\DistributerLoginController@showLoginForm')->name('distributer.login');
     Route::post('/login', 'Auth\DistributerLoginController@login')->name('distributer.login.submit');
@@ -160,7 +168,6 @@ Route::prefix('distributer')->group(function() {
 Route::prefix('employee')->group(function() {
     Route::get('/login', 'Auth\EmployeeLoginController@showLoginForm')->name('employee.login');
     Route::post('/login', 'Auth\EmployeeLoginController@login')->name('employee.login.submit');
-    Route::get('/home', 'EmployeeController@index')->name('employee.home');
 });
 
 

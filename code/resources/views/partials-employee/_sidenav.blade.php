@@ -28,8 +28,8 @@
                     <h3>General</h3>
                     <ul class="nav side-menu">
 
-                        <li><a href="#"><i class="fa fa-edit"></i> Clinical Activity Request Form </a></li>
-                        <li><a href="#"><i class="fa fa-edit"></i> Monthly Clinical Activity Feedback</a></li>
+                        <li><a href="{{ route('clinical-activity-form.index') }}"><i class="fa fa-edit"></i> Monthly Clinical Activity Feedback </a></li>
+                        <li><a href="{{ route('clinical-request-form.index') }}"><i class="fa fa-edit"></i> Clinical Activity Request Form</a></li>
 
                     </ul>
                 </div>

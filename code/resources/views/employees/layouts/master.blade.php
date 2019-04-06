@@ -33,7 +33,7 @@
 
         @include('partials-employee._topnav')
 
-        @yield('content-employee')
+        @yield('content')
 
         @include('partials-employee._footer')
 
@@ -41,7 +41,10 @@
     </div>
 </div>
 
-
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
 <script src="{{ asset('plugins/ckeditor/ckeditor.js')}}"></script>
 <script src="{{ asset('vendors/editors.js')}}"></script>
 
